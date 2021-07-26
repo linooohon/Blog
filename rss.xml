@@ -8,7 +8,7 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>mitsukuchiph.</title>
-        <link>https://linooohon.github.io/</link>
+        <link>https://linooohon.com/blog/</link>
         <description>MemE 是一個強大且可高度定製的 GoHugo 部落格主題，專為個人部落格設計。</description>
         <generator>Hugo 0.83.1 https://gohugo.io/</generator>
         
@@ -21,22 +21,22 @@
             <webMaster>linooohon@gmail.com (mitsukuchiph.)</webMaster>
         
         
-        <lastBuildDate>Mon, 26 Jul 2021 17:41:37 &#43;0800</lastBuildDate>
+        <lastBuildDate>Mon, 26 Jul 2021 17:52:13 &#43;0800</lastBuildDate>
         
-            <atom:link rel="self" type="application/rss&#43;xml" href="https://linooohon.github.io/rss.xml" />
+            <atom:link rel="self" type="application/rss&#43;xml" href="https://linooohon.com/blog/rss.xml" />
         
         
             <item>
                 <title>Hi Blog, YUI - TOKYO</title>
-                <link>https://linooohon.github.io/first-post/</link>
-                <guid isPermaLink="true">https://linooohon.github.io/first-post/</guid>
+                <link>https://linooohon.com/blog/first-post/</link>
+                <guid isPermaLink="true">https://linooohon.com/blog/first-post/</guid>
                 <pubDate>Thu, 03 Jun 2021 18:36:14 &#43;0800</pubDate>
                 
                     <author>linooohon@gmail.com (mitsukuchiph.)</author>
                 
                 
                 
-                    <description>&lt;p&gt;&lt;img src=&#34;https://linooohon.github.io/main_pic/01_210603_firstpost.jpg&#34; alt=&#34;Hi Blog, YUI - TOKYO&#34;&gt;&lt;/p&gt;
+                    <description>&lt;p&gt;&lt;img src=&#34;https://linooohon.com/blog/main_pic/01_210603_firstpost.jpg&#34; alt=&#34;Hi Blog, YUI - TOKYO&#34;&gt;&lt;/p&gt;
 &lt;h5 id=&#34;try-to-share-the-things-i-experienced-and-some-of-my-ideas-on-this-platform-thanks&#34;&gt;Try to share the things I experienced and some of my ideas on this platform, thanks!&lt;/h5&gt;
 &lt;h5 id=&#34;so&#34;&gt;So,&lt;/h5&gt;
 &lt;h5 id=&#34;for-the-first-post-of-the-new-site-im-going-to-share-the-lyrics-of-the-songs-that-i-really-love-recently&#34;&gt;for the first post of the new site, I&#39;m going to share the lyrics of the songs that I really love recently.&lt;/h5&gt;
@@ -125,7 +125,7 @@ At least I know that much.
                                 
                                 
                                 
-                                    <category domain="https://linooohon.github.io/categories/202106/">202106</category>
+                                    <category domain="https://linooohon.com/blog/categories/202106/">202106</category>
                                 
                             
                         
@@ -135,7 +135,7 @@ At least I know that much.
                                 
                                 
                                 
-                                    <category domain="https://linooohon.github.io/tags/life/">life</category>
+                                    <category domain="https://linooohon.com/blog/tags/life/">life</category>
                                 
                             
                         
