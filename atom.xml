@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-TW">
     <title type="text">mitsukuchiph.</title>
     <subtitle type="html">MemE 是一個強大且可高度定製的 GoHugo 部落格主題，專為個人部落格設計。</subtitle>
-    <updated>2021-07-27T22:22:05&#43;08:00</updated>
+    <updated>2021-07-30T00:44:53&#43;08:00</updated>
     <id>https://linooohon.com/blog/</id>
     <link rel="alternate" type="text/html" href="https://linooohon.com/blog/" />
     <link rel="self" type="application/atom&#43;xml" href="https://linooohon.com/blog/atom.xml" />
@@ -16,6 +16,188 @@
             </author>
     
     <generator uri="https://gohugo.io/" version="0.83.1">Hugo</generator>
+        <entry>
+            <title type="text">01「Git 介紹」什麼是 git rebase</title>
+            <link rel="alternate" type="text/html" href="https://linooohon.com/blog/01%E3%80%8CGit%20%E4%BB%8B%E7%B4%B9%E3%80%8D%E4%BB%80%E9%BA%BC%E6%98%AF%20git%20rebase/" />
+            <id>https://linooohon.com/blog/01%E3%80%8CGit%20%E4%BB%8B%E7%B4%B9%E3%80%8D%E4%BB%80%E9%BA%BC%E6%98%AF%20git%20rebase/</id>
+            <updated>2021-07-30T00:43:05&#43;08:00</updated>
+            <published>2021-06-15T18:36:14&#43;08:00</published>
+            <author>
+                    <name>mitsukuchiph.</name>
+                    <uri>https://linooohon.com/portfolio</uri>
+                    <email>linooohon@gmail.com</email>
+                    </author>
+            <summary type="html">最近又整理了一下自己對 git 的概念，分享一下&lt;img src=&#34;main_pic/02_210615_git_rebase.png&#34;&gt;</summary>
+            
+                <content type="html">&lt;h1 style=&#34;text-align:center&#34;&gt;
+「Git 介紹」Ch1: 什麼是 git rebase
+&lt;/h1&gt;
+&lt;blockquote&gt;
+&lt;p&gt;最近自己對 git 的概念又整理了一下，先來介紹一下 git rebase&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://linooohon.com/blog/blog/main_pic/02_210615_git_rebase.png&#34; alt=&#34;Git 介紹」Ch1: 什麼是 git rebase&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;一-what-git-rebase-可以做什麼-&#34;&gt;一. (What?) git rebase 可以做什麼 ?&lt;/h2&gt;
+&lt;h3 id=&#34;除了-git-merge-的另一種選擇&#34;&gt;除了 &lt;code&gt;git merge&lt;/code&gt; 的另一種選擇&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;merge 的常見三種方式: &lt;code&gt;git rebase&lt;/code&gt;, &lt;code&gt;git merge&lt;/code&gt;, &lt;code&gt;git cherry-pick&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;一般做 merge 常見大概會有 rebase、merge、cherry-pick，這篇只先針對 rebase 做分享，rebase 可以做的事情算是滿多的。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;與 git merge 的差別 ?
+&lt;ul&gt;
+&lt;li&gt;最主要在使用 &lt;code&gt;git merge&lt;/code&gt; 的時候，如果你有注意，其實都會再產生一個做 merge 這件事情的 commit，在 &lt;code&gt;git log --graph --all&lt;/code&gt; 線圖上就不會是線性，線會轉彎然後合起來，最常見的情況是會產生小耳朵(小耳朵link)。然而在使用 &lt;code&gt;git rebase&lt;/code&gt; 做 merge 時，它會是用接點的方式接在前面，rebase 顧名思義，重新定義 base(它的根)，而當然實際 git 的實作， 不是單純拿原本的 commit 接上去，其實是複製了一份過去，SHA-1 值也是重新產生，是會改變的。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;有一個狀況-git-merge-還是會保持一條線&#34;&gt;有一個狀況 git merge 還是會保持一條線&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(除非parent branch 的 commit 始終包含在 child branch 裡，parent branch 從來沒變更過，現在要把 parent 的進度更新成 child 的進度，這時候的 merge 會走 ff(fast-forward)，也就是說不會產生額外的 commit，但這裡不討論這個，先假設 branch 間已經有分歧了，也是合作比較常見的狀況)。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;如果在上述情況下 git merge 不想走 ff 可以 &lt;code&gt;git merge --no-ff&lt;/code&gt; 這樣一定會產生一個 commit， git 會請你再留一個 commit message。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;二-以下分享-git-rebase-git-merge-的差異&#34;&gt;二. 以下分享 &lt;code&gt;git rebase&lt;/code&gt;, &lt;code&gt;git merge&lt;/code&gt; 的差異&lt;/h2&gt;
+&lt;h3 id=&#34;-先來看-git-merge接下來藉由圖片和實例讓大家參考&#34;&gt;Ⅰ. 先來看 &lt;code&gt;git merge&lt;/code&gt;，接下來藉由圖片和實例讓大家參考:&lt;/h3&gt;
+&lt;p&gt;如果是 &lt;code&gt;git merge&lt;/code&gt; 的情況:
+&lt;img src=&#34;https://i.imgur.com/3Jb3U5g.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;center&gt;&#34;圖1(Sourcetree)&#34;&lt;/center&gt;
+&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/ElOabeG.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;center&gt;&#34;git log --graph --all --oneline 也是一樣的&#34;&lt;/center&gt;
+&lt;ul&gt;
+&lt;li&gt;目前我在 &lt;code&gt;master&lt;/code&gt; 加了 &lt;code&gt;add 01 project&lt;/code&gt; commit 接著在 &lt;code&gt;master&lt;/code&gt; commit 完後，建了一個分支 &lt;code&gt;add-02project&lt;/code&gt;，並 commit 了三次，停在 &lt;code&gt;feat: add 02.js&lt;/code&gt;，接著我繼續從 &lt;code&gt;add-02project&lt;/code&gt; 分支建了 &lt;code&gt;add-03project&lt;/code&gt; 分支，並 commit 一次 &lt;code&gt;feat: add 03.html&lt;/code&gt; ，然後我回頭從 &lt;code&gt;master&lt;/code&gt; 建 &lt;code&gt;add-04project&lt;/code&gt; 分支 commit 一次 &lt;code&gt;feat: add 04.html&lt;/code&gt;，以上都只是我亂建的不重要，只是為了講解一下。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;接下來重點是我想讓 &lt;code&gt;add-04project&lt;/code&gt; branch 與 &lt;code&gt;add-03project&lt;/code&gt; branch 做 merge，&lt;br&gt;這裡如果我先做 &lt;code&gt;git merge&lt;/code&gt;：&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;目前 HEAD 在 add-04project，下指令&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;$ git merge add-03project
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;意思是 : merge branch &lt;code&gt;add-03project&lt;/code&gt; into branch &lt;code&gt;add-04project&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;接著，&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/AXL1adk.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;center&gt;&#34;圖2&#34;&lt;/center&gt;
+&lt;blockquote&gt;
+&lt;p&gt;你會看到線圖產生變化，多了一個 commit &lt;code&gt;cbcfe7b&lt;/code&gt;  是 for merge 的，然後線圖也還是原本的線，只是接在一起了。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;-那現在來看如果使用-git-rebase&#34;&gt;Ⅱ. 那現在來看如果使用 &lt;code&gt;git rebase&lt;/code&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;原本的情況和圖1一樣，HEAD 一樣在 &lt;code&gt;add-04project&lt;/code&gt; branch :
+&lt;img src=&#34;https://i.imgur.com/3Jb3U5g.png&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;center&gt;&#34;圖1&#34;&lt;/center&gt;
+&lt;p&gt;在這裡下&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ git rebase add-03project
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;字面意思是請幫我把我當前的 branch 的根換成 &lt;code&gt;add-03project&lt;/code&gt; branch，所以實際上它會把當前 branch 進度複製接到 &lt;code&gt;add-03project&lt;/code&gt; branch 上，這時候會呈現如下:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/WsdMcBl.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;center&gt;&#34;圖3&#34;&lt;/center&gt;
+&lt;ul&gt;
+&lt;li&gt;會發現變成一條線了，且 &lt;code&gt;add-04project&lt;/code&gt; commit 內容也都在，但 SHA-1 會重新計算。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;三-rebase-反悔了怎麼辦&#34;&gt;三. rebase 反悔了怎麼辦：&lt;/h2&gt;
+&lt;h3 id=&#34;git-reset---hard-sha-1值&#34;&gt;&lt;code&gt;git reset --hard &amp;lt;SHA-1值&amp;gt;&lt;/code&gt;&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;記得在使用 git rebase 的時候，如果反悔了剛剛的操作，不能用 &lt;code&gt;git reset --hard HEAD^&lt;/code&gt; 做相對路徑切換， 它是不會切回原樣的，要記得直接用絕對路徑切換，下 &lt;code&gt;git reflog&lt;/code&gt; 看想切回去的地方，然後下 &lt;code&gt;git reset --hard &amp;lt;SHA-1值&amp;gt;&lt;/code&gt; 也就是直接放 commit ID，或著是 reflog 上的 HEAD@{x}，&lt;code&gt;git reset --hard HEAD@{x}&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;
+$ git reset --hard &amp;lt;SHA-1值&amp;gt;  &lt;span class=&#34;c1&#34;&gt;#找你想要回去的點&lt;/span&gt;
+$ git reset --hard HEAD@&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;x&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;   &lt;span class=&#34;c1&#34;&gt;#找你想要回去的點&lt;/span&gt;
+$ git reset --hard ORIG_HEAD  &lt;span class=&#34;c1&#34;&gt;#反悔離當下最近的危險操作點&lt;/span&gt;
+
+&lt;span class=&#34;s1&#34;&gt;&amp;#39;&amp;#39;&amp;#39;
+&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;要注意的是 ORIG_HEAD 是在危險操作時紀錄上一個點，如果沒有在操作過後的當下馬上使用 git reset --hard ORIG_HEAD
+&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;ORIG_HEAD 很有可能會被蓋過去就不能用了，這時後就要使用其他兩個指令，可以自己選想回去的地方
+&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;四-git-rebase--i-會進入-rebase-的互動模式之後分享一下&#34;&gt;四. &lt;code&gt;git rebase -i&lt;/code&gt; (會進入 rebase 的互動模式，之後分享一下)&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;我把它稱作小小時光機，但就像 &lt;a href=&#34;https://www.imdb.com/title/tt0088763/&#34;&gt;Back to the Future&lt;/a&gt; 演的那樣，很酷也容易不小心出問題。&lt;/li&gt;
+&lt;li&gt;可以做滿多事，但也要注意有時會更動到歷史紀錄，在多人協作專案，更是要小心操作。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;五-why-為什麼需要-git-rebase&#34;&gt;五. (Why?) 為什麼需要 git rebase&lt;/h2&gt;
+&lt;h3 id=&#34;先說結論&#34;&gt;先說結論：&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;直接先說我自己認為的結論，&lt;code&gt;git rebase&lt;/code&gt; 只是工具，不管是 git merge、git rebase 還是其他 git 指令，其實都是因應情況、團隊開發模式等情況下，去做合理使用，只要在合適的情況使用 rebase 我相信是沒問題的，使用 rebase 有時可以讓專案的進度 (commit 顆粒) 更清晰。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;那什麼是合適的情況--&#34;&gt;那什麼是合適的情況 ? :&lt;/h3&gt;
+&lt;p&gt;以下情況我根據自身經驗認為會使用或是可以使用:&lt;/p&gt;
+&lt;h4 id=&#34;1-遠端-mastermain-branch-的-code-進度更新了-這時候自己的分支開發了一個功能準備推上去可以使用-rebase-讓自己的-branch-進度更新最後再推上去自己的分支&#34;&gt;1. 遠端 master(main) branch 的 code 進度更新了， 這時候自己的分支開發了一個功能，準備推上去，可以使用 &lt;code&gt;rebase&lt;/code&gt; 讓自己的 branch 進度更新，最後再推上去自己的分支&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;$ git fetch upstream
+$ git rebase upstream/master
+$ git push origin 自己的 branch
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;2-同理更新自己的-fork-repo&#34;&gt;2. 同理更新自己的 fork repo:&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;$ git checkout master
+$ git fetch upstream
+$ git rebase upstream/master
+$ git push origin master
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;3-整理-git-歷史紀錄可以修改合併變更刪除等等&#34;&gt;3. 整理 git 歷史紀錄，可以修改、合併、變更、刪除等等..&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;# 使用互動模式
+$ git rebase -i &amp;lt;SHA-1&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
+&lt;h2 id=&#34;the-end&#34;&gt;The End:&lt;/h2&gt;
+&lt;h3 id=&#34;review&#34;&gt;Review:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;git rebase&lt;/code&gt; 與 &lt;code&gt;git merge&lt;/code&gt; 的差異&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;git rebase&lt;/code&gt; 反悔如何處理&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;git rebase&lt;/code&gt; 使用時機的取捨&lt;/li&gt;
+&lt;li&gt;在團隊協作中善用工具，follow 大家的共識&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;reference&#34;&gt;Reference:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://git-scm.com/docs/git-rebase&#34;&gt;git&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://learngitbranching.js.org/?locale=zh_TW&#34;&gt;Git Branching!&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://wangyufeng.org/2020/03/15/post-20200315/&#34;&gt;王雨峰的博客&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://gitbook.tw/chapters/branch/merge-with-rebase.html&#34;&gt;高見龍-為你自己學 Git&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+            
+            
+            
+            
+            
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/categories/202106/" term="202106" label="202106" />
+                            
+                        
+                    
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/tags/git/" term="git" label="git" />
+                            
+                        
+                    
+                
+            
+        </entry>
+    
         <entry>
             <title type="text">Hi Blog, YUI - TOKYO</title>
             <link rel="alternate" type="text/html" href="https://linooohon.com/blog/first-post/" />
