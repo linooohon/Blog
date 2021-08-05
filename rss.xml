@@ -21,10 +21,179 @@
             <webMaster>linooohon@gmail.com (mitsukuchiph.)</webMaster>
         
         
-        <lastBuildDate>Fri, 30 Jul 2021 01:24:46 &#43;0800</lastBuildDate>
+        <lastBuildDate>Thu, 05 Aug 2021 22:42:10 &#43;0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://linooohon.com/blog/rss.xml" />
         
+        
+            <item>
+                <title>02「Git 介紹」git rebase -i</title>
+                <link>https://linooohon.com/blog/posts/02%E3%80%8CGit%20%E4%BB%8B%E7%B4%B9%E3%80%8Dgit%20rebase%20-i/</link>
+                <guid isPermaLink="true">https://linooohon.com/blog/posts/02%E3%80%8CGit%20%E4%BB%8B%E7%B4%B9%E3%80%8Dgit%20rebase%20-i/</guid>
+                <pubDate>Sun, 20 Jun 2021 18:36:14 &#43;0800</pubDate>
+                
+                    <author>linooohon@gmail.com (mitsukuchiph.)</author>
+                
+                
+                
+                    <description>&lt;h1 style=&#34;text-align:center&#34;&gt;
+「Git 介紹」Ch2: git rebase 互動模式 - git rebase -i
+&lt;/h1&gt;
+&lt;blockquote&gt;
+&lt;p&gt;上次提到 &lt;code&gt;git rebase&lt;/code&gt; 的使用時機，這次介紹一下 &lt;code&gt;git rebase -i&lt;/code&gt; 互動模式!&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://linooohon.com/blog/blog/main_pic/03_210620_git_rebase_2.png&#34; alt=&#34;Git 第二篇, git rebase -i 互動模式&#34;&gt;&lt;/p&gt;
+&lt;h1 id=&#34;what-什麼是-git-rebase--i&#34;&gt;(What?) 什麼是 git rebase -i&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Git rebase 提供的全家餐，輸入魔法&lt;code&gt;-i&lt;/code&gt;, 搭配 commit ID, 神力再現。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;how-git-rebase--i-的幾種操作&#34;&gt;(How?) git rebase -i 的幾種操作&lt;/h1&gt;
+&lt;h2 id=&#34;1情境&#34;&gt;1.情境:&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;假設現在自己分支多了 3 個 commit 準備要合回去主分支，在合回去之前，想對自己的 commit 先做些整理，這時候 &lt;code&gt;git rebase -i&lt;/code&gt; 就派上用場了。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&#34;language-shell=bash&#34; data-lang=&#34;shell=bash&#34;&gt;# 目前的三個 commit, commit ID 先用 aaaaaaa, bbbbbbb, ccccccc 代替, a 是第一個 commit, b 是第二個, c 是第三個
+ccccccc commit-msg
+bbbbbbb commit-msg
+aaaaaaa commit-msg
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;2-流程&#34;&gt;2. 流程:&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;進入互動模式&lt;/li&gt;
+&lt;li&gt;執行這次想做的修改&lt;/li&gt;
+&lt;li&gt;如果有衝突的話，需要解決&lt;/li&gt;
+&lt;li&gt;完成操作&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;3-進入git-rebase--i-commit-id&#34;&gt;3. 進入，&lt;code&gt;git rebase -i &amp;lt;commit ID&amp;gt;&lt;/code&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;解釋: 代表我現在想進入 interactive rebase 的模式來做些事情，那我要處理哪些 commit 呢? 就是 -i 後面輸入的 &lt;code&gt;&amp;lt;commit ID&amp;gt;&lt;/code&gt; 之後的所有 commit 我可能需要處理。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;所以這行指令就是，我想進入互動模式處理 &lt;code&gt;&amp;lt;commit ID&amp;gt;&lt;/code&gt; 之後的 commit (不包括輸入的 commit ID 的 commit 好饒舌?..)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;4-進來後注意順序&#34;&gt;4. 進來後，注意順序:&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;一進來互動模式時，最新的 commit 是在最下面！&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&#34;language-shell=bash&#34; data-lang=&#34;shell=bash&#34;&gt;# 像是這樣
+# 上面最舊
+pick aaaaaaa commit-msg #1
+pick bbbbbbb commit-msg #2
+pick ccccccc commit-msg #3
+# 下面最新
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;5-手法&#34;&gt;5. 手法:&lt;/h2&gt;
+&lt;h3 id=&#34;pick---預設值&#34;&gt;&lt;code&gt;pick&lt;/code&gt; - 預設值&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;作用: 意思是保留這個 commit&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;squash---合併&#34;&gt;&lt;code&gt;squash&lt;/code&gt; - 合併&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;作用: 合併多個 commit&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;pick aaaaaaa commit-msg #1
+squash bbbbbbb commit-msg #2
+pick ccccccc commit-msg #3
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;把 pick 改成 squash。如此,
+&lt;code&gt;bbbbbbb&lt;/code&gt; 會與前一個 commit &lt;code&gt;aaaaaaa&lt;/code&gt; 合併。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;reword---修改訊息&#34;&gt;&lt;code&gt;reword&lt;/code&gt; - 修改訊息&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;作用: 修改 commit message&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;pick aaaaaaa commit-msg #1
+reword bbbbbbb commit-msg #2
+reword ccccccc commit-msg #3
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;如此便能修改 commit message&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;drop---丟掉&#34;&gt;&lt;code&gt;drop&lt;/code&gt; - 丟掉&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;作用: 丟掉這個 commit&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;pick aaaaaaa commit-msg #1
+drop bbbbbbb commit-msg #2
+pick ccccccc commit-msg #3
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;如此 &lt;code&gt;bbbbbbb&lt;/code&gt; 這個 commit 便會被丟掉。
+也可以直接刪掉那一行，也可以達成丟掉。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;edit---修改內容&#34;&gt;&lt;code&gt;edit&lt;/code&gt; - 修改內容&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;作用: 我要這個 commit 但到這裡的時候停一下，我要修改一下。
+修改完後指令接著做:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;git add xxxx
+git commit --amend --no-edit
+# --no-edit 是不修改 commit 訊息
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;fixup---也是合併&#34;&gt;&lt;code&gt;fixup&lt;/code&gt; - 也是合併&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;作用:  也是合併，但捨棄這個 commit message。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;替換-commit-順序&#34;&gt;&lt;code&gt;替換 commit 順序&lt;/code&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;就直接換就好哈哈哈哈&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;pick aaaaaaa commit-msg #1
+pick ccccccc commit-msg #3
+pick bbbbbbb commit-msg #2
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;6-一些會遇到的基本流程&#34;&gt;6. 一些會遇到的基本流程：&lt;/h2&gt;
+&lt;h3 id=&#34;修改-commit-message&#34;&gt;修改 commit message。&lt;/h3&gt;
+&lt;h3 id=&#34;遇到衝突&#34;&gt;遇到衝突:&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;解決衝突 
+git add xxxxxxxx
+git rebase --continue
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;放棄這次-rebase回到之前的狀態&#34;&gt;放棄這次 rebase，回到之前的狀態。&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;git rebase --abort
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;小心使用-慎用如果有衝突這個會丟掉整個-commit很容易出事&#34;&gt;小心使用, 慎用。如果有衝突，這個會丟掉整個 commit，很容易出事。&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;git rebase --skip
+&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
+&lt;h2 id=&#34;the-end&#34;&gt;The End:&lt;/h2&gt;
+&lt;h3 id=&#34;review&#34;&gt;Review:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;git rebase -i&lt;/code&gt; 所做的更動，commit ID 的 SHA-1值是會變的，也就是說與人協作時要注意目前做的動作會不會影響他人。&lt;/li&gt;
+&lt;li&gt;善用 &lt;code&gt;git rebase -i&lt;/code&gt; 整理自己的 commit 紀錄。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;git rebase -i&lt;/code&gt; 時, 遇到衝突會一個一個停下來讓我們解決。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;git rebase --skip&lt;/code&gt; 危險！&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;git rebase --abort&lt;/code&gt; 當作什麼事都沒發生。&lt;/li&gt;
+&lt;li&gt;最後, &lt;code&gt;git rebase -i &amp;lt;commit ID&amp;gt;&lt;/code&gt; 安心服用，熟能生巧。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;reference&#34;&gt;Reference:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://git-scm.com/docs/git-rebase&#34;&gt;git&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://learngitbranching.js.org/?locale=zh_TW&#34;&gt;Git Branching!&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://gitbook.tw/chapters/rewrite-history/merge-multiple-commits-to-one-commit.html&#34;&gt;高見龍-為你自己學 Git&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;上一篇&#34;&gt;上一篇:&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://linooohon.com/blog/blog/posts/01「Git 介紹」什麼是 git rebase&#34;&gt;01「Git 介紹」什麼是 git rebase&lt;/a&gt;&lt;/p&gt;
+</description>
+                
+                
+                
+                
+                
+                    
+                        
+                            
+                                
+                                
+                                
+                                    <category domain="https://linooohon.com/blog/categories/202106/">202106</category>
+                                
+                            
+                        
+                    
+                        
+                            
+                                
+                                
+                                
+                                    <category domain="https://linooohon.com/blog/tags/git/">git</category>
+                                
+                            
+                        
+                    
+                
+            </item>
         
             <item>
                 <title>01「Git 介紹」什麼是 git rebase</title>
