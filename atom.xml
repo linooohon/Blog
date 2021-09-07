@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-TW">
     <title type="text">mitsukuchiph.</title>
     <subtitle type="html">MemE 是一個強大且可高度定製的 GoHugo 部落格主題，專為個人部落格設計。</subtitle>
-    <updated>2021-08-05T22:42:10&#43;08:00</updated>
+    <updated>2021-09-08T01:00:33&#43;08:00</updated>
     <id>https://linooohon.com/blog/</id>
     <link rel="alternate" type="text/html" href="https://linooohon.com/blog/" />
     <link rel="self" type="application/atom&#43;xml" href="https://linooohon.com/blog/atom.xml" />
@@ -16,6 +16,321 @@
             </author>
     
     <generator uri="https://gohugo.io/" version="0.83.1">Hugo</generator>
+        <entry>
+            <title type="text">「Flask」01: Basic, Route, Templates, GET, POST</title>
+            <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/%E3%80%8CFlask%E3%80%8D01:%20Basic,%20Route,%20Templates,%20GET,%20POST/" />
+            <id>https://linooohon.com/blog/posts/%E3%80%8CFlask%E3%80%8D01:%20Basic,%20Route,%20Templates,%20GET,%20POST/</id>
+            <updated>2021-09-08T00:55:39&#43;08:00</updated>
+            <published>2021-07-10T18:36:14&#43;08:00</published>
+            <author>
+                    <name>mitsukuchiph.</name>
+                    <uri>https://linooohon.com/portfolio</uri>
+                    <email>linooohon@gmail.com</email>
+                    </author>
+            <summary type="html">前陣子實做了 Flask App 紀錄一下基本處理! (EN)&lt;img src=&#34;main_pic/04_210710_flask_intro.png&#34;&gt;</summary>
+            
+                <content type="html">&lt;h1 style=&#34;text-align:center&#34;&gt;
+「Flask」01: Basic, Route, Templates, GET, POST
+&lt;/h1&gt;
+&lt;blockquote&gt;
+&lt;p&gt;前陣子用 Flask 實做了一個 LifePlaylist App 這裡簡單紀錄一下基本的東西，以後回頭更快重拾記憶🤧&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://linooohon.com/blog/blog/main_pic/04_210710_flask_intro.png&#34; alt=&#34;前陣子實做了 Flask App 紀錄一下基本處理!&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;-intro-&#34;&gt;&lt;strong&gt;&amp;lt; Intro &amp;gt;&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;&amp;quot;A lightweight Python Web Framework ! &amp;quot; ----&amp;gt;
+&lt;a href=&#34;https://flask.palletsprojects.com/en/latest/quickstart/&#34;&gt;Flask Doc&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;-quick-start-to-run-a-flask-app-&#34;&gt;&lt;strong&gt;&amp;lt; Quick start to run a Flask App &amp;gt;&lt;/strong&gt;&lt;/h2&gt;
+&lt;h3 id=&#34;install&#34;&gt;Install:&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;pip install Flask
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;create-python-file&#34;&gt;Create python file:&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;touch main.py
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;import&#34;&gt;Import:&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;from flask import Flask
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;create-instance&#34;&gt;Create instance:&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;app = Flask(__name__)
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;route&#34;&gt;Route:&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;@app.route(&#39;/&#39;)
+def index():
+    return &#39;Hi Flask App ! &#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;setting-only-when-you-run-python-file-directly-then-execute-apprun&#34;&gt;Setting only when you run python file directly, then execute &lt;code&gt;app.run()&lt;/code&gt;:&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;if __name__ == &#39;__main__&#39;:
+    app.run()
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;now-run-flask-app&#34;&gt;Now run Flask App:&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;python main.py
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;And Flask Default Port:5000: &lt;code&gt;http://127.0.0.1:5000&lt;/code&gt; will run on local.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Hi Flask App !&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;-handling-route-&#34;&gt;&lt;strong&gt;&amp;lt; Handling Route &amp;gt;&lt;/strong&gt;&lt;/h2&gt;
+&lt;h3 id=&#34;example&#34;&gt;Example:&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;@app.route&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+def xxxxxx&lt;span class=&#34;o&#34;&gt;()&lt;/span&gt;:
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;basic&#34;&gt;Basic:&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;@app.route(&#39;/login&#39;)
+def login():
+    return &#39;This is login page.&#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;handling-multiple-routes-with-same-function&#34;&gt;Handling Multiple routes with same function:&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;@app.route(&#39;/index&#39;)
+@app.route(&#39;/&#39;)
+def home():
+    return &#39;Welcome Home.&#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;routing-parameters&#34;&gt;Routing parameters:&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;@app.route(&#39;/&amp;lt;number&amp;gt;&#39;)
+def number():
+    return f&#39;Your route is /{number} .&#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;-use-templatejinja2-&#34;&gt;&lt;strong&gt;&amp;lt; Use Template(Jinja2) &amp;gt;&lt;/strong&gt;&lt;/h2&gt;
+&lt;h3 id=&#34;import-1&#34;&gt;Import:&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;from flask import render_template
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;create-xxxhtml&#34;&gt;Create xxx.html:&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;mkdir templates
+touch templates/welcome.html
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;change-return&#34;&gt;Change return:&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;@app.route(&amp;quot;/welcome&amp;quot;)
+def home():
+    return render_template(&#39;welcome.html&#39;)
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;pass-parameters&#34;&gt;Pass parameters：&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;@app.route(&amp;quot;/welcome/&amp;lt;yourname&amp;gt;&amp;quot;)
+def home(yourname):
+    return render_template(&#39;welcome.html&#39;, yourname=yourname)
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;welcomehtml&#34;&gt;welcome.html:&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Use {{}}&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;Basic:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;{{ yourname }}
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;List:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;{{ list.0 }}
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;Dict:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;{{ Dict.key }}
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;If statement:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;{% if &amp;lt;xxxx&amp;gt; %}
+    Hi, {{ xxxx }}!
+{% else %}
+    Oops...
+{% endif %}
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;For loop:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;{% for item in &amp;lt;xxxx&amp;gt; %}
+    &amp;lt;li&amp;gt;{{ item }}&amp;lt;/li&amp;gt;
+{% endfor %}
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;Use base template:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;## Create base.html
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;{% extends &amp;quot;base.html&amp;quot; %}
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;Put own content(child templates):&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;e.g.: {% block content %}{% endblock %}
+e.g.: {% block body %}{% endblock %}
+e.g.: {% block custom %}{% endblock %}
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;-get-post-&#34;&gt;&lt;strong&gt;&amp;lt; GET, POST &amp;gt;&lt;/strong&gt;&lt;/h2&gt;
+&lt;h3 id=&#34;import-2&#34;&gt;Import:&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;from flask import request
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;setting-route-with-get-method&#34;&gt;Setting route with GET method:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Settting Route:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Remember is &amp;quot;methods&amp;quot; not &amp;quot;method&amp;quot;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;**locals()&lt;/code&gt; can pass all args.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;from flask import Flask, request, render_template
+
+app = Flask(__name__)
+
+@app.route(&#39;/&#39;,methods=[&#39;GET&#39;])
+def index():
+    q = request.args.get(&#39;q&#39;)
+    q2 = request.args.get(&#39;q2&#39;)
+    return render_template(&#39;get.html&#39;, **locals())
+
+if __name__ == &#39;__main__&#39;:
+    app.run()
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;Remember is &amp;quot;templates&amp;quot; not &amp;quot;template&amp;quot;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;templates/get.html&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;{{ q }}
+{{ q2 }}
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;Run local and enter URL&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-Python&#34; data-lang=&#34;Python&#34;&gt;&lt;span class=&#34;n&#34;&gt;http&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;//&lt;/span&gt;&lt;span class=&#34;mf&#34;&gt;127.0&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;mf&#34;&gt;0.1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;5000&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;?&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;q&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;123&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;q2&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;456&lt;/span&gt;
+
+&lt;span class=&#34;c1&#34;&gt;## Should appear 123 456&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;setting-route-with-post-method&#34;&gt;Setting route with POST method:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Settting &lt;code&gt;/form&lt;/code&gt; Route:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;from flask import Flask, request, render_template
+
+app = Flask(__name__)
+
+@app.route(&amp;quot;/form&amp;quot;)
+def form():
+    return render_template(&#39;form.html&#39;)
+    
+if __name__ == &#39;__main__&#39;:
+    app.run()
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;Create form.html&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Setting &lt;code&gt;action=&amp;quot;{{url_for(&#39;submit&#39;)}}&amp;quot;&lt;/code&gt; for POST route&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html lang=&amp;quot;en&amp;quot;&amp;gt;
+&amp;lt;body&amp;gt;
+    &amp;lt;form method=&amp;quot;POST&amp;quot; action=&amp;quot;{{url_for(&#39;submit&#39;)}}&amp;quot;&amp;gt;
+    &amp;lt;input type=&amp;quot;text&amp;quot; name=&amp;quot;name&amp;quot; placeholder=&amp;quot;Name&amp;quot;&amp;gt;
+    &amp;lt;input type=&amp;quot;text&amp;quot; name=&amp;quot;email&amp;quot; placeholder=&amp;quot;Email&amp;quot;&amp;gt;
+    &amp;lt;button type=&amp;quot;submit&amp;quot;&amp;gt;Submit&amp;lt;/button&amp;gt;
+&amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;Handle &lt;code&gt;/submit&lt;/code&gt; Route:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;@app.route(&amp;quot;/submit&amp;quot;, methods=[&#39;POST&#39;])
+def submit():
+    name = request.values[&#39;name&#39;]
+    email = request.values[&#39;email&#39;]
+    return render_template(&#39;submit.html&#39;,**locals())
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;Create submit.html&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html lang=&amp;quot;en&amp;quot;&amp;gt;
+&amp;lt;body&amp;gt;
+    {{ name }}
+    {{ email }}
+&amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;Run local and enter URL&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-Python&#34; data-lang=&#34;Python&#34;&gt;&lt;span class=&#34;n&#34;&gt;http&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;//&lt;/span&gt;&lt;span class=&#34;mf&#34;&gt;127.0&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;mf&#34;&gt;0.1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;5000&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;form&lt;/span&gt;
+
+&lt;span class=&#34;c1&#34;&gt;## Should appear form, fill out name and email, then submit.&lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;## Should go to `http://127.0.0.1:5000/submit`, and show name and email.&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;handle-both-get-and-post-with-one-route&#34;&gt;Handle both GET and POST with one route:&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;from flask import Flask, request, render_template
+from flask import redirect, url_for
+
+@app.route(&amp;quot;/form&amp;quot;, methods=[&amp;quot;POST&amp;quot;,&amp;quot;GET&amp;quot;])
+def form():
+    if request.method == &amp;quot;POST&amp;quot;:
+        name = request.form[&#39;name&#39;]
+        email = request.form[&#39;email&#39;]
+        return redirect(url_for(&#39;submit&#39;,**locals()))
+    else:
+        return render_template(&#39;form.html&#39;)
+
+@app.route(&amp;quot;/submit&amp;quot;, methods=[&#39;POST&#39;])
+def submit():
+    name = request.values[&#39;name&#39;]
+    email = request.values[&#39;email&#39;]
+    return render_template(&#39;submit.html&#39;,**locals())
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;-the-end-&#34;&gt;&lt;strong&gt;&amp;lt; The End &amp;gt;&lt;/strong&gt;:&lt;/h2&gt;
+&lt;h3 id=&#34;review&#34;&gt;Review:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Remember Route Method settings is &amp;quot;methods&amp;quot; not &amp;quot;method&amp;quot;.&lt;/li&gt;
+&lt;li&gt;Remember folder name is &amp;quot;templates&amp;quot; not &amp;quot;template&amp;quot;.&lt;/li&gt;
+&lt;li&gt;Jinja2 syntax ?&lt;/li&gt;
+&lt;li&gt;**locals() ?&lt;/li&gt;
+&lt;li&gt;redirect &amp;amp; url_for ?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;reference&#34;&gt;Reference:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://jinja.palletsprojects.com/en/3.0.x/templates/?highlight=enabled%20line&#34;&gt;Jinja2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://flask.palletsprojects.com/en/latest/quickstart/&#34;&gt;Flask&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://medium.com/seaniap/tagged/flask&#34;&gt;Sean Yeh in Python Everywhere -from Beginner to Advanced&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;-next-下一篇-&#34;&gt;&lt;strong&gt;&amp;lt; Next 下一篇 &amp;gt;&lt;/strong&gt;:&lt;/h2&gt;
+&lt;!-- &lt;a href=&#34;https://linooohon.com/blog/blog/posts/01「Git 介紹」什麼是 git rebase&#34;&gt;「Flask」02&lt;/a&gt; --&gt;</content>
+            
+            
+            
+            
+            
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/categories/202107/" term="202107" label="202107" />
+                            
+                        
+                    
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/tags/flask/" term="Flask" label="Flask" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/tags/python/" term="Python" label="Python" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/tags/web/" term="Web" label="Web" />
+                            
+                        
+                    
+                
+            
+        </entry>
+    
         <entry>
             <title type="text">02「Git 介紹」git rebase -i</title>
             <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/02%E3%80%8CGit%20%E4%BB%8B%E7%B4%B9%E3%80%8Dgit%20rebase%20-i/" />
