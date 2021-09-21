@@ -3,25 +3,31 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://linooohon.com/blog/categories/202107/</loc>
-    <lastmod>2021-09-15T16:26:57+08:00</lastmod>
+    <lastmod>2021-09-22T02:05:11+08:00</lastmod>
   </url><url>
-    <loc>https://linooohon.com/blog/tags/flask/</loc>
-    <lastmod>2021-09-15T16:26:57+08:00</lastmod>
+    <loc>https://linooohon.com/blog/tags/django/</loc>
+    <lastmod>2021-09-22T02:05:11+08:00</lastmod>
   </url><url>
     <loc>https://linooohon.com/blog/</loc>
-    <lastmod>2021-09-15T16:26:57+08:00</lastmod>
+    <lastmod>2021-09-22T02:05:11+08:00</lastmod>
   </url><url>
     <loc>https://linooohon.com/blog/tags/python/</loc>
-    <lastmod>2021-09-15T16:26:57+08:00</lastmod>
+    <lastmod>2021-09-22T02:05:11+08:00</lastmod>
   </url><url>
     <loc>https://linooohon.com/blog/tags/web/</loc>
-    <lastmod>2021-09-15T16:26:57+08:00</lastmod>
+    <lastmod>2021-09-22T02:05:11+08:00</lastmod>
+  </url><url>
+    <loc>https://linooohon.com/blog/posts/%E3%80%8CDjango%E3%80%8Dpart1.2:%20Official%20Docs%20Note</loc>
+    <lastmod>2021-09-22T02:05:11+08:00</lastmod>
+  </url><url>
+    <loc>https://linooohon.com/blog/tags/flask/</loc>
+    <lastmod>2021-09-22T01:36:35+08:00</lastmod>
   </url><url>
     <loc>https://linooohon.com/blog/posts/%E3%80%8CFlask%E3%80%8D02:%20Static%20File%20handling,%20Database%20connection/</loc>
-    <lastmod>2021-09-15T16:25:43+08:00</lastmod>
+    <lastmod>2021-09-22T01:36:35+08:00</lastmod>
   </url><url>
     <loc>https://linooohon.com/blog/posts/%E3%80%8CFlask%E3%80%8D01:%20Basic,%20Route,%20Templates,%20GET,%20POST/</loc>
-    <lastmod>2021-09-15T16:26:57+08:00</lastmod>
+    <lastmod>2021-09-22T01:36:24+08:00</lastmod>
   </url><url>
     <loc>https://linooohon.com/blog/posts/02%E3%80%8CGit%20%E4%BB%8B%E7%B4%B9%E3%80%8Dgit%20rebase%20-i/</loc>
     <lastmod>2021-08-05T22:39:49+08:00</lastmod>
