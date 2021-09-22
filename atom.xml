@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-TW">
     <title type="text">mitsukuchiph.</title>
     <subtitle type="html">MemE 是一個強大且可高度定製的 GoHugo 部落格主題，專為個人部落格設計。</subtitle>
-    <updated>2021-09-22T02:06:32&#43;08:00</updated>
+    <updated>2021-09-22T12:17:44&#43;08:00</updated>
     <id>https://linooohon.com/blog/</id>
     <link rel="alternate" type="text/html" href="https://linooohon.com/blog/" />
     <link rel="self" type="application/atom&#43;xml" href="https://linooohon.com/blog/atom.xml" />
@@ -17,10 +17,10 @@
     
     <generator uri="https://gohugo.io/" version="0.83.1">Hugo</generator>
         <entry>
-            <title type="text">「Django」part1.2: Official Docs Note</title>
-            <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/%E3%80%8CDjango%E3%80%8Dpart1.2:%20Official%20Docs%20Note" />
-            <id>https://linooohon.com/blog/posts/%E3%80%8CDjango%E3%80%8Dpart1.2:%20Official%20Docs%20Note</id>
-            <updated>2021-09-22T02:05:11&#43;08:00</updated>
+            <title type="text">Django - part1.2: Official Docs Note</title>
+            <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/06/210720/Django-part1.2:Official%20Docs%20Note" />
+            <id>https://linooohon.com/blog/posts/06/210720/Django-part1.2:Official%20Docs%20Note</id>
+            <updated>2021-09-22T12:16:48&#43;08:00</updated>
             <published>2021-07-20T18:36:14&#43;08:00</published>
             <author>
                     <name>mitsukuchiph.</name>
