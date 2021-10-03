@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-TW">
     <title type="text">mitsukuchiph.</title>
     <subtitle type="html">MemE 是一個強大且可高度定製的 GoHugo 部落格主題，專為個人部落格設計。</subtitle>
-    <updated>2021-09-22T12:31:51&#43;08:00</updated>
+    <updated>2021-10-03T11:23:13&#43;08:00</updated>
     <id>https://linooohon.com/blog/</id>
     <link rel="alternate" type="text/html" href="https://linooohon.com/blog/" />
     <link rel="self" type="application/atom&#43;xml" href="https://linooohon.com/blog/atom.xml" />
@@ -17,17 +17,1525 @@
     
     <generator uri="https://gohugo.io/" version="0.83.1">Hugo</generator>
         <entry>
+            <title type="text">Python 觀念(2) yield, generator?，那 Scrapy 裡的 yield?</title>
+            <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/08/210810/python%E7%9A%84yield%E5%92%8Cscrapy%E7%9A%84yield/" />
+            <id>https://linooohon.com/blog/posts/08/210810/python%E7%9A%84yield%E5%92%8Cscrapy%E7%9A%84yield/</id>
+            <updated>2021-10-03T11:11:37&#43;08:00</updated>
+            <published>2021-08-10T18:36:14&#43;08:00</published>
+            <author>
+                    <name>mitsukuchiph.</name>
+                    <uri>https://linooohon.com/portfolio</uri>
+                    <email>linooohon@gmail.com</email>
+                    </author>
+            <summary type="html">繼上篇 Iterator 紀錄，這次對 yield 的概念在此統整一下，同時也追了一下 Scrapy 的 source code &lt;img src=&#34;https://linooohon.com/blog/blog/images/08_210805/08_210805_pythonyield_intro.png&#34; /&gt;</summary>
+            
+                <content type="html">&lt;h1 style=&#34;text-align:center&#34;&gt;
+Python 的 yield 是什麼?，Scrapy 裡的 yield?
+&lt;/h1&gt;
+&lt;blockquote&gt;
+&lt;p&gt;最近研究了一下 yield 的概念，在此統整一下&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://linooohon.com/blog/blog/images/08_210805/08_210805_pythonyield_intro.png&#34; alt=&#34;Python 的 yield 是什麼?&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;-關於-yield-&#34;&gt;&lt;strong&gt;&amp;lt; 關於 yield &amp;gt;&lt;/strong&gt;:&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;談到 yield 就會談到 generator，但 generator 是什麼後面解釋！&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;在 python 的定義中，function 中只要出現了 yield（yield expressions），那麼事實上定義的是一個 generator function。
+跟一般的 function 不一樣，呼叫 generator function 就是會 return &amp;quot;generator iterator&amp;quot;。&lt;/p&gt;
+&lt;h3 id=&#34;所以&#34;&gt;所以,&lt;/h3&gt;
+&lt;p&gt;有 yield 的 function 被單純呼叫的時候會 return &amp;quot;generator iterator&amp;quot;，然後這時候還不會執行 function 定義的事情，那什麼時候執行？
+大概有兩種執行方式:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;調用 Built-in Function &lt;code&gt;next()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;使用 for loop (實際 for loop 的步驟也是 magic method &lt;code&gt;__next__()&lt;/code&gt; 在處理)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;例子測試一下&#34;&gt;例子測試一下:&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;確實是 return generator iterator&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-py&#34; data-lang=&#34;py&#34;&gt;&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;get_string&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;happy coding&amp;#34;&lt;/span&gt;
+    
+    
+&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;get_generator&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;yield&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;happy coding&amp;#34;&lt;/span&gt;
+    
+    
+&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;vm&#34;&gt;__name__&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+    
+    &lt;span class=&#34;n&#34;&gt;result&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;get_string&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;result&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;type&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;result&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# happy coding &amp;lt;class &amp;#39;str&amp;#39;&amp;gt;&lt;/span&gt;
+    
+    &lt;span class=&#34;n&#34;&gt;result&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;get_generator&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;result&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;type&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;result&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# &amp;lt;generator object get_generator at 0x10c424d60&amp;gt; &amp;lt;class &amp;#39;generator&amp;#39;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;-幾個名詞先釐清-&#34;&gt;&lt;strong&gt;&amp;lt; 幾個名詞先釐清 &amp;gt;&lt;/strong&gt;:&lt;/h2&gt;
+&lt;p&gt;在 &lt;a href=&#34;https://docs.python.org/3.9/glossary.html#term-generator&#34;&gt;Python Glossary&lt;/a&gt; 裡定義了三個詞&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;generator&lt;/li&gt;
+&lt;li&gt;generator iterator&lt;/li&gt;
+&lt;li&gt;generator expression&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;generator-generator-iterator-generator-expression&#34;&gt;generator, generator iterator, generator expression&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;裡面寫道 (這裡只先做名詞區分不解釋)：&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;generator
+&lt;ul&gt;
+&lt;li&gt;是一個 function 會回傳 generator iterator。&lt;/li&gt;
+&lt;li&gt;而通常 generator 指的是一個大家常說的詞叫做 &lt;code&gt;generator function&lt;/code&gt;，但是在某些文檔裡也有人把它用來指 &lt;code&gt;generator iterator&lt;/code&gt;，&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;generator iterator
+&lt;ul&gt;
+&lt;li&gt;是一個被 generator function 創造出來的物件。(就我查詢的過程中，在某些文章裡會寫 &lt;code&gt;generator object&lt;/code&gt; 特別指出當下這個 generator 是被創造出來的 object, 而不是 function)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;generator expression
+&lt;ul&gt;
+&lt;li&gt;是一個 expression 會回傳 iterator。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p style=&#34;color: #d19169&#34;&gt;名詞看到會有點疑惑，但把它搞清楚才是最佳解，以後看別人的文章或是文件，才不會模模糊糊:&lt;/p&gt;
+&lt;p&gt;Glossary 對於 generator 的補充:&lt;/p&gt;
+&lt;p style=&#34;color: #42bac7&#34;&gt;Usually refers to a generator function, but may refer to a generator iterator in some contexts. In cases where the intended meaning isn’t clear, using the full terms avoids ambiguity.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;所以接下來我會用 generator function 和 generator iterator 這兩個來區別 function 與 object。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;關於 Generator 留到後面做解釋&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;現在只要先知道 function 裡有 yield 就是一個會回傳 generator iterator 的 generator function。
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;既然知道 yield 和 generator 的關係了，底下來個例子
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;-generatorgenerator-function-例子解釋-&#34;&gt;&lt;strong&gt;&amp;lt; (generator)generator function 例子解釋 &amp;gt;&lt;/strong&gt;:&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;用這個 function 來理解一下，看到對岸的朋友解釋的文章，覺得挺好的，記錄下來！&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-py&#34; data-lang=&#34;py&#34;&gt;&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;foo&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;foo function is starting...&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;while&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;True&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;res&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;yield&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;4&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;res:&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;res&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;g&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;foo&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;next&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;g&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;*&amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;next&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;g&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;執行結果:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-py&#34; data-lang=&#34;py&#34;&gt;&lt;span class=&#34;n&#34;&gt;foo&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;is&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;starting&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;...&lt;/span&gt;
+&lt;span class=&#34;mi&#34;&gt;4&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;********************&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;res&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;None&lt;/span&gt;
+&lt;span class=&#34;mi&#34;&gt;4&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;1-g--foo&#34;&gt;1. &lt;code&gt;g = foo()&lt;/code&gt;&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-py&#34; data-lang=&#34;py&#34;&gt;&lt;span class=&#34;n&#34;&gt;g&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;foo&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;因為 foo() 帶有 yield 所以根據定義，就算呼叫了 foo(), 他也不會開始執行。&lt;/p&gt;
+&lt;p&gt;但是這裡他會得到一個生成器物件 &amp;quot;g&amp;quot; (generator iterator)。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;執行結果: 什麼都沒印&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;2-printnextg&#34;&gt;2. &lt;code&gt;print(next(g))&lt;/code&gt;&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-py&#34; data-lang=&#34;py&#34;&gt;&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;next&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;g&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;直到調用 next 方法 foo function 才正式開始執行，
+先執行 foo 的 print(&#39;foo function is starting...&#39;) 然後進入 while loop，&lt;/p&gt;
+&lt;p&gt;這時候遇到 yield，先把它想成 return ，所以這時候 return 一個 4, program(程序)就停了。
+這裡很大的重點是，&amp;quot;並沒有把 4 assign(指派/賦值) 給 res&amp;quot;。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;print(next(g)) 執行結果:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;next(g): print 了 &#39;foo function is starting...&#39;&lt;/li&gt;
+&lt;li&gt;return 了 4, 所以又 print 了 4&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;foo function is starting...
+4
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;3-print10&#34;&gt;3. &lt;code&gt;print(&#39;*&#39;*10)&lt;/code&gt;&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-py&#34; data-lang=&#34;py&#34;&gt;&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;*&amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;這行只是印開心的順便做一些區隔: print 10個 &#39;*&#39;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;print(&#39;*&#39;*10) 執行結果:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;********************
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;4-printnextg&#34;&gt;4. &lt;code&gt;print(next(g))&lt;/code&gt;&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-py&#34; data-lang=&#34;py&#34;&gt;&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;next&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;g&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;這裡是第二次調用，每次調用會接續上一次停止的地方，也就是正準備把 4 assign(指派/賦值) 給 res 的時候，但注意這邊因為上一次調用 &lt;code&gt;next()&lt;/code&gt; 的最後一個步驟是 return 4 出去，所以這時候 &amp;quot;=&amp;quot; 右邊已經是 None 了。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;print(next(g)) 執行結果:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;這時候 None 被 assign 給 res, res 就是 None，所以 print(&#39;res:&#39;, res) -&amp;gt; res: None。&lt;/li&gt;
+&lt;li&gt;接著還在 loop 裡，又會跑到 yield 4, 所以 return 4 出來，所以最後還會 print 出 4。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;res: None
+4
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;如果最後一行改成這樣-printgsend7&#34;&gt;如果最後一行改成這樣: &lt;code&gt;print(g.send(7))&lt;/code&gt;&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;n&#34;&gt;g&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;foo&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;next&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;g&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;*&amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;20&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;g&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;send&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;7&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;   &lt;span class=&#34;c1&#34;&gt;## 改這行&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;7 就會 assign 給 res
+所以 print(&#39;res:&#39;, res) -&amp;gt; res: 7&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;執行結果:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;foo function is starting...
+4
+********************
+res: 7
+4
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;-key-point-&#34;&gt;&lt;strong&gt;&amp;lt; Key Point &amp;gt;&lt;/strong&gt;:&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;每次調用 next() 他會記住上次停的地方，這次就會從那裡開始。&lt;/li&gt;
+&lt;li&gt;而 generator iterator 也是 iterator 的一種，所以當然想處理 generator iterator 也是有兩種方式：
+&lt;ul&gt;
+&lt;li&gt;一次次自己調用 next()&lt;/li&gt;
+&lt;li&gt;for loop它&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;使用 send() 可以接續上一次 yield 停住的地方並 assign 給左邊。&lt;/li&gt;
+&lt;li&gt;generator 是 iterator 的一種，但 iterator 卻不一定是 generator。這個不難理解，依我自己的看法(這裡只是隨意舉例!)像是陸軍和特種部隊都會一樣的基本能力，但特種部隊擁有陸軍所沒有的特性, 能力(在程式碼這裡就會是: 定義, 功能, 佔用空間等等..)。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;isinstance-可以查看它是不是這裡不多說&#34;&gt;isinstance 可以查看它是不是，這裡不多說&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;也可以用 isinstance，來確認它是不是 Iterable, Iterator, Generator&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python=&#34; data-lang=&#34;python=&#34;&gt;import pandas as pd
+import numpy as np
+from collections.abc import Iterator, Iterable, Generator
+
+# dic
+dic_ = {&#39;name&#39;: &#39;phil&#39;, &#39;phone&#39;: &#39;0933333333&#39;}
+print(&amp;quot;===============dic===============&amp;quot;)
+print(isinstance(dic_, Iterable))
+print(isinstance(dic_, Iterator))
+print(isinstance(dic_, Generator))
+
+# list
+list_ = [&#39;a&#39;, 1, {&#39;key&#39;: &#39;value&#39;}, (1, 2), {1, 2}]
+print(&amp;quot;===============list===============&amp;quot;)
+print(isinstance(list_, Iterable))
+print(isinstance(list_, Iterator))
+print(isinstance(list_, Generator))
+
+# tuple
+tuple_ = (&#39;a&#39;, {&#39;key&#39;: &#39;value&#39;}, 2)
+print(&amp;quot;===============tuple===============&amp;quot;)
+print(isinstance(tuple_, Iterable))
+print(isinstance(tuple_, Iterator))
+print(isinstance(tuple_, Generator))
+
+# range
+range_ = range(1)
+print(&amp;quot;===============range===============&amp;quot;)
+print(isinstance(range_, Iterable))
+print(isinstance(range_, Iterator))
+print(isinstance(range_, Generator))
+
+# string
+string_ = &#39;a&#39;
+print(&amp;quot;===============string===============&amp;quot;)
+print(isinstance(string_, Iterable))
+print(isinstance(string_, Iterator))
+print(isinstance(string_, Generator))
+
+# set
+set_ = {&#39;a&#39;, 2, 3, (1, 2)}
+print(&amp;quot;===============set===============&amp;quot;)
+print(isinstance(set_, Iterable))
+print(isinstance(set_, Iterator))
+print(isinstance(set_, Generator))
+
+# numpy array
+np_array_ = np.array([1, 2, 3, 4])
+print(&amp;quot;===============np_array===============&amp;quot;)
+print(isinstance(np_array_, Iterable))
+print(isinstance(np_array_, Iterator))
+print(isinstance(np_array_, Generator))
+
+# dataframe
+df_ = pd.read_csv(&amp;quot;1.csv&amp;quot;)
+print(&amp;quot;===============dataframe===============&amp;quot;)
+print(isinstance(df_, Iterable))
+print(isinstance(df_, Iterator))
+print(isinstance(df_, Generator))
+
+# bytes
+bytes_1 = bytes(1)
+print(&amp;quot;===============bytes===============&amp;quot;)
+print(isinstance(bytes_1, Iterable))
+print(isinstance(bytes_1, Iterator))
+print(isinstance(bytes_1, Generator))
+
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;generator-到底是什麼目的用法再次解析&#34;&gt;Generator 到底是什麼，目的，用法(再次解析):&lt;/h3&gt;
+&lt;p&gt;Python 中有一個東西叫做 List Comprehensions, 是 Python 可以簡潔的創造 list 的方式&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-py&#34; data-lang=&#34;py&#34;&gt;&lt;span class=&#34;n&#34;&gt;list_&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;range&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;11&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;list_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;# [4, 16, 36, 64, 100]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;列出資料夾底下所有文件和資料夾&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-py&#34; data-lang=&#34;py&#34;&gt;&lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;os&lt;/span&gt; 
+&lt;span class=&#34;n&#34;&gt;l&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;d&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;d&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;os&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;listdir&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;.&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)]&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;type&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;l&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# 是個 list&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p style=&#34;color: #d19169&#34;&gt;但是，如果今天我們要的內容很多，list 就會變得非常佔用記憶體，所以當我們要做的事，可以依照某種規則算出來，那我們就可以 loop 整個過程去持續推算下一個元素，這樣就不必創造很大很大的 list, 在 Python 中，這樣邊 loop 邊計算還真的有，就是 Generator(生成器)&lt;/p&gt;
+&lt;p&gt;要創建 generator 除了上面有提過的 generator function，這裡再補充一個，只要把 List Comprehensions 改成小括號 &lt;code&gt;()&lt;/code&gt; 就行了。
+就是所謂的 generator expression &lt;a href=&#34;https://docs.python.org/3.9/glossary.html#term-generator-expression&#34;&gt;Docs&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-py&#34; data-lang=&#34;py&#34;&gt;&lt;span class=&#34;n&#34;&gt;list_&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;range&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;11&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;list_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;# &amp;lt;generator object &amp;lt;genexpr&amp;gt; at 0x106a674a0&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;那當然 generator 直接 print 沒東西，我們就是透過上面提過的 &lt;code&gt;next()&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-py&#34; data-lang=&#34;py&#34;&gt;&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;next&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;list_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;next&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;list_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;next&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;list_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;next&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;list_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;next&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;list_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;next&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;list_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+&lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;36
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;64
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;100
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;Traceback (most recent call last):
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;  File &amp;#34;/Users/linpinhung/Desktop/TMPF/06.py&amp;#34;, line 82, in &amp;lt;module&amp;gt;
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;    print(next(list_))
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;StopIteration
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;但一直用 next()，太麻煩，基本上都用 for loop 實現，且用 for loop 也不需關心 &lt;code&gt;StopIteration&lt;/code&gt;, Python 幫忙解決，這也就是上一篇提過的 Iterator 的特性之一，Generator Iterator 當然也會有 Iterator 的特性。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-py&#34; data-lang=&#34;py&#34;&gt;&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;list_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+&lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;36
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;64
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;100
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;generatorgenerator-iterator與-iterator的差異&#34;&gt;Generator(Generator Iterator)與 Iterator的差異:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;創建 Generator 我們用 &lt;code&gt;generator expression&lt;/code&gt; 或是 &lt;code&gt;generator function&lt;/code&gt; 而不使用 class 創建, 但創建 Iterator 我們用 &lt;code&gt;iter()&lt;/code&gt; 或是自己創建 class 寫 &lt;code&gt;__iter__()&lt;/code&gt;, &lt;code&gt;__next__()&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;Generator 用 yield 關鍵字，Iterator 沒有。&lt;/li&gt;
+&lt;li&gt;Generator 在每次 yield 停住的時候會儲存狀態(ex: 變數)，但 Iterator 不會，他就是做 iteration 而已。&lt;/li&gt;
+&lt;li&gt;Generator Function 裡可以不只有一個 yield。&lt;/li&gt;
+&lt;li&gt;Generator 是 Iterator 的 subclass, 我們可以透過 &lt;code&gt;issubclass()&lt;/code&gt; 證明&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-py&#34; data-lang=&#34;py&#34;&gt;&lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;collections&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;nn&#34;&gt;types&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;issubclass&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;types&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GeneratorType&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;collections&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;abc&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Iterator&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;#True&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;issubclass&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;collections&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;abc&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Generator&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;collections&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;abc&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Iterator&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;#True&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;-scrapy-&#34;&gt;&lt;strong&gt;&amp;lt; Scrapy &amp;gt;&lt;/strong&gt;:&lt;/h2&gt;
+&lt;h3 id=&#34;scrapy-框架裡常用的-yield-會有兩種情況&#34;&gt;Scrapy 框架裡常用的 yield, 會有兩種情況。&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;一個是 yield item, 一個是 yield Request&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;自己在工作上有使用 Scrapy 的機會，
+而出於好奇也想知道 Scrapy 在這裡怎麼會用 yield,
+仔細去追 Scrapy 的 source code，就會發現以 &lt;code&gt;scrapy/crawler.py&lt;/code&gt; 底下的 class CrawlerRunner 為例:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-py&#34; data-lang=&#34;py&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 根據官方文檔&lt;/span&gt;
+&lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;scrapy&lt;/span&gt;
+&lt;span class=&#34;kn&#34;&gt;from&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;twisted.internet&lt;/span&gt; &lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;reactor&lt;/span&gt;
+&lt;span class=&#34;kn&#34;&gt;from&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;scrapy.crawler&lt;/span&gt; &lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;CrawlerRunner&lt;/span&gt;
+&lt;span class=&#34;kn&#34;&gt;from&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;scrapy.utils.log&lt;/span&gt; &lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;configure_logging&lt;/span&gt;
+&lt;span class=&#34;kn&#34;&gt;from&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;scrapy.utils.project&lt;/span&gt; &lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;get_project_settings&lt;/span&gt;
+
+&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;MySpider1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;scrapy&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Spider&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;# Your first spider definition&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;...&lt;/span&gt;
+
+&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;MySpider2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;scrapy&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Spider&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;# Your second spider definition&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;...&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;configure_logging&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;settings&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;get_project_settings&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;runner&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;CrawlerRunner&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;settings&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;runner&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;crawl&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;MySpider1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;runner&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;crawl&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;MySpider2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;d&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;runner&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;join&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;d&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;addBoth&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;lambda&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;reactor&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;stop&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;())&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;reactor&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;run&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# the script will block here until all crawling jobs are finished&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;最一開始是呼叫了 class CrawlerRunner 的 crawl 方法：
+這時後仔細看 source code 往下追，&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;scrapy/crawler.py&lt;/code&gt; &lt;a href=&#34;https://github.com/scrapy/scrapy/blob/06f3d12c1208c380f9f1a16cb36ba2dfa3c244c5/scrapy/crawler.py&#34;&gt;source code&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;kn&#34;&gt;from&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;scrapy.core.engine&lt;/span&gt; &lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ExecutionEngine&lt;/span&gt;
+
+
+&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Crawler&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;crawl&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;args&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;**&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;kwargs&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    
+    &lt;span class=&#34;c1&#34;&gt;#(略)&lt;/span&gt;
+    
+    &lt;span class=&#34;k&#34;&gt;try&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;spider&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;_create_spider&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;args&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;**&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;kwargs&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;engine&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;_create_engine&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;start_requests&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;iter&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;spider&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;start_requests&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;())&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;yield&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;engine&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;open_spider&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;spider&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;start_requests&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+    &lt;span class=&#34;c1&#34;&gt;# (略)&lt;/span&gt;
+
+
+&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_create_spider&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;args&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;**&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;kwargs&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;spidercls&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;from_crawler&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;args&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;**&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;kwargs&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        
+&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_create_engine&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ExecutionEngine&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;lambda&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;stop&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;())&lt;/span&gt;
+
+&lt;span class=&#34;c1&#34;&gt;# (略)&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;追到 &lt;code&gt;scrapy/core/engine.py&lt;/code&gt;&lt;a href=&#34;https://github.com/scrapy/scrapy/blob/06f3d12c1208c380f9f1a16cb36ba2dfa3c244c5/scrapy/core/engine.py&#34;&gt;source code&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;32
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;33
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;34
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;35
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;36
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;37
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;38
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;39
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;40
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;41
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;42
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-py&#34; data-lang=&#34;py&#34;&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Slot&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;fm&#34;&gt;__init__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;
+        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;start_requests&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Iterable&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;close_if_idle&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;bool&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;nextcall&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;CallLaterOnce&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;scheduler&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;None&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;closing&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Optional&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Deferred&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;None&lt;/span&gt;
+        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;inprogress&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Set&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Request&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;set&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;start_requests&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Optional&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Iterator&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;iter&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;start_requests&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;close_if_idle&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;close_if_idle&lt;/span&gt;
+        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;nextcall&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;nextcall&lt;/span&gt;
+        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;scheduler&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;scheduler&lt;/span&gt;
+        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;heartbeat&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;LoopingCall&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;nextcall&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;schedule&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+    &lt;span class=&#34;c1&#34;&gt;# (略)&lt;/span&gt;
+    
+&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;ExecutionEngine&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_next_request&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;None&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;assert&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;slot&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;is&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;not&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;None&lt;/span&gt;  &lt;span class=&#34;c1&#34;&gt;# typing&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;assert&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;spider&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;is&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;not&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;None&lt;/span&gt;  &lt;span class=&#34;c1&#34;&gt;# typing&lt;/span&gt;
+
+        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;paused&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;None&lt;/span&gt;
+
+        &lt;span class=&#34;k&#34;&gt;while&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;not&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;_needs_backout&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;and&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;_next_request_from_scheduler&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;is&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;not&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;None&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;pass&lt;/span&gt;
+
+        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;slot&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;start_requests&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;is&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;not&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;None&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;and&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;not&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;_needs_backout&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;try&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+                &lt;span class=&#34;n&#34;&gt;request&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;next&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;slot&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;start_requests&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;except&lt;/span&gt; &lt;span class=&#34;ne&#34;&gt;StopIteration&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+                &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;slot&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;start_requests&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;None&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;except&lt;/span&gt; &lt;span class=&#34;ne&#34;&gt;Exception&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+                &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;slot&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;start_requests&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;None&lt;/span&gt;
+                &lt;span class=&#34;n&#34;&gt;logger&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;error&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;Error while obtaining start requests&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;exc_info&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;True&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;extra&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;spider&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;spider&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;})&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+                &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;crawl&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;request&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;spider_is_idle&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;and&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;slot&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;close_if_idle&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+            &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;_spider_idle&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;其實看到 yield 就了解 generator 會有 next() 的實作，但是還是想親眼見到，所以：
+看到第 32 行，找到 next()，也就安心了...
+而 Scrapy 本身是在 Twisted 這個 asynchronous networking 的 library 架構下做處理，但這邊我還不是很理解，也不多說，這邊就記錄一下而已！&lt;/p&gt;
+&lt;h2 id=&#34;-the-end-&#34;&gt;&lt;strong&gt;&amp;lt; The End &amp;gt;&lt;/strong&gt;:&lt;/h2&gt;
+&lt;h3 id=&#34;self-checklist&#34;&gt;Self Checklist:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Explain what is &lt;code&gt;yield&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Explain what is &lt;code&gt;generator function&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Explain what is &lt;code&gt;generator iterator&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Figure out confusing terms&lt;code&gt;generator&lt;/code&gt;, &lt;code&gt;generator function&lt;/code&gt;, &lt;code&gt;generator iterator&lt;/code&gt;, &lt;code&gt;generator object&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Can you tell what is the difference between &lt;code&gt;iterator&lt;/code&gt; and &lt;code&gt;generator&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Explain what is &lt;code&gt;next()&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Explain what is &lt;code&gt;send()&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; How to make &lt;code&gt;generator iterator&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;reference&#34;&gt;Reference:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3.9/glossary.html#term-generator-expression&#34;&gt;generator expression&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3.9/glossary.html&#34;&gt;Python Glossary&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.kancloud.cn/smilesb101/python3_x/296095&#34;&gt;廖雪峰 Python 3.x&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://medium.com/citycoddee/python%E9%80%B2%E9%9A%8E%E6%8A%80%E5%B7%A7-6-%E8%BF%AD%E4%BB%A3%E9%82%A3%E4%BB%B6%E5%B0%8F%E4%BA%8B-%E6%B7%B1%E5%85%A5%E4%BA%86%E8%A7%A3-iteration-iterable-iterator-iter-getitem-next-fac5b4542cf4&#34;&gt;迭代那件小事：深入了解 Iteration / Iterable / Iterator / &lt;strong&gt;iter&lt;/strong&gt; / &lt;strong&gt;getitem&lt;/strong&gt; / &lt;strong&gt;next&lt;/strong&gt; / yield&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://data-flair.training/blogs/python-generator-vs-iterator/&#34;&gt;Python Generators vs Iterators – Comparison Between Python Iterators and Generators&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;-next-下一篇-&#34;&gt;&lt;strong&gt;&amp;lt; Next 下一篇 &amp;gt;&lt;/strong&gt;:&lt;/h2&gt;
+&lt;!-- &lt;a href=&#34;https://linooohon.com/blog/blog/posts/08/210805/python的yield和scrapy的yield&#34;&gt;Python 觀念(2) yield 是什麼?，那Scrapy 裡的 yield?&lt;/a&gt; --&gt;
+</content>
+            
+            
+            
+            
+            
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/categories/202108/" term="202108" label="202108" />
+                            
+                        
+                    
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/tags/yield/" term="Yield" label="Yield" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/tags/python/" term="Python" label="Python" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/tags/scrapy/" term="Scrapy" label="Scrapy" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/tags/generator/" term="Generator" label="Generator" />
+                            
+                        
+                    
+                
+            
+        </entry>
+    
+        <entry>
+            <title type="text">Python 觀念(1) - Iteration, Iterable, Iterator</title>
+            <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/07/210727/Python%20%E8%A7%80%E5%BF%B5%281%29%20-%20Iteration,%20Iterable,%20Iterator/" />
+            <id>https://linooohon.com/blog/posts/07/210727/Python%20%E8%A7%80%E5%BF%B5%281%29%20-%20Iteration,%20Iterable,%20Iterator/</id>
+            <updated>2021-10-03T11:11:54&#43;08:00</updated>
+            <published>2021-07-27T18:36:14&#43;08:00</published>
+            <author>
+                    <name>mitsukuchiph.</name>
+                    <uri>https://linooohon.com/portfolio</uri>
+                    <email>linooohon@gmail.com</email>
+                    </author>
+            <summary type="html">Python Iteration 如何運行，for loop 本質 - Iteration, Iterable, Iterator &lt;img src=&#34;https://linooohon.com/blog/blog/images/07_210727/07_210727_python_iteration.png&#34; /&gt;</summary>
+            
+                <content type="html">&lt;h1 style=&#34;text-align:center&#34;&gt;
+Python 觀念紀錄 - Iteration, Iterable, Iterator
+&lt;/h1&gt;
+&lt;blockquote&gt;
+&lt;p&gt;在此對 Iteration, Iterable, Iterator 的觀念做個紀錄。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://linooohon.com/blog/blog/images/07_210727/07_210727_python_iteration.png&#34; alt=&#34;Python 觀念紀錄 - Iteration, Iterable, Iterator&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;了解-iteration-迭代&#34;&gt;了解 Iteration (迭代)&lt;/h2&gt;
+&lt;h3 id=&#34;-iteration-&#34;&gt;&lt;strong&gt;&amp;lt; Iteration &amp;gt;&lt;/strong&gt;:&lt;/h3&gt;
+&lt;p&gt;是個廣義名詞, 意思是每次去 &amp;quot;遍歷(走訪)&amp;quot; 1 個 object, 對裡面每個 item 做想操作的事的這個過程，ex: 像是在程式碼中操作 loop，我們可以說這個是一種 Iteration。&lt;/p&gt;
+&lt;h3 id=&#34;-iterable-iterator兩個名詞必須分清楚-&#34;&gt;&lt;strong&gt;&amp;lt; Iterable, Iterator兩個名詞必須分清楚 &amp;gt;&lt;/strong&gt;:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Iterable&lt;/li&gt;
+&lt;li&gt;Iterator&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;iterable-可迭代物件&#34;&gt;Iterable (可迭代物件):&lt;/h4&gt;
+&lt;blockquote&gt;
+&lt;p&gt;在 Python 中 Iterable 和 Iterator 有特別意義，先解釋 Iterable。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h5 id=&#34;python對它的定義&#34;&gt;Python對它的定義:&lt;/h5&gt;
+&lt;p&gt;是一個物件，這個物件裡要有 &lt;code&gt;__iter__()&lt;/code&gt; 方法或是 &lt;code&gt;__getitem__()&lt;/code&gt; 方法(要能支持從 0 開始的index)，這兩個其中一個條件達成，它就是定義上的 Iterable。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;為什麼要有這兩個方法，因為 Python 說要成為 Iterable 就必須支持 Iteration Protocol 或是 Sequence Protocol。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;code&gt;__iter__()&lt;/code&gt; 對應 Iteration Protocol。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;__getitem__()&lt;/code&gt; 對應 Sequence Protocol。&lt;/p&gt;
+&lt;h5 id=&#34;特徵&#34;&gt;特徵:&lt;/h5&gt;
+&lt;ol&gt;
+&lt;li&gt;是一個物件。&lt;/li&gt;
+&lt;li&gt;可以 for loop 遍歷的 objects 它都是定義上 Iterable 的範圍。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h5 id=&#34;基本上&#34;&gt;基本上：&lt;/h5&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;當今天迭代的 Iterable 是 String, 那每次就是得到單個字符。&lt;/li&gt;
+&lt;li&gt;當今天迭代的 Iterable 是 文件，那每次得到的就是每一行的字符串。&lt;/li&gt;
+&lt;li&gt;當今天迭代的 Iterable 是 Dictionary, 那每次得到的就是該次的 Key。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;dic, list, tuple, range, string, set, numpy array, dataframe, bytes 都是 Iterable
+&lt;/code&gt;&lt;/pre&gt;&lt;h5 id=&#34;那-__iter__-和-__getitem__-是什麼&#34;&gt;那 &lt;code&gt;__iter__()&lt;/code&gt; 和 &lt;code&gt;__getitem__()&lt;/code&gt; 是什麼？&lt;/h5&gt;
+&lt;p&gt;它們是 Python Magic Methods
+&lt;code&gt;__iter__()&lt;/code&gt;: &lt;a href=&#34;https://docs.python.org/3/reference/datamodel.html#object.__iter__&#34;&gt;Docs&lt;/a&gt;
+&lt;code&gt;__getitem__()&lt;/code&gt;: &lt;a href=&#34;https://docs.python.org/3/reference/datamodel.html#object.__getitem__&#34;&gt;Docs&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;當 &lt;code&gt;__iter__()&lt;/code&gt; 被呼叫時，會 return 一個 Iterator(新的 Iterator)
+當 &lt;code&gt;__getitem__()&lt;/code&gt; 在 class 裡被定義, 使用object[index]形式, 就會呼叫該方法:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python=&#34; data-lang=&#34;python=&#34;&gt;class Hi():
+    def __init__(self, name):
+        self.name = name
+    def __getitem__(self, key):
+        return &amp;quot;__getitem__ is called&amp;quot;
+
+hi = Hi(&amp;quot;Phil&amp;quot;)
+print(hi[2])  
+
+# 輸出:
+# __getitem__ is called
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;那什麼是 Iterator，接著講：&lt;/p&gt;
+&lt;h4 id=&#34;iterator-迭代器&#34;&gt;Iterator (迭代器):&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Iterator: &lt;a href=&#34;https://docs.python.org/3/library/stdtypes.html#iterator-types&#34;&gt;Docs&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h5 id=&#34;python-對它的定義&#34;&gt;Python 對它的定義:&lt;/h5&gt;
+&lt;p&gt;它是一個物件，這個物件裡要有 &lt;code&gt;__iter__()&lt;/code&gt; 方法和 &lt;code&gt;__next__()&lt;/code&gt; 方法，兩個方法都必須要有，那它就是定義上的 Iterator。&lt;/p&gt;
+&lt;h5 id=&#34;特徵-1&#34;&gt;特徵:&lt;/h5&gt;
+&lt;ol&gt;
+&lt;li&gt;是一個物件。&lt;/li&gt;
+&lt;li&gt;Iterable 其實可以 for loop 是因為 Python 私底下幫忙轉換為 Iterator 然後做處理。&lt;/li&gt;
+&lt;li&gt;Iterator 才可以調用 &lt;code&gt;next()&lt;/code&gt;, Iterable 不行。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;而, dic, list, tuple, range, string, set, numpy array, dataframe, bytes 都不是 Iterator
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;從下面程式碼可以發現他們裡面都沒有 &lt;code&gt;__next__()&lt;/code&gt;，所以不會是 Iterator&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;32
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;33
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;34
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;35
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;36
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;37
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;38
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;39
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;40
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;41
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;42
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;43
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;44
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;45
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;46
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;47
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;48
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;49
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;50
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;51
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;52
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;53
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;54
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;55
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;56
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;57
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;58
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;59
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;60
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;61
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;62
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;63
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;64
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;65
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;66
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;67
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;68
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;69
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-py&#34; data-lang=&#34;py&#34;&gt;&lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;numpy&lt;/span&gt; &lt;span class=&#34;kn&#34;&gt;as&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;np&lt;/span&gt;
+&lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;pandas&lt;/span&gt; &lt;span class=&#34;kn&#34;&gt;as&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;pd&lt;/span&gt;
+
+&lt;span class=&#34;c1&#34;&gt;# dic&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;dic_&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;phil&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;phone&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;0933333333&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;===============dic===============&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;hasattr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;dic_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;__iter__&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# True&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;hasattr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;dic_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;__getitem__&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# True&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;hasattr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;dic_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;__next__&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# False&lt;/span&gt;
+
+
+&lt;span class=&#34;c1&#34;&gt;# list&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;list_&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;a&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;key&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;value&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;},&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}]&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;===============list===============&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;hasattr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;list_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;__iter__&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# True&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;hasattr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;list_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;__getitem__&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# True&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;hasattr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;list_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;__next__&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# False&lt;/span&gt;
+
+
+&lt;span class=&#34;c1&#34;&gt;# tuple&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;tuple_&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;a&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;key&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;value&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;},&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;===============tuple===============&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;hasattr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;tuple_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;__iter__&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# True&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;hasattr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;tuple_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;__getitem__&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# True&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;hasattr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;tuple_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;__next__&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# False&lt;/span&gt;
+
+&lt;span class=&#34;c1&#34;&gt;# range&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;range_&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;range&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;===============range===============&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;hasattr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;range_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;__iter__&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# True&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;hasattr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;range_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;__getitem__&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# True&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;hasattr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;range_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;__next__&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# False&lt;/span&gt;
+
+&lt;span class=&#34;c1&#34;&gt;# string&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;string_&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;a&amp;#39;&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;===============string===============&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;hasattr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;string_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;__iter__&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# True&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;hasattr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;string_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;__getitem__&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# True&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;hasattr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;string_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;__next__&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# False&lt;/span&gt;
+
+&lt;span class=&#34;c1&#34;&gt;# set&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;set_&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;a&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)}&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;===============set===============&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;hasattr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;set_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;__iter__&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# True&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;hasattr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;set_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;__getitem__&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# False&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;hasattr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;set_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;__next__&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# False&lt;/span&gt;
+
+&lt;span class=&#34;c1&#34;&gt;# numpy array&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;np_array_&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;np&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;array&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;([&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;])&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;===============np_array===============&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;hasattr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;np_array_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;__iter__&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# True&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;hasattr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;np_array_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;__getitem__&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# True&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;hasattr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;np_array_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;__next__&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# False&lt;/span&gt;
+
+&lt;span class=&#34;c1&#34;&gt;# dataframe&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;df_&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pd&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;read_csv&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;1.csv&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;===============dataframe===============&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;hasattr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;df_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;__iter__&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# True&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;hasattr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;df_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;__getitem__&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# True&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;hasattr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;df_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;__next__&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# False&lt;/span&gt;
+
+
+&lt;span class=&#34;c1&#34;&gt;# bytes&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;bytes_1&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;bytes&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;===============bytes===============&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;hasattr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bytes_1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;__iter__&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# True&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;hasattr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bytes_1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;__getitem__&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# True&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;hasattr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bytes_1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;__next__&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# False&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h5 id=&#34;那如何成為-iterator--iter-next&#34;&gt;那如何成為 Iterator:  &lt;code&gt;iter()&lt;/code&gt;, &lt;code&gt;next()&lt;/code&gt;&lt;/h5&gt;
+&lt;blockquote&gt;
+&lt;p&gt;根據 Iterator 成立的條件，我們如果 call Builtin Function &lt;code&gt;iter()&lt;/code&gt;
+裡面帶 Iterable，就可以 return Iterator.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;所以&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;iter()&lt;/code&gt; 會 return Iterator&lt;/li&gt;
+&lt;li&gt;Iterator 裡有 &lt;code&gt;next()&lt;/code&gt; 所以可以使用 &lt;code&gt;next()&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;next()&lt;/code&gt; 的作用:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Iterator 可以被 &lt;code&gt;next()&lt;/code&gt; 調用，並不斷的返回下一個資料，直到沒有資料的時候，會拋出 StopIteration error, 而這是什麼意思呢？等等再底下有個例子可以解釋。&lt;/p&gt;
+&lt;p&gt;在 Python Docs &lt;a href=&#34;https://docs.python.org/3.9/glossary.html#term-iterator&#34;&gt;Glossary&lt;/a&gt; 裡面，寫道，Iterator is an object representing a stream of data，可以看到 Iterator 是代表一個資料流的概念，也就是說程式它本身其實不知道整個長度，像是 &lt;code&gt;dict&lt;/code&gt;, &lt;code&gt;list&lt;/code&gt;, &lt;code&gt;str&lt;/code&gt; 是一開始就知道長度的，但 Iterator 的概念是&lt;code&gt;流&lt;/code&gt;, 每當我需要的時候，我才通過 &lt;code&gt;next()&lt;/code&gt; 拿到下一個我要的產出(資料), 以我的觀點 Iterator 有點像是一個 被動、懶惰的代表, 我喊它，它才動, 我不喊它, 它永遠都不動，所以他的計算是被動的，只有在需要 return 下一個資料的時候它才會行動(計算)。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ex: 範例&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python=&#34; data-lang=&#34;python=&#34;&gt;ss_ = &amp;quot;abc&amp;quot;
+iter_ss_ = iter(ss_)
+print(hasattr(iter_ss_, &#39;__iter__&#39;)) # True
+print(hasattr(iter_ss_, &#39;__getitem__&#39;)) # False
+print(hasattr(iter_ss_, &#39;__next__&#39;)) # True
+
+print(next(iter_ss_))
+print(next(iter_ss_))
+print(next(iter_ss_))
+
+
+# 輸出:
+&amp;quot;&amp;quot;&amp;quot;
+True
+False
+True
+a
+b
+c
+&amp;quot;&amp;quot;&amp;quot;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;底下這裡就會報錯因為不是 Iterator&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python=&#34; data-lang=&#34;python=&#34;&gt;ss_ = &amp;quot;abc&amp;quot;
+next(ss_)
+
+# 輸出
+&amp;quot;&amp;quot;&amp;quot;
+True
+False
+True
+Traceback (most recent call last):
+TypeError: &#39;str&#39; object is not an iterator
+&amp;quot;&amp;quot;&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;-關於-iter-__iter__-next-__next__--&#34;&gt;&lt;strong&gt;&amp;lt; 關於 &lt;code&gt;iter()&lt;/code&gt;, &lt;code&gt;__iter__()&lt;/code&gt;, &lt;code&gt;next()&lt;/code&gt;, &lt;code&gt;__next__()&lt;/code&gt; &amp;gt;&lt;/strong&gt; :&lt;/h3&gt;
+&lt;p&gt;最一開始我也搞的滿模糊的，但要理解可以先拆分：&lt;/p&gt;
+&lt;h4 id=&#34;built-in-function-iter-next&#34;&gt;Built-in Function: &lt;code&gt;iter()&lt;/code&gt; &lt;code&gt;next()&lt;/code&gt;&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;iter()&lt;/code&gt;, &lt;code&gt;next()&lt;/code&gt; : Python Built-In Function &lt;a href=&#34;https://docs.python.org/3/library/functions.html&#34;&gt;Docs&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;所謂 Built-In Function, 你只要 call 它，Python 就會照著他原本寫好的劇本去跑。&lt;/p&gt;
+&lt;h4 id=&#34;magic-methods-__iter__-__next__&#34;&gt;Magic Methods: &lt;code&gt;__iter__()&lt;/code&gt; &lt;code&gt;__next__()&lt;/code&gt;&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;__iter__()&lt;/code&gt;, &lt;code&gt;__next__()&lt;/code&gt;: Python Magic Methods(Dunders)&lt;/p&gt;
+&lt;p&gt;所謂 Magic Methods, 就是由 class 裡所提供的一些 methods, Python 將這些 methods 特徵弄成前後各兩個底線，而這些 methods 之所以很 magic(自認為..)，是因為..其實我們做的很多事情，都是他們幫我們代勞的。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;代勞是什麼意思呢？
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;看一下這個例子:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-py&#34; data-lang=&#34;py&#34;&gt;&lt;span class=&#34;n&#34;&gt;number&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;number&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;   &lt;span class=&#34;c1&#34;&gt;#3&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;number&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;fm&#34;&gt;__add__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;#3&lt;/span&gt;
+
+&lt;span class=&#34;c1&#34;&gt;# 會發現都是 print 出 3&lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;# 當我們用 Int 這個 type 做加法, `+` 和 使用 `__add__()` 是一樣的結果。&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-py&#34; data-lang=&#34;py&#34;&gt;&lt;span class=&#34;err&#34;&gt;如果我們用&lt;/span&gt; &lt;span class=&#34;sb&#34;&gt;`help()`&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;看一下&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Int&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;class&lt;/span&gt;
+&lt;span class=&#34;err&#34;&gt;會發現它所定義的東西就是 `+` 要做的事&lt;/span&gt;
+&lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;__add__(self, value, /)
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;    Return self+value.
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id=&#34;那意思是我們可以自己客製化-object-修改這個-object-的--的功能&#34;&gt;那意思是我們可以自己客製化 object 修改這個 object 的 &lt;code&gt;+&lt;/code&gt; 的功能&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-py&#34; data-lang=&#34;py&#34;&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;CustomPlus&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;fm&#34;&gt;__init__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;num&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;num&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;num&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;fm&#34;&gt;__add__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;__add__ is called &amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;num&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;value&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;cp&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;CustomPlus&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cp&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;fm&#34;&gt;__add__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;# __add__ is called &lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;# -1&lt;/span&gt;
+
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cp&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;# __add__ is called &lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;# -1&lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;# 可以發現 cp + 2 也是走 class 裡的 __add__() 所以結果就也會變成 -1&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id=&#34;所以結論是&#34;&gt;所以，結論是:&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-py&#34; data-lang=&#34;py&#34;&gt;&lt;span class=&#34;err&#34;&gt;使用&lt;/span&gt; &lt;span class=&#34;sb&#34;&gt;`+`&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;的背後，其實&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;python&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;是去找&lt;/span&gt; &lt;span class=&#34;sb&#34;&gt;`Int`&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;所定義的 `&lt;/span&gt;&lt;span class=&#34;nc&#34;&gt;__add__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;`&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;然後叫它做事&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id=&#34;在-python-中有數不清像--這樣由-__add__-代勞的事情&#34;&gt;在 Python 中有數不清像 &lt;code&gt;+&lt;/code&gt; 這樣由 &lt;code&gt;__add__()&lt;/code&gt; 代勞的事情，&lt;/h4&gt;
+&lt;p&gt;詳細可以看 &lt;a href=&#34;https://docs.python.org/3/reference/datamodel.html#special-method-names&#34;&gt;Docs 3. Data model 這頁&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&#34;那同理回到主題&#34;&gt;那同理，回到主題:&lt;/h4&gt;
+&lt;p&gt;其實 &lt;code&gt;iter()&lt;/code&gt; &lt;code&gt;next()&lt;/code&gt; 是會去找當下的 type 所能使用的 &lt;code&gt;__iter__()&lt;/code&gt;, &lt;code&gt;__next__()&lt;/code&gt; 代勞，白話一點就是 call &lt;code&gt;iter()&lt;/code&gt; &lt;code&gt;next()&lt;/code&gt; 的下一瞬間，Python 就是會設法 call &lt;code&gt;__iter__()&lt;/code&gt;, &lt;code&gt;__next__()&lt;/code&gt;。&lt;/p&gt;
+&lt;h4 id=&#34;一個小結論&#34;&gt;一個小結論:&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-py&#34; data-lang=&#34;py&#34;&gt;&lt;span class=&#34;n&#34;&gt;call&lt;/span&gt; &lt;span class=&#34;sb&#34;&gt;`iter()`&lt;/span&gt; &lt;span class=&#34;sb&#34;&gt;`next()`&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;可以說是等價於&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;call&lt;/span&gt; &lt;span class=&#34;sb&#34;&gt;`__iter__()`&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;sb&#34;&gt;`__next__()`&lt;/span&gt;
+&lt;span class=&#34;err&#34;&gt;但&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;call&lt;/span&gt; &lt;span class=&#34;sb&#34;&gt;`__iter__()`&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;sb&#34;&gt;`__next__()`&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;不等於&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;call&lt;/span&gt; &lt;span class=&#34;sb&#34;&gt;`iter()`&lt;/span&gt; &lt;span class=&#34;sb&#34;&gt;`next()`&lt;/span&gt;
+&lt;span class=&#34;err&#34;&gt;因為就像上面說的&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;magic&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;methods&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;可以客製化&lt;/span&gt;
+&lt;span class=&#34;err&#34;&gt;但&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Built&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;In&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Function&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;就是照著劇本走，&lt;/span&gt;
+&lt;span class=&#34;err&#34;&gt;所以當你把&lt;/span&gt; &lt;span class=&#34;sb&#34;&gt;`__iter__()`&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;sb&#34;&gt;`__next__()`&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;改成不照著&lt;/span&gt; &lt;span class=&#34;sb&#34;&gt;`iter()`&lt;/span&gt; &lt;span class=&#34;sb&#34;&gt;`next()`&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;劇本規定的時後，再來使用&lt;/span&gt; &lt;span class=&#34;sb&#34;&gt;`iter()`&lt;/span&gt; &lt;span class=&#34;sb&#34;&gt;`next()`&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;就肯定會報錯&lt;/span&gt;
+&lt;span class=&#34;err&#34;&gt;看一下底下&lt;/span&gt; &lt;span class=&#34;sb&#34;&gt;`iter()`&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;的例子&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id=&#34;用-iter-再舉個例子&#34;&gt;用 &lt;code&gt;iter()&lt;/code&gt; 再舉個例子:&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-py&#34; data-lang=&#34;py&#34;&gt;&lt;span class=&#34;n&#34;&gt;s&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;abc&amp;#34;&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;iter_s&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;iter&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;__iter__s&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;fm&#34;&gt;__iter__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;type&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;iter_s&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;type&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;__iter__s&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+
+&lt;span class=&#34;c1&#34;&gt;# 輸出&lt;/span&gt;
+&lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;lt;class &amp;#39;str_iterator&amp;#39;&amp;gt;
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;lt;class &amp;#39;str_iterator&amp;#39;&amp;gt;
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;pre&gt;&lt;code&gt;這裡沒問題，兩個就是做一樣的事，但如果底下我們自定義呢?
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;這裡自訂義 class Foo:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-py&#34; data-lang=&#34;py&#34;&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Foo&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;fm&#34;&gt;__iter__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Foo&amp;#34;&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;foo&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Foo&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;foo&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;fm&#34;&gt;__iter__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;())&lt;/span&gt;
+
+&lt;span class=&#34;c1&#34;&gt;# 輸出不會報錯&lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;# Foo &lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;如果改成 &lt;code&gt;iter()&lt;/code&gt; 這時底下這裡就會出錯，因為 &lt;code&gt;iter()&lt;/code&gt; 的劇本就是堅持要拿到 &lt;code&gt;Iterator&lt;/code&gt;, 你給他 &lt;code&gt;str&lt;/code&gt; 就肯定噴錯&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-py&#34; data-lang=&#34;py&#34;&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Foo&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;fm&#34;&gt;__iter__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Foo&amp;#34;&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;foo&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Foo&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;iter&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;foo&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+
+&lt;span class=&#34;c1&#34;&gt;# 輸出會報錯&lt;/span&gt;
+&lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;Traceback (most recent call last):
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;print(iter(foo))
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;TypeError: iter() returned non-iterator of type &amp;#39;str&amp;#39;
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;小結論:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;所有可 for loop 的 object 都是 Iterable。&lt;/li&gt;
+&lt;li&gt;所有可作用於 &lt;code&gt;next()&lt;/code&gt; 的 object 都是 Iterator。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;list&lt;/code&gt;, &lt;code&gt;str&lt;/code&gt;, &lt;code&gt;dict&lt;/code&gt; 這些是 Iterable 不是 Iterator, 但可以使用 &lt;code&gt;iter()&lt;/code&gt; return 一個 Iterator。&lt;/li&gt;
+&lt;li&gt;可以自己做 class 做出 Iterator, 本質上 Iterator 可以 for loop 是由 &lt;code&gt;__iter__()&lt;/code&gt; return self, 也就是 return object 自己去實現的，如此才能不斷繼續調用自己的 &lt;code&gt;__next__()&lt;/code&gt; 如果 class 裡只實現 &lt;code&gt;__next__()&lt;/code&gt;，那是不能使用 for loop 的，只能調用 next() 一個一個呼叫。&lt;/li&gt;
+&lt;li&gt;那 &lt;code&gt;next()&lt;/code&gt; return 什麼？ 你讓它 return 什麼它就 return 什麼。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-py&#34; data-lang=&#34;py&#34;&gt;&lt;span class=&#34;n&#34;&gt;iterator_&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;iter&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;([[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;],&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{}])&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;type&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;next&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;iterator_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)))&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;type&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;next&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;iterator_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)))&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;type&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;next&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;iterator_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)))&lt;/span&gt;
+
+&lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;lt;class &amp;#39;list&amp;#39;&amp;gt;
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;lt;class &amp;#39;int&amp;#39;&amp;gt;
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;lt;class &amp;#39;dict&amp;#39;&amp;gt;
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+
+&lt;span class=&#34;c1&#34;&gt;# 當然也是可以客製化 class 裡的 `__next__()`&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id=&#34;關於前面提到-for-loop-的概念&#34;&gt;關於前面提到 for loop 的概念:&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;for loop 的本質上就是通過不斷調用 &lt;code&gt;next()&lt;/code&gt; 實現的。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;ex:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-py&#34; data-lang=&#34;py&#34;&gt;&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]:&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;pass&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;實際上相當於是:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-py&#34; data-lang=&#34;py&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 先得到 Iterator&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;iterator_&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;iter&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;([&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;])&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;while&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;True&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;try&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;next&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;iterator_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;#獲得下一個值&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;except&lt;/span&gt; &lt;span class=&#34;ne&#34;&gt;StopIteration&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# 遇到 StopIteration 就退出 loop&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;break&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;32
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;33
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;34
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-py&#34; data-lang=&#34;py&#34;&gt;&lt;span class=&#34;n&#34;&gt;iterator_&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;iter&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;([&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;])&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;while&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;True&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;try&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;front======&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;next&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;iterator_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;#獲得下一個值&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;back======&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;except&lt;/span&gt; &lt;span class=&#34;ne&#34;&gt;StopIteration&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# 遇到 StopIteration 就退出 loop&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;到底了======&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;break&lt;/span&gt;
+        
+        
+&lt;span class=&#34;c1&#34;&gt;# 如果仔細這樣 print&lt;/span&gt;
+&lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;front======
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;back======
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;front======
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;back======
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;front======
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;back======
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;front======
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;back======
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;front======
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;back======
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;front======
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;到底了======
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+
+&lt;span class=&#34;c1&#34;&gt;# 會發現 第 6 次 call next(), 就出現 exception&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;所以 for 語句是如何 loop 的:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;ol&gt;
+&lt;li&gt;先判斷是否為可迭代物件(Iterable)，不是的話直接報錯: TypeError: &#39;xxxx&#39; object is not iterable，是的話調用 &lt;code&gt;__iter__()&lt;/code&gt;，並 return 一個迭代器(Iterator)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;不斷的調用迭代器(Iterato)的 &lt;code&gt;__next__()&lt;/code&gt; 方法，每次都按照順序返回迭代器(Iterator)中的一個值&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;迭代到最後，已經沒有元素了，這時就會拋出 StopIteration，但是這個異常就像上面的例子一樣會做處理，Python 自己會處理掉，不會給 developer 看。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;收尾&#34;&gt;收尾:&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Iteration(迭代): 可以指一個概念，輪廓，操作過程，是一個廣義名詞，在程式中的例子有 for loop&lt;/li&gt;
+&lt;li&gt;Iterable(可迭代物件): 一個物件，根據 Python 的定義，得出結論:
+&lt;ol&gt;
+&lt;li&gt;如果可以 for loop 它，就是 Iterable 的範疇&lt;/li&gt;
+&lt;li&gt;但 Iterable 可以 for loop 是因為 Python 幫我們把它轉變成 Iterator&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;Iterator(迭代器): 一個物件，根據 Python 的定義，得出結論：
+&lt;ol&gt;
+&lt;li&gt;Python for loop 的原理就是需要 Iterator，然後不斷調用 Iterator 的 &lt;code&gt;__next__()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;產生 Iterator 的方式:
+&lt;ul&gt;
+&lt;li&gt;iter()&lt;/li&gt;
+&lt;li&gt;自己客製化 class&lt;/li&gt;
+&lt;li&gt;產生 generator iterator (或是叫做 generator object / generator)(是一種 Iterator，下篇會敘述)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;the-end&#34;&gt;The End:&lt;/h2&gt;
+&lt;h3 id=&#34;-self-checklist-&#34;&gt;&lt;strong&gt;&amp;lt; Self Checklist &amp;gt;&lt;/strong&gt;:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Explain what is &lt;code&gt;Iteration&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Explain what is &lt;code&gt;Iterable&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Explain what is &lt;code&gt;Iterator&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Can you tell what is the difference between &lt;code&gt;Iterable&lt;/code&gt; and &lt;code&gt;Iterator&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Explain what is &lt;code&gt;Built-in Function&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Explain what is &lt;code&gt;Magic Methods&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Explain how Python &lt;code&gt;for loop&lt;/code&gt; works.&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Use &lt;code&gt;hasattr()&lt;/code&gt;, &lt;code&gt;next()&lt;/code&gt;, &lt;code&gt;iter()&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;-reference-&#34;&gt;&lt;strong&gt;&amp;lt; Reference &amp;gt;&lt;/strong&gt;:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/reference/datamodel.html#object.__iter__&#34;&gt;Python &lt;code&gt;__iter__()&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/reference/datamodel.html#object.__getitem__&#34;&gt;Python &lt;code&gt;__getitem__()&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/library/stdtypes.html#iterator-types&#34;&gt;Python Iterator&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3.9/glossary.html&#34;&gt;Python Glossary&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/library/functions.html&#34;&gt;Python Built-In Function&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/reference/datamodel.html#special-method-names&#34;&gt;Python Docs 3. Data model&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.kancloud.cn/smilesb101/python3_x/296095&#34;&gt;廖雪峰 Python 3.x&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://medium.com/citycoddee/python%E9%80%B2%E9%9A%8E%E6%8A%80%E5%B7%A7-6-%E8%BF%AD%E4%BB%A3%E9%82%A3%E4%BB%B6%E5%B0%8F%E4%BA%8B-%E6%B7%B1%E5%85%A5%E4%BA%86%E8%A7%A3-iteration-iterable-iterator-iter-getitem-next-fac5b4542cf4&#34;&gt;迭代那件小事：深入了解 Iteration / Iterable / Iterator / &lt;strong&gt;iter&lt;/strong&gt; / &lt;strong&gt;getitem&lt;/strong&gt; / &lt;strong&gt;next&lt;/strong&gt; / yield&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;-next-下一篇-&#34;&gt;&lt;strong&gt;&amp;lt; Next 下一篇 &amp;gt;&lt;/strong&gt;:&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://linooohon.com/blog/blog/posts/08/210810/python的yield和scrapy的yield&#34;&gt;Python 觀念(2) yield 是什麼?，那Scrapy 裡的 yield?&lt;/a&gt;&lt;/p&gt;
+</content>
+            
+            
+            
+            
+            
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/categories/202107/" term="202107" label="202107" />
+                            
+                        
+                    
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/tags/python/" term="Python" label="Python" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/tags/iterator/" term="Iterator" label="Iterator" />
+                            
+                        
+                    
+                
+            
+        </entry>
+    
+        <entry>
             <title type="text">Django - part1.2: Official Docs Note</title>
-            <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/06/210720/DjangoDocsNote-part1&amp;2/" />
-            <id>https://linooohon.com/blog/posts/06/210720/DjangoDocsNote-part1&amp;2/</id>
-            <updated>2021-09-22T12:31:31&#43;08:00</updated>
+            <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/06/210720/Django%20-%20part1.2:%20Official%20Docs%20Note" />
+            <id>https://linooohon.com/blog/posts/06/210720/Django%20-%20part1.2:%20Official%20Docs%20Note</id>
+            <updated>2021-10-02T15:53:14&#43;08:00</updated>
             <published>2021-07-20T18:36:14&#43;08:00</published>
             <author>
                     <name>mitsukuchiph.</name>
                     <uri>https://linooohon.com/portfolio</uri>
                     <email>linooohon@gmail.com</email>
                     </author>
-            <summary type="html">關於 Django 的官方文件筆記(EN)&lt;img src=&#34;main_pic/06_210720/06_210720_django.png&#34;&gt;</summary>
+            <summary type="html">關於 Django 的官方文件筆記(EN)&lt;img src=&#34;https://linooohon.com/blog/blog/images/06_210720/06_210720_django.png&#34; /&gt;</summary>
             
                 <content type="html">&lt;h1 style=&#34;text-align:center&#34;&gt;
 「Django」part1.2: Official Docs Note(EN)
@@ -35,7 +1543,7 @@
 &lt;blockquote&gt;
 &lt;p&gt;關於 Django 的官方文件筆記(EN)，紀錄起來，讓自己可以快速統整 👐&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;&lt;img src=&#34;https://linooohon.com/blog/blog/main_pic/06_210720/06_210720_django.png&#34; alt=&#34;關於 Django 的官方文件筆記(EN)&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://linooohon.com/blog/blog/images/06_210720/06_210720_django.png&#34; alt=&#34;關於 Django 的官方文件筆記(EN)&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;-intro-&#34;&gt;&lt;strong&gt;&amp;lt; Intro &amp;gt;&lt;/strong&gt;&lt;/h2&gt;
 &lt;p&gt;&amp;quot;A popular python web framework ! &amp;quot; ----&amp;gt;
 &lt;a href=&#34;https://docs.djangoproject.com/en/3.2/intro/tutorial01/&#34;&gt;Django Docs&lt;/a&gt;&lt;/p&gt;
@@ -527,11 +2035,11 @@ Superuser created successfully.
 &lt;blockquote&gt;
 &lt;p&gt;And enter username and password.&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;&lt;img src=&#34;https://linooohon.com/blog/blog/main_pic/06_210720/06_210720_django_adminlogin.png&#34; alt=&#34;linooohon@gmail.com&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://linooohon.com/blog/blog/images/06_210720/06_210720_django_adminlogin.png&#34; alt=&#34;linooohon@gmail.com&#34;&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Will see the Django administration&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;&lt;img src=&#34;https://linooohon.com/blog/blog/main_pic/06_210720/06_210720_django_admininterface.png&#34; alt=&#34;linooohon@gmail.com&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://linooohon.com/blog/blog/images/06_210720/06_210720_django_admininterface.png&#34; alt=&#34;linooohon@gmail.com&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;--register-our-own-models-in-django-admin-interface&#34;&gt;- Register our own models in Django admin interface.&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;In the &lt;code&gt;polls/admin.py&lt;/code&gt;&lt;/li&gt;
@@ -599,16 +2107,16 @@ admin.site.register(Choice)
     
         <entry>
             <title type="text">「Flask」02: Static File handling, Database connection</title>
-            <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/%E3%80%8CFlask%E3%80%8D02:%20Static%20File%20handling,%20Database%20connection/" />
-            <id>https://linooohon.com/blog/posts/%E3%80%8CFlask%E3%80%8D02:%20Static%20File%20handling,%20Database%20connection/</id>
-            <updated>2021-09-22T01:36:35&#43;08:00</updated>
+            <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/05/210714/%E3%80%8C%E3%80%8CFlask%E3%80%8D02:%20Static%20File%20handling,%20Database%20connection/" />
+            <id>https://linooohon.com/blog/posts/05/210714/%E3%80%8C%E3%80%8CFlask%E3%80%8D02:%20Static%20File%20handling,%20Database%20connection/</id>
+            <updated>2021-10-02T15:55:34&#43;08:00</updated>
             <published>2021-07-14T18:36:14&#43;08:00</published>
             <author>
                     <name>mitsukuchiph.</name>
                     <uri>https://linooohon.com/portfolio</uri>
                     <email>linooohon@gmail.com</email>
                     </author>
-            <summary type="html">上次紀錄了 Flask 基本處理，這次紀錄 Static File 和 DB 連線(EN)&lt;img src=&#34;main_pic/04_05_210710_flask_intro.png&#34;&gt;</summary>
+            <summary type="html">上次紀錄了 Flask 基本處理，這次紀錄 Static File 和 DB 連線(EN) &lt;img src=&#34;https://linooohon.com/blog/blog/images/04_05_210710/04_05_210710_flask_intro.png&#34; /&gt;</summary>
             
                 <content type="html">&lt;h1 style=&#34;text-align:center&#34;&gt;
 「Flask」02: Static File handling, Database connection
@@ -616,7 +2124,7 @@ admin.site.register(Choice)
 &lt;blockquote&gt;
 &lt;p&gt;前陣子用 Flask 實做了一個 LifePlaylist App 這裡簡單紀錄一下基本的東西，以後回頭更快重拾記憶🤧 -  第二篇&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;&lt;img src=&#34;https://linooohon.com/blog/blog/main_pic/04_05_210710_flask_intro.png&#34; alt=&#34;上次紀錄了 Flask 基本處理，這次&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://linooohon.com/blog/blog/images/04_05_210710/04_05_210710_flask_intro.png&#34; alt=&#34;上次紀錄了 Flask 基本處理，這次&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;-intro-&#34;&gt;&lt;strong&gt;&amp;lt; Intro &amp;gt;&lt;/strong&gt;&lt;/h2&gt;
 &lt;p&gt;&amp;quot;A lightweight Python Web Framework ! &amp;quot; ----&amp;gt;
 &lt;a href=&#34;https://flask.palletsprojects.com/en/latest/quickstart/&#34;&gt;Flask Docs&lt;/a&gt;&lt;/p&gt;
@@ -1015,8 +2523,9 @@ def insert_data&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;self, insert_dic&lt;s
 &lt;li&gt;&lt;a href=&#34;https://flask-sqlalchemy.palletsprojects.com/en/2.x/&#34;&gt;FlaskSQLAlchemy&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://medium.com/seaniap/python-web-flask-%E4%BD%BF%E7%94%A8%E9%9D%9C%E6%85%8B%E6%AA%94%E6%A1%88-ac00e863a470&#34;&gt;Sean Yeh in Python Everywhere -from Beginner to Advanced&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;-next-下一篇-&#34;&gt;&lt;strong&gt;&amp;lt; Next 下一篇 &amp;gt;&lt;/strong&gt;:&lt;/h2&gt;
-&lt;!-- &lt;a href=&#34;https://linooohon.com/blog/blog/posts/01「Git 介紹」什麼是 git rebase&#34;&gt;「Flask」02&lt;/a&gt; --&gt;</content>
+&lt;h2 id=&#34;-next-上一篇-&#34;&gt;&lt;strong&gt;&amp;lt; Next 上一篇 &amp;gt;&lt;/strong&gt;:&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://linooohon.com/blog/blog/posts/04/210710/「Flask」01: Basic, Route, Templates, GET, POST&#34;&gt;「Flask」01: Basic, Route, Templates, GET, POST&lt;/a&gt;&lt;/p&gt;
+</content>
             
             
             
@@ -1060,16 +2569,16 @@ def insert_data&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;self, insert_dic&lt;s
     
         <entry>
             <title type="text">「Flask」01: Basic, Route, Templates, GET, POST</title>
-            <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/%E3%80%8CFlask%E3%80%8D01:%20Basic,%20Route,%20Templates,%20GET,%20POST/" />
-            <id>https://linooohon.com/blog/posts/%E3%80%8CFlask%E3%80%8D01:%20Basic,%20Route,%20Templates,%20GET,%20POST/</id>
-            <updated>2021-09-22T01:36:24&#43;08:00</updated>
+            <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/04/210710/%E3%80%8CFlask%E3%80%8D01:%20Basic,%20Route,%20Templates,%20GET,%20POST/" />
+            <id>https://linooohon.com/blog/posts/04/210710/%E3%80%8CFlask%E3%80%8D01:%20Basic,%20Route,%20Templates,%20GET,%20POST/</id>
+            <updated>2021-10-02T15:55:54&#43;08:00</updated>
             <published>2021-07-10T18:36:14&#43;08:00</published>
             <author>
                     <name>mitsukuchiph.</name>
                     <uri>https://linooohon.com/portfolio</uri>
                     <email>linooohon@gmail.com</email>
                     </author>
-            <summary type="html">前陣子實做了 Flask App 紀錄一下基本處理! (EN)&lt;img src=&#34;main_pic/04_05_210710_flask_intro.png&#34;&gt;</summary>
+            <summary type="html">前陣子實做了 Flask App 紀錄一下基本處理! (EN) &lt;img src=&#34;https://linooohon.com/blog/blog/images/04_05_210710/04_05_210710_flask_intro.png&#34; /&gt;</summary>
             
                 <content type="html">&lt;h1 style=&#34;text-align:center&#34;&gt;
 「Flask」01: Basic, Route, Templates, GET, POST
@@ -1077,7 +2586,7 @@ def insert_data&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;self, insert_dic&lt;s
 &lt;blockquote&gt;
 &lt;p&gt;前陣子用 Flask 實做了一個 LifePlaylist App 這裡簡單紀錄一下基本的東西，以後回頭更快重拾記憶🤧&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;&lt;img src=&#34;https://linooohon.com/blog/blog/main_pic/04_05_210710_flask_intro.png&#34; alt=&#34;前陣子實做了 Flask App 紀錄一下基本處理!&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://linooohon.com/blog/blog/images/04_05_210710/04_05_210710_flask_intro.png&#34; alt=&#34;前陣子實做了 Flask App 紀錄一下基本處理!&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;-intro-&#34;&gt;&lt;strong&gt;&amp;lt; Intro &amp;gt;&lt;/strong&gt;&lt;/h2&gt;
 &lt;p&gt;&amp;quot;A lightweight Python Web Framework ! &amp;quot; ----&amp;gt;
 &lt;a href=&#34;https://flask.palletsprojects.com/en/latest/quickstart/&#34;&gt;Flask Docs&lt;/a&gt;&lt;/p&gt;
@@ -1331,7 +2840,7 @@ def submit():
 &lt;li&gt;&lt;a href=&#34;https://medium.com/seaniap/tagged/flask&#34;&gt;Sean Yeh in Python Everywhere -from Beginner to Advanced&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;-next-下一篇-&#34;&gt;&lt;strong&gt;&amp;lt; Next 下一篇 &amp;gt;&lt;/strong&gt;:&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&#34;https://linooohon.com/blog/blog/posts/「Flask」02: Static File handling, Database connection&#34;&gt;「Flask」02: Static File handling, Database connection&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://linooohon.com/blog/blog/posts/05/210714/「「Flask」02: Static File handling, Database connection&#34;&gt;「Flask」02: Static File handling, Database connection&lt;/a&gt;&lt;/p&gt;
 </content>
             
             
@@ -1376,16 +2885,16 @@ def submit():
     
         <entry>
             <title type="text">02「Git 介紹」git rebase -i</title>
-            <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/02%E3%80%8CGit%20%E4%BB%8B%E7%B4%B9%E3%80%8Dgit%20rebase%20-i/" />
-            <id>https://linooohon.com/blog/posts/02%E3%80%8CGit%20%E4%BB%8B%E7%B4%B9%E3%80%8Dgit%20rebase%20-i/</id>
-            <updated>2021-08-05T22:39:49&#43;08:00</updated>
+            <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/03/210620/02%E3%80%8CGit%20%E4%BB%8B%E7%B4%B9%E3%80%8Dgit%20rebase%20-i/" />
+            <id>https://linooohon.com/blog/posts/03/210620/02%E3%80%8CGit%20%E4%BB%8B%E7%B4%B9%E3%80%8Dgit%20rebase%20-i/</id>
+            <updated>2021-10-02T15:54:58&#43;08:00</updated>
             <published>2021-06-20T18:36:14&#43;08:00</published>
             <author>
                     <name>mitsukuchiph.</name>
                     <uri>https://linooohon.com/portfolio</uri>
                     <email>linooohon@gmail.com</email>
                     </author>
-            <summary type="html">Git 第二篇, git rebase -i 互動模式&lt;img src=&#34;main_pic/03_210620_git_rebase_2.png&#34;&gt;</summary>
+            <summary type="html">Git 第二篇, git rebase -i 互動模式 &lt;img src=&#34;https://linooohon.com/blog/blog/images/03_210620/03_210620_git_rebase_2.png&#34; /&gt;</summary>
             
                 <content type="html">&lt;h1 style=&#34;text-align:center&#34;&gt;
 「Git 介紹」Ch2: git rebase 互動模式 - git rebase -i
@@ -1393,7 +2902,7 @@ def submit():
 &lt;blockquote&gt;
 &lt;p&gt;上次提到 &lt;code&gt;git rebase&lt;/code&gt; 的使用時機，這次介紹一下 &lt;code&gt;git rebase -i&lt;/code&gt; 互動模式!&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;&lt;img src=&#34;https://linooohon.com/blog/blog/main_pic/03_210620_git_rebase_2.png&#34; alt=&#34;Git 第二篇, git rebase -i 互動模式&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://linooohon.com/blog/blog/images/03_210620/03_210620_git_rebase_2.png&#34; alt=&#34;Git 第二篇, git rebase -i 互動模式&#34;&gt;&lt;/p&gt;
 &lt;h1 id=&#34;what-什麼是-git-rebase--i&#34;&gt;(What?) 什麼是 git rebase -i&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;Git rebase 提供的全家餐，輸入魔法&lt;code&gt;-i&lt;/code&gt;, 搭配 commit ID, 神力再現。&lt;/li&gt;
@@ -1515,7 +3024,7 @@ git rebase --continue
 &lt;li&gt;&lt;a href=&#34;https://gitbook.tw/chapters/rewrite-history/merge-multiple-commits-to-one-commit.html&#34;&gt;高見龍-為你自己學 Git&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;上一篇&#34;&gt;上一篇:&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&#34;https://linooohon.com/blog/blog/posts/01「Git 介紹」什麼是 git rebase&#34;&gt;01「Git 介紹」什麼是 git rebase&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://linooohon.com/blog/blog/posts/02/210615/01「Git 介紹」什麼是 git rebase&#34;&gt;01「Git 介紹」什麼是 git rebase&lt;/a&gt;&lt;/p&gt;
 </content>
             
             
@@ -1538,7 +3047,7 @@ git rebase --continue
                             
                             
                             
-                                <category scheme="https://linooohon.com/blog/tags/git/" term="git" label="git" />
+                                <category scheme="https://linooohon.com/blog/tags/git/" term="Git" label="Git" />
                             
                         
                     
@@ -1548,16 +3057,16 @@ git rebase --continue
     
         <entry>
             <title type="text">01「Git 介紹」什麼是 git rebase</title>
-            <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/01%E3%80%8CGit%20%E4%BB%8B%E7%B4%B9%E3%80%8D%E4%BB%80%E9%BA%BC%E6%98%AF%20git%20rebase/" />
-            <id>https://linooohon.com/blog/posts/01%E3%80%8CGit%20%E4%BB%8B%E7%B4%B9%E3%80%8D%E4%BB%80%E9%BA%BC%E6%98%AF%20git%20rebase/</id>
-            <updated>2021-07-30T01:22:10&#43;08:00</updated>
+            <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/02/210615/01%E3%80%8CGit%20%E4%BB%8B%E7%B4%B9%E3%80%8D%E4%BB%80%E9%BA%BC%E6%98%AF%20git%20rebase/" />
+            <id>https://linooohon.com/blog/posts/02/210615/01%E3%80%8CGit%20%E4%BB%8B%E7%B4%B9%E3%80%8D%E4%BB%80%E9%BA%BC%E6%98%AF%20git%20rebase/</id>
+            <updated>2021-10-02T15:54:40&#43;08:00</updated>
             <published>2021-06-15T18:36:14&#43;08:00</published>
             <author>
                     <name>mitsukuchiph.</name>
                     <uri>https://linooohon.com/portfolio</uri>
                     <email>linooohon@gmail.com</email>
                     </author>
-            <summary type="html">最近又整理了一下自己對 git 的概念，分享一下&lt;img src=&#34;main_pic/02_210615_git_rebase.png&#34;&gt;</summary>
+            <summary type="html">最近又整理了一下自己對 git 的概念，分享一下 &lt;img src=&#34;https://linooohon.com/blog/blog/images/02_210615/02_210615_git_rebase.png&#34; /&gt;</summary>
             
                 <content type="html">&lt;h1 style=&#34;text-align:center&#34;&gt;
 「Git 介紹」Ch1: 什麼是 git rebase
@@ -1565,7 +3074,7 @@ git rebase --continue
 &lt;blockquote&gt;
 &lt;p&gt;最近自己對 git 的概念又整理了一下，先來介紹一下 git rebase&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;&lt;img src=&#34;https://linooohon.com/blog/blog/main_pic/02_210615_git_rebase.png&#34; alt=&#34;Git 介紹」Ch1: 什麼是 git rebase&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://linooohon.com/blog/blog/images/02_210615/02_210615_git_rebase.png&#34; alt=&#34;Git 介紹」Ch1: 什麼是 git rebase&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;一-what-git-rebase-可以做什麼-&#34;&gt;一. (What?) git rebase 可以做什麼 ?&lt;/h2&gt;
 &lt;h3 id=&#34;除了-git-merge-的另一種選擇&#34;&gt;除了 &lt;code&gt;git merge&lt;/code&gt; 的另一種選擇&lt;/h3&gt;
 &lt;ul&gt;
@@ -1698,6 +3207,8 @@ $ git rebase -i &amp;lt;SHA-1&amp;gt;
 &lt;li&gt;&lt;a href=&#34;http://wangyufeng.org/2020/03/15/post-20200315/&#34;&gt;王雨峰的博客&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://gitbook.tw/chapters/branch/merge-with-rebase.html&#34;&gt;高見龍-為你自己學 Git&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
+&lt;h2 id=&#34;next-下一篇&#34;&gt;Next 下一篇:&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://linooohon.com/blog/blog/posts/03/210620/02「Git 介紹」git rebase -i&#34;&gt;02「Git 介紹」git rebase -i&lt;/a&gt;&lt;/p&gt;
 </content>
             
             
@@ -1720,7 +3231,7 @@ $ git rebase -i &amp;lt;SHA-1&amp;gt;
                             
                             
                             
-                                <category scheme="https://linooohon.com/blog/tags/git/" term="git" label="git" />
+                                <category scheme="https://linooohon.com/blog/tags/git/" term="Git" label="Git" />
                             
                         
                     
@@ -1730,18 +3241,18 @@ $ git rebase -i &amp;lt;SHA-1&amp;gt;
     
         <entry>
             <title type="text">Hi Blog, YUI - TOKYO</title>
-            <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/first-post/" />
-            <id>https://linooohon.com/blog/posts/first-post/</id>
-            <updated>2021-07-30T01:21:56&#43;08:00</updated>
+            <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/01/210603/first-post/" />
+            <id>https://linooohon.com/blog/posts/01/210603/first-post/</id>
+            <updated>2021-10-02T15:51:47&#43;08:00</updated>
             <published>2021-06-03T18:36:14&#43;08:00</published>
             <author>
                     <name>mitsukuchiph.</name>
                     <uri>https://linooohon.com/portfolio</uri>
                     <email>linooohon@gmail.com</email>
                     </author>
-            <summary type="html">Blog. 你好，多多指教&lt;img src=&#34;main_pic/01_210603_firstpost.jpg&#34;&gt;</summary>
+            <summary type="html">Blog. 你好，多多指教 &lt;img width=&#34;80%&#34; src=&#34;https://linooohon.com/blog/blog/images/01_210603/01_210603_firstpost.jpg&#34; /&gt;</summary>
             
-                <content type="html">&lt;p&gt;&lt;img src=&#34;https://linooohon.com/blog/blog/main_pic/01_210603_firstpost.jpg&#34; alt=&#34;Hi Blog, YUI - TOKYO&#34;&gt;&lt;/p&gt;
+                <content type="html">&lt;p&gt;&lt;img src=&#34;https://linooohon.com/blog/blog/images/01_210603/01_210603_firstpost.jpg&#34; alt=&#34;Hi Blog, YUI - TOKYO&#34;&gt;&lt;/p&gt;
 &lt;h5 id=&#34;try-to-share-the-things-i-experienced-and-some-of-my-ideas-on-this-platform-thanks&#34;&gt;Try to share the things I experienced and some of my ideas on this platform, thanks!&lt;/h5&gt;
 &lt;h5 id=&#34;so&#34;&gt;So,&lt;/h5&gt;
 &lt;h5 id=&#34;for-the-first-post-of-the-new-site-im-going-to-share-the-lyrics-of-the-songs-that-i-really-love-recently&#34;&gt;for the first post of the new site, I&#39;m going to share the lyrics of the songs that I really love recently.&lt;/h5&gt;
@@ -1840,7 +3351,7 @@ At least I know that much.
                             
                             
                             
-                                <category scheme="https://linooohon.com/blog/tags/life/" term="life" label="life" />
+                                <category scheme="https://linooohon.com/blog/tags/life/" term="Life" label="Life" />
                             
                         
                     

@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+    <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
+    <meta charset="UTF-8" />
+
+    <meta name="generator" content="Hugo 0.83.1" /><meta name="theme-color" content="#fff" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <title>Python 觀念(1) - Iteration, Iterable, Iterator | mitsukuchiph.</title>
+
+    <link rel="stylesheet" href="/blog/css/meme.min.52302fc2c748579e45ca7d728c12eb575296a3fd3d12f87e02bcb2f58d90997b.css"/>
+
+    
+    
+        <script src="/blog/js/meme.min.811da9ffaffab122daf294e15ed79153ffaf004328e3be8eca5aa6fecb733bb8.js"></script>
+
+    
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB&#43;Garamond:ital,wght@0,400;0,500;0,700;1,400;1,700&amp;family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" media="print" onload="this.media='all'" />
+        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB&#43;Garamond:ital,wght@0,400;0,500;0,700;1,400;1,700&amp;family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" /></noscript>
+
+    <meta name="author" content="linooohon" /><meta name="description" content="Python Iteration 如何運行，for loop 本質 - Iteration, Iterable, Iterator " />
+
+    <link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon" />
+    <link rel="mask-icon" href="/blog/icons/safari-pinned-tab.svg" color="#2a6df4" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/blog/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="mitsukuchiph." />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="mitsukuchiph." />
+    <meta name="msapplication-starturl" content="../../../../../" />
+    <meta name="msapplication-TileColor" content="#fff" />
+    <meta name="msapplication-TileImage" content="../../../../../icons/mstile-150x150.png" />
+    <link rel="manifest" href="/blog/manifest.json" />
+
+    
+    
+
+    
+    <link rel="canonical" href="https://linooohon.com/blog/posts/07/210727/Python%20%E8%A7%80%E5%BF%B5%281%29%20-%20Iteration,%20Iterable,%20Iterator/" />
+    
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "datePublished": "2021-07-27T18:36:14+08:00",
+        "dateModified": "2021-10-03T11:11:54+08:00",
+        "url": "https://linooohon.com/blog/posts/07/210727/Python%20%E8%A7%80%E5%BF%B5%281%29%20-%20Iteration,%20Iterable,%20Iterator/",
+        "headline": "Python 觀念(1) - Iteration, Iterable, Iterator",
+        "description": "Python Iteration 如何運行，for loop 本質 - Iteration, Iterable, Iterator ",
+        "inLanguage" : "zh-TW",
+        "articleSection": "posts",
+        "wordCount":  3188 ,
+        "image": ["https://linooohon.com/blog/blog/images/07_210727/07_210727_python_iteration.png"],
+        "author": {
+            "@type": "Person",
+            "description": "這是簡介",
+            "email": "linooohon@gmail.com",
+            "image": "https://linooohon.com/icons/apple-touch-icon.png",
+            "url": "https://linooohon.com/portfolio",
+            "name": "mitsukuchiph."
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "mitsukuchiph.",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://linooohon.com/icons/apple-touch-icon.png"
+            },
+            "url": "https://linooohon.com/"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebSite",
+            "@id": "https://linooohon.com/"
+        }
+    }
+</script>
+
+    
+
+<meta name="twitter:card" content="summary_large_image" />
+
+
+<meta name="twitter:creator" content="@linooohon" />
+
+    
+
+
+
+<meta property="og:title" content="Python 觀念(1) - Iteration, Iterable, Iterator" />
+<meta property="og:description" content="Python Iteration 如何運行，for loop 本質 - Iteration, Iterable, Iterator " />
+<meta property="og:url" content="https://linooohon.com/blog/posts/07/210727/Python%20%E8%A7%80%E5%BF%B5%281%29%20-%20Iteration,%20Iterable,%20Iterator/" />
+<meta property="og:site_name" content="mitsukuchiph." />
+<meta property="og:locale" content="zh-tw" /><meta property="og:image" content="https://linooohon.com/blog/blog/images/07_210727/07_210727_python_iteration.png" />
+<meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2021-07-27T18:36:14&#43;08:00" />
+    <meta property="article:modified_time" content="2021-10-03T11:11:54&#43;08:00" />
+    
+    <meta property="article:section" content="posts" />
+
+
+
+    
+    
+
+    
+</head>
+
+    <body>
+        <div class="container">
+            
+    <header class="header">
+        
+            <div class="header-wrapper">
+                <div class="header-inner single">
+                    
+    <div class="site-brand">
+        
+            <a href="/blog/" class="brand">mitsukuchiph.</a>
+        
+    </div>
+
+                    <nav class="nav">
+    <ul class="menu" id="menu">
+        
+            
+        
+        
+        
+        
+            
+                <li class="menu-item"><a href="/blog/posts/"><span class="menu-item-name">pos</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/blog/categories/"><span class="menu-item-name">cat</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/blog/tags/"><span class="menu-item-name">tag</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/blog/about/"><span class="menu-item-name">abt</span></a>
+                </li>
+            
+        
+            
+                
+                    
+                    
+                        <li class="menu-item">
+                            <a id="theme-switcher" href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon theme-icon-light"><path d="M193.2 104.5l48.8-97.5a18 18 0 0128 0l48.8 97.5 103.4 -34.5a18 18 0 0119.8 19.8l-34.5 103.4l97.5 48.8a18 18 0 010 28l-97.5 48.8 34.5 103.4a18 18 0 01-19.8 19.8l-103.4-34.5-48.8 97.5a18 18 0 01-28 0l-48.8-97.5l-103.4 34.5a18 18 0 01-19.8-19.8l34.5-103.4-97.5-48.8a18 18 0 010-28l97.5-48.8-34.5-103.4a18 18 0 0119.8-19.8zM256 128a128 128 0 10.01 0M256 160a96 96 0 10.01 0"/></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon theme-icon-dark"><path d="M27 412a256 256 0 10154-407a11.5 11.5 0 00-5 20a201.5 201.5 0 01-134 374a11.5 11.5 0 00-15 13"/></svg></a>
+                        </li>
+                    
+                
+            
+        
+            
+                
+            
+        
+    </ul>
+</nav>
+
+                    
+                </div>
+            </div>
+            
+    <input type="checkbox" id="nav-toggle" aria-hidden="true" />
+    <label for="nav-toggle" class="nav-toggle"></label>
+    <label for="nav-toggle" class="nav-curtain"></label>
+
+
+        
+    </header>
+
+
+
+
+            
+            
+    <main class="main single" id="main">
+    <div class="main-inner">
+
+        
+
+        <article class="content post h-entry" data-align="justify" data-type="posts" data-toc-num="true">
+
+            <h1 class="post-title p-name">Python 觀念(1) - Iteration, Iterable, Iterator</h1>
+
+            <div class="post-subtitle p-name">Python 自我心得</div>
+            
+
+            
+                
+            
+
+            
+                
+
+<div class="post-meta">
+    
+        
+        <time datetime="2021-07-27T18:36:14&#43;08:00" class="post-meta-item published dt-published"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon post-meta-icon"><path d="M148 288h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12zm108-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 96v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm192 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96-260v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h48c26.5 0 48 21.5 48 48zm-48 346V160H48v298c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z"/></svg>&nbsp;2021.7.27</time>
+    
+    
+    
+    
+        
+        
+        
+            
+                <span class="post-meta-item category"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M464 128H272l-54.63-54.63c-6-6-14.14-9.37-22.63-9.37H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V176c0-26.51-21.49-48-48-48zm0 272H48V112h140.12l54.63 54.63c6 6 14.14 9.37 22.63 9.37H464v224z"/></svg>&nbsp;<a href="/blog/categories/202107/" class="category-link p-category">202107</a></span>
+            
+        
+    
+    
+        
+        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;3188</span>
+    
+    
+        
+        <span class="post-meta-item reading-time"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"/></svg>&nbsp;7&nbsp;分鐘</span>
+    
+    
+    
+</div>
+
+            
+
+            <nav class="contents">
+  <h2 id="contents" class="contents-title">目錄</h2><ol class="toc">
+    <li><a id="contents:了解-iteration-迭代" href="#了解-iteration-迭代">了解 Iteration (迭代)</a>
+      <ol>
+        <li><a id="contents:-iteration-" href="#-iteration-"><strong>&lt; Iteration &gt;</strong>:</a></li>
+        <li><a id="contents:-iterable-iterator兩個名詞必須分清楚-" href="#-iterable-iterator兩個名詞必須分清楚-"><strong>&lt; Iterable, Iterator兩個名詞必須分清楚 &gt;</strong>:</a>
+          <ol>
+            <li><a id="contents:iterable-可迭代物件" href="#iterable-可迭代物件">Iterable (可迭代物件):</a>
+              <ol>
+                <li><a id="contents:python對它的定義" href="#python對它的定義">Python對它的定義:</a></li>
+                <li><a id="contents:特徵" href="#特徵">特徵:</a></li>
+                <li><a id="contents:基本上" href="#基本上">基本上：</a></li>
+                <li><a id="contents:那-__iter__-和-__getitem__-是什麼" href="#那-__iter__-和-__getitem__-是什麼">那 <code>__iter__()</code> 和 <code>__getitem__()</code> 是什麼？</a></li>
+              </ol>
+            </li>
+            <li><a id="contents:iterator-迭代器" href="#iterator-迭代器">Iterator (迭代器):</a>
+              <ol>
+                <li><a id="contents:python-對它的定義" href="#python-對它的定義">Python 對它的定義:</a></li>
+                <li><a id="contents:特徵-1" href="#特徵-1">特徵:</a></li>
+                <li><a id="contents:那如何成為-iterator--iter-next" href="#那如何成為-iterator--iter-next">那如何成為 Iterator:  <code>iter()</code>, <code>next()</code></a></li>
+              </ol>
+            </li>
+          </ol>
+        </li>
+        <li><a id="contents:-關於-iter-__iter__-next-__next__--" href="#-關於-iter-__iter__-next-__next__--"><strong>&lt; 關於 <code>iter()</code>, <code>__iter__()</code>, <code>next()</code>, <code>__next__()</code> &gt;</strong> :</a>
+          <ol>
+            <li><a id="contents:built-in-function-iter-next" href="#built-in-function-iter-next">Built-in Function: <code>iter()</code> <code>next()</code></a></li>
+            <li><a id="contents:magic-methods-__iter__-__next__" href="#magic-methods-__iter__-__next__">Magic Methods: <code>__iter__()</code> <code>__next__()</code></a></li>
+            <li><a id="contents:那意思是我們可以自己客製化-object-修改這個-object-的--的功能" href="#那意思是我們可以自己客製化-object-修改這個-object-的--的功能">那意思是我們可以自己客製化 object 修改這個 object 的 <code>+</code> 的功能</a></li>
+            <li><a id="contents:所以結論是" href="#所以結論是">所以，結論是:</a></li>
+            <li><a id="contents:在-python-中有數不清像--這樣由-__add__-代勞的事情" href="#在-python-中有數不清像--這樣由-__add__-代勞的事情">在 Python 中有數不清像 <code>+</code> 這樣由 <code>__add__()</code> 代勞的事情，</a></li>
+            <li><a id="contents:那同理回到主題" href="#那同理回到主題">那同理，回到主題:</a></li>
+            <li><a id="contents:一個小結論" href="#一個小結論">一個小結論:</a></li>
+            <li><a id="contents:用-iter-再舉個例子" href="#用-iter-再舉個例子">用 <code>iter()</code> 再舉個例子:</a></li>
+            <li><a id="contents:關於前面提到-for-loop-的概念" href="#關於前面提到-for-loop-的概念">關於前面提到 for loop 的概念:</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a id="contents:收尾" href="#收尾">收尾:</a></li>
+    <li><a id="contents:the-end" href="#the-end">The End:</a>
+      <ol>
+        <li><a id="contents:-self-checklist-" href="#-self-checklist-"><strong>&lt; Self Checklist &gt;</strong>:</a></li>
+        <li><a id="contents:-reference-" href="#-reference-"><strong>&lt; Reference &gt;</strong>:</a></li>
+        <li><a id="contents:-next-下一篇-" href="#-next-下一篇-"><strong>&lt; Next 下一篇 &gt;</strong>:</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav><div class="post-body e-content">
+                <h1 style="text-align:center">
+Python 觀念紀錄 - Iteration, Iterable, Iterator
+</h1>
+<blockquote>
+<p>在此對 Iteration, Iterable, Iterator 的觀念做個紀錄。</p>
+</blockquote>
+<p><img src="/blog/images/07_210727/07_210727_python_iteration.png" alt="Python 觀念紀錄 - Iteration, Iterable, Iterator"></p>
+<h2 id="了解-iteration-迭代"><a href="#了解-iteration-迭代" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:了解-iteration-迭代" class="headings">了解 Iteration (迭代)</a></h2>
+<h3 id="-iteration-"><a href="#-iteration-" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:-iteration-" class="headings"><strong>&lt; Iteration &gt;</strong>:</a></h3>
+<p>是個廣義名詞, 意思是每次去 &quot;遍歷(走訪)&quot; 1 個 object, 對裡面每個 item 做想操作的事的這個過程，ex: 像是在程式碼中操作 loop，我們可以說這個是一種 Iteration。</p>
+<h3 id="-iterable-iterator兩個名詞必須分清楚-"><a href="#-iterable-iterator兩個名詞必須分清楚-" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:-iterable-iterator兩個名詞必須分清楚-" class="headings"><strong>&lt; Iterable, Iterator兩個名詞必須分清楚 &gt;</strong>:</a></h3>
+<ul>
+<li>Iterable</li>
+<li>Iterator</li>
+</ul>
+<h4 id="iterable-可迭代物件"><a href="#iterable-可迭代物件" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:iterable-可迭代物件" class="headings">Iterable (可迭代物件):</a></h4>
+<blockquote>
+<p>在 Python 中 Iterable 和 Iterator 有特別意義，先解釋 Iterable。</p>
+</blockquote>
+<h5 id="python對它的定義"><a href="#python對它的定義" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:python對它的定義" class="headings">Python對它的定義:</a></h5>
+<p>是一個物件，這個物件裡要有 <code>__iter__()</code> 方法或是 <code>__getitem__()</code> 方法(要能支持從 0 開始的index)，這兩個其中一個條件達成，它就是定義上的 Iterable。</p>
+<blockquote>
+<p>為什麼要有這兩個方法，因為 Python 說要成為 Iterable 就必須支持 Iteration Protocol 或是 Sequence Protocol。</p>
+</blockquote>
+<p><code>__iter__()</code> 對應 Iteration Protocol。</p>
+<p><code>__getitem__()</code> 對應 Sequence Protocol。</p>
+<h5 id="特徵"><a href="#特徵" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:特徵" class="headings">特徵:</a></h5>
+<ol>
+<li>是一個物件。</li>
+<li>可以 for loop 遍歷的 objects 它都是定義上 Iterable 的範圍。</li>
+</ol>
+<h5 id="基本上"><a href="#基本上" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:基本上" class="headings">基本上：</a></h5>
+<ol start="2">
+<li>當今天迭代的 Iterable 是 String, 那每次就是得到單個字符。</li>
+<li>當今天迭代的 Iterable 是 文件，那每次得到的就是每一行的字符串。</li>
+<li>當今天迭代的 Iterable 是 Dictionary, 那每次得到的就是該次的 Key。</li>
+</ol>
+<pre><code>dic, list, tuple, range, string, set, numpy array, dataframe, bytes 都是 Iterable
+</code></pre><h5 id="那-__iter__-和-__getitem__-是什麼"><a href="#那-__iter__-和-__getitem__-是什麼" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:那-__iter__-和-__getitem__-是什麼" class="headings">那 <code>__iter__()</code> 和 <code>__getitem__()</code> 是什麼？</a></h5>
+<p>它們是 Python Magic Methods
+<code>__iter__()</code>: <a href="https://docs.python.org/3/reference/datamodel.html#object.__iter__" target="_blank" rel="noopener">Docs</a>
+<code>__getitem__()</code>: <a href="https://docs.python.org/3/reference/datamodel.html#object.__getitem__" target="_blank" rel="noopener">Docs</a></p>
+<p>當 <code>__iter__()</code> 被呼叫時，會 return 一個 Iterator(新的 Iterator)
+當 <code>__getitem__()</code> 在 class 裡被定義, 使用object[index]形式, 就會呼叫該方法:</p>
+<pre><code class="language-python=" data-lang="python=">class Hi():
+    def __init__(self, name):
+        self.name = name
+    def __getitem__(self, key):
+        return &quot;__getitem__ is called&quot;
+
+hi = Hi(&quot;Phil&quot;)
+print(hi[2])  
+
+# 輸出:
+# __getitem__ is called
+</code></pre><p>那什麼是 Iterator，接著講：</p>
+<h4 id="iterator-迭代器"><a href="#iterator-迭代器" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:iterator-迭代器" class="headings">Iterator (迭代器):</a></h4>
+<ul>
+<li>Iterator: <a href="https://docs.python.org/3/library/stdtypes.html#iterator-types" target="_blank" rel="noopener">Docs</a></li>
+</ul>
+<h5 id="python-對它的定義"><a href="#python-對它的定義" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:python-對它的定義" class="headings">Python 對它的定義:</a></h5>
+<p>它是一個物件，這個物件裡要有 <code>__iter__()</code> 方法和 <code>__next__()</code> 方法，兩個方法都必須要有，那它就是定義上的 Iterator。</p>
+<h5 id="特徵-1"><a href="#特徵-1" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:特徵-1" class="headings">特徵:</a></h5>
+<ol>
+<li>是一個物件。</li>
+<li>Iterable 其實可以 for loop 是因為 Python 私底下幫忙轉換為 Iterator 然後做處理。</li>
+<li>Iterator 才可以調用 <code>next()</code>, Iterable 不行。</li>
+</ol>
+<pre><code>而, dic, list, tuple, range, string, set, numpy array, dataframe, bytes 都不是 Iterator
+</code></pre><blockquote>
+<p>從下面程式碼可以發現他們裡面都沒有 <code>__next__()</code>，所以不會是 Iterator</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-py" data-lang="py"><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+
+<span class="c1"># dic</span>
+<span class="n">dic_</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;phil&#39;</span><span class="p">,</span> <span class="s1">&#39;phone&#39;</span><span class="p">:</span> <span class="s1">&#39;0933333333&#39;</span><span class="p">}</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;===============dic===============&#34;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">dic_</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">dic_</span><span class="p">,</span> <span class="s1">&#39;__getitem__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">dic_</span><span class="p">,</span> <span class="s1">&#39;__next__&#39;</span><span class="p">))</span> <span class="c1"># False</span>
+
+
+<span class="c1"># list</span>
+<span class="n">list_</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;value&#39;</span><span class="p">},</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">}]</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;===============list===============&#34;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">list_</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">list_</span><span class="p">,</span> <span class="s1">&#39;__getitem__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">list_</span><span class="p">,</span> <span class="s1">&#39;__next__&#39;</span><span class="p">))</span> <span class="c1"># False</span>
+
+
+<span class="c1"># tuple</span>
+<span class="n">tuple_</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;value&#39;</span><span class="p">},</span> <span class="mi">2</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;===============tuple===============&#34;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">tuple_</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">tuple_</span><span class="p">,</span> <span class="s1">&#39;__getitem__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">tuple_</span><span class="p">,</span> <span class="s1">&#39;__next__&#39;</span><span class="p">))</span> <span class="c1"># False</span>
+
+<span class="c1"># range</span>
+<span class="n">range_</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;===============range===============&#34;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">range_</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">range_</span><span class="p">,</span> <span class="s1">&#39;__getitem__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">range_</span><span class="p">,</span> <span class="s1">&#39;__next__&#39;</span><span class="p">))</span> <span class="c1"># False</span>
+
+<span class="c1"># string</span>
+<span class="n">string_</span> <span class="o">=</span> <span class="s1">&#39;a&#39;</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;===============string===============&#34;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">string_</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">string_</span><span class="p">,</span> <span class="s1">&#39;__getitem__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">string_</span><span class="p">,</span> <span class="s1">&#39;__next__&#39;</span><span class="p">))</span> <span class="c1"># False</span>
+
+<span class="c1"># set</span>
+<span class="n">set_</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)}</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;===============set===============&#34;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">set_</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">set_</span><span class="p">,</span> <span class="s1">&#39;__getitem__&#39;</span><span class="p">))</span> <span class="c1"># False</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">set_</span><span class="p">,</span> <span class="s1">&#39;__next__&#39;</span><span class="p">))</span> <span class="c1"># False</span>
+
+<span class="c1"># numpy array</span>
+<span class="n">np_array_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;===============np_array===============&#34;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">np_array_</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">np_array_</span><span class="p">,</span> <span class="s1">&#39;__getitem__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">np_array_</span><span class="p">,</span> <span class="s1">&#39;__next__&#39;</span><span class="p">))</span> <span class="c1"># False</span>
+
+<span class="c1"># dataframe</span>
+<span class="n">df_</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&#34;1.csv&#34;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;===============dataframe===============&#34;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">df_</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">df_</span><span class="p">,</span> <span class="s1">&#39;__getitem__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">df_</span><span class="p">,</span> <span class="s1">&#39;__next__&#39;</span><span class="p">))</span> <span class="c1"># False</span>
+
+
+<span class="c1"># bytes</span>
+<span class="n">bytes_1</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;===============bytes===============&#34;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">bytes_1</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">bytes_1</span><span class="p">,</span> <span class="s1">&#39;__getitem__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">bytes_1</span><span class="p">,</span> <span class="s1">&#39;__next__&#39;</span><span class="p">))</span> <span class="c1"># False</span>
+
+</code></pre></td></tr></table></div>
+</div>
+</div><h5 id="那如何成為-iterator--iter-next"><a href="#那如何成為-iterator--iter-next" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:那如何成為-iterator--iter-next" class="headings">那如何成為 Iterator:  <code>iter()</code>, <code>next()</code></a></h5>
+<blockquote>
+<p>根據 Iterator 成立的條件，我們如果 call Builtin Function <code>iter()</code>
+裡面帶 Iterable，就可以 return Iterator.</p>
+</blockquote>
+<blockquote>
+<p>所以</p>
+</blockquote>
+<ol>
+<li><code>iter()</code> 會 return Iterator</li>
+<li>Iterator 裡有 <code>next()</code> 所以可以使用 <code>next()</code></li>
+</ol>
+<blockquote>
+<p><code>next()</code> 的作用:</p>
+</blockquote>
+<p>Iterator 可以被 <code>next()</code> 調用，並不斷的返回下一個資料，直到沒有資料的時候，會拋出 StopIteration error, 而這是什麼意思呢？等等再底下有個例子可以解釋。</p>
+<p>在 Python Docs <a href="https://docs.python.org/3.9/glossary.html#term-iterator" target="_blank" rel="noopener">Glossary</a> 裡面，寫道，Iterator is an object representing a stream of data，可以看到 Iterator 是代表一個資料流的概念，也就是說程式它本身其實不知道整個長度，像是 <code>dict</code>, <code>list</code>, <code>str</code> 是一開始就知道長度的，但 Iterator 的概念是<code>流</code>, 每當我需要的時候，我才通過 <code>next()</code> 拿到下一個我要的產出(資料), 以我的觀點 Iterator 有點像是一個 被動、懶惰的代表, 我喊它，它才動, 我不喊它, 它永遠都不動，所以他的計算是被動的，只有在需要 return 下一個資料的時候它才會行動(計算)。</p>
+<blockquote>
+<p>ex: 範例</p>
+</blockquote>
+<pre><code class="language-python=" data-lang="python=">ss_ = &quot;abc&quot;
+iter_ss_ = iter(ss_)
+print(hasattr(iter_ss_, '__iter__')) # True
+print(hasattr(iter_ss_, '__getitem__')) # False
+print(hasattr(iter_ss_, '__next__')) # True
+
+print(next(iter_ss_))
+print(next(iter_ss_))
+print(next(iter_ss_))
+
+
+# 輸出:
+&quot;&quot;&quot;
+True
+False
+True
+a
+b
+c
+&quot;&quot;&quot;
+
+</code></pre><blockquote>
+<p>底下這裡就會報錯因為不是 Iterator</p>
+</blockquote>
+<pre><code class="language-python=" data-lang="python=">ss_ = &quot;abc&quot;
+next(ss_)
+
+# 輸出
+&quot;&quot;&quot;
+True
+False
+True
+Traceback (most recent call last):
+TypeError: 'str' object is not an iterator
+&quot;&quot;&quot;
+</code></pre><h3 id="-關於-iter-__iter__-next-__next__--"><a href="#-關於-iter-__iter__-next-__next__--" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:-關於-iter-__iter__-next-__next__--" class="headings"><strong>&lt; 關於 <code>iter()</code>, <code>__iter__()</code>, <code>next()</code>, <code>__next__()</code> &gt;</strong> :</a></h3>
+<p>最一開始我也搞的滿模糊的，但要理解可以先拆分：</p>
+<h4 id="built-in-function-iter-next"><a href="#built-in-function-iter-next" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:built-in-function-iter-next" class="headings">Built-in Function: <code>iter()</code> <code>next()</code></a></h4>
+<p><code>iter()</code>, <code>next()</code> : Python Built-In Function <a href="https://docs.python.org/3/library/functions.html" target="_blank" rel="noopener">Docs</a></p>
+<p>所謂 Built-In Function, 你只要 call 它，Python 就會照著他原本寫好的劇本去跑。</p>
+<h4 id="magic-methods-__iter__-__next__"><a href="#magic-methods-__iter__-__next__" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:magic-methods-__iter__-__next__" class="headings">Magic Methods: <code>__iter__()</code> <code>__next__()</code></a></h4>
+<p><code>__iter__()</code>, <code>__next__()</code>: Python Magic Methods(Dunders)</p>
+<p>所謂 Magic Methods, 就是由 class 裡所提供的一些 methods, Python 將這些 methods 特徵弄成前後各兩個底線，而這些 methods 之所以很 magic(自認為<em class="emphasis-point">)，是因為</em>其實我們做的很多事情，都是他們幫我們代勞的。</p>
+<pre><code>代勞是什麼意思呢？
+</code></pre><p>看一下這個例子:</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-py" data-lang="py"><span class="n">number</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">print</span><span class="p">(</span><span class="n">number</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>   <span class="c1">#3</span>
+<span class="k">print</span><span class="p">(</span><span class="n">number</span><span class="o">.</span><span class="fm">__add__</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span> <span class="c1">#3</span>
+
+<span class="c1"># 會發現都是 print 出 3</span>
+<span class="c1"># 當我們用 Int 這個 type 做加法, `+` 和 使用 `__add__()` 是一樣的結果。</span>
+</code></pre></td></tr></table></div>
+</div>
+</div><div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-py" data-lang="py"><span class="err">如果我們用</span> <span class="sb">`help()`</span> <span class="err">看一下</span> <span class="n">Int</span> <span class="k">class</span>
+<span class="err">會發現它所定義的東西就是 `+` 要做的事</span>
+<span class="s2">&#34;&#34;&#34;
+</span><span class="s2">__add__(self, value, /)
+</span><span class="s2">    Return self+value.
+</span><span class="s2">&#34;&#34;&#34;</span>
+</code></pre></td></tr></table></div>
+</div>
+</div><h4 id="那意思是我們可以自己客製化-object-修改這個-object-的--的功能"><a href="#那意思是我們可以自己客製化-object-修改這個-object-的--的功能" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:那意思是我們可以自己客製化-object-修改這個-object-的--的功能" class="headings">那意思是我們可以自己客製化 object 修改這個 object 的 <code>+</code> 的功能</a></h4>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-py" data-lang="py"><span class="k">class</span> <span class="nc">CustomPlus</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num</span> <span class="o">=</span> <span class="n">num</span>
+    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&#34;__add__ is called &#34;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">num</span> <span class="o">-</span> <span class="n">value</span>
+
+<span class="n">cp</span> <span class="o">=</span> <span class="n">CustomPlus</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="fm">__add__</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+<span class="c1"># __add__ is called </span>
+<span class="c1"># -1</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">cp</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
+<span class="c1"># __add__ is called </span>
+<span class="c1"># -1</span>
+<span class="c1"># 可以發現 cp + 2 也是走 class 裡的 __add__() 所以結果就也會變成 -1</span>
+</code></pre></td></tr></table></div>
+</div>
+</div><h4 id="所以結論是"><a href="#所以結論是" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:所以結論是" class="headings">所以，結論是:</a></h4>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-py" data-lang="py"><span class="err">使用</span> <span class="sb">`+`</span> <span class="err">的背後，其實</span> <span class="n">python</span> <span class="err">是去找</span> <span class="sb">`Int`</span> <span class="k">class</span> <span class="err">所定義的 `</span><span class="nc">__add__</span><span class="p">()</span><span class="err">`</span> <span class="err">然後叫它做事</span>
+</code></pre></td></tr></table></div>
+</div>
+</div><h4 id="在-python-中有數不清像--這樣由-__add__-代勞的事情"><a href="#在-python-中有數不清像--這樣由-__add__-代勞的事情" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:在-python-中有數不清像--這樣由-__add__-代勞的事情" class="headings">在 Python 中有數不清像 <code>+</code> 這樣由 <code>__add__()</code> 代勞的事情，</a></h4>
+<p>詳細可以看 <a href="https://docs.python.org/3/reference/datamodel.html#special-method-names" target="_blank" rel="noopener">Docs 3. Data model 這頁</a></p>
+<h4 id="那同理回到主題"><a href="#那同理回到主題" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:那同理回到主題" class="headings">那同理，回到主題:</a></h4>
+<p>其實 <code>iter()</code> <code>next()</code> 是會去找當下的 type 所能使用的 <code>__iter__()</code>, <code>__next__()</code> 代勞，白話一點就是 call <code>iter()</code> <code>next()</code> 的下一瞬間，Python 就是會設法 call <code>__iter__()</code>, <code>__next__()</code>。</p>
+<h4 id="一個小結論"><a href="#一個小結論" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:一個小結論" class="headings">一個小結論:</a></h4>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-py" data-lang="py"><span class="n">call</span> <span class="sb">`iter()`</span> <span class="sb">`next()`</span> <span class="err">可以說是等價於</span> <span class="n">call</span> <span class="sb">`__iter__()`</span><span class="p">,</span> <span class="sb">`__next__()`</span>
+<span class="err">但</span><span class="p">,</span>
+<span class="n">call</span> <span class="sb">`__iter__()`</span><span class="p">,</span> <span class="sb">`__next__()`</span> <span class="err">不等於</span> <span class="n">call</span> <span class="sb">`iter()`</span> <span class="sb">`next()`</span>
+<span class="err">因為就像上面說的</span> <span class="n">magic</span> <span class="n">methods</span> <span class="err">可以客製化</span>
+<span class="err">但</span> <span class="n">Built</span><span class="o">-</span><span class="n">In</span> <span class="n">Function</span> <span class="err">就是照著劇本走，</span>
+<span class="err">所以當你把</span> <span class="sb">`__iter__()`</span><span class="p">,</span> <span class="sb">`__next__()`</span> <span class="err">改成不照著</span> <span class="sb">`iter()`</span> <span class="sb">`next()`</span> <span class="err">劇本規定的時後，再來使用</span> <span class="sb">`iter()`</span> <span class="sb">`next()`</span> <span class="err">就肯定會報錯</span>
+<span class="err">看一下底下</span> <span class="sb">`iter()`</span> <span class="err">的例子</span>
+</code></pre></td></tr></table></div>
+</div>
+</div><h4 id="用-iter-再舉個例子"><a href="#用-iter-再舉個例子" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:用-iter-再舉個例子" class="headings">用 <code>iter()</code> 再舉個例子:</a></h4>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-py" data-lang="py"><span class="n">s</span> <span class="o">=</span> <span class="s2">&#34;abc&#34;</span>
+<span class="n">iter_s</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="n">__iter__s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="fm">__iter__</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">iter_s</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">__iter__s</span><span class="p">))</span>
+
+<span class="c1"># 輸出</span>
+<span class="s2">&#34;&#34;&#34;
+</span><span class="s2">&lt;class &#39;str_iterator&#39;&gt;
+</span><span class="s2">&lt;class &#39;str_iterator&#39;&gt;
+</span><span class="s2">&#34;&#34;&#34;</span>
+</code></pre></td></tr></table></div>
+</div>
+</div><pre><code>這裡沒問題，兩個就是做一樣的事，但如果底下我們自定義呢?
+</code></pre><blockquote>
+<p>這裡自訂義 class Foo:</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-py" data-lang="py"><span class="k">class</span> <span class="nc">Foo</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&#34;Foo&#34;</span>
+
+<span class="n">foo</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">foo</span><span class="o">.</span><span class="fm">__iter__</span><span class="p">())</span>
+
+<span class="c1"># 輸出不會報錯</span>
+<span class="c1"># Foo </span>
+</code></pre></td></tr></table></div>
+</div>
+</div><blockquote>
+<p>如果改成 <code>iter()</code> 這時底下這裡就會出錯，因為 <code>iter()</code> 的劇本就是堅持要拿到 <code>Iterator</code>, 你給他 <code>str</code> 就肯定噴錯</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-py" data-lang="py"><span class="k">class</span> <span class="nc">Foo</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&#34;Foo&#34;</span>
+
+<span class="n">foo</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">foo</span><span class="p">))</span>
+
+<span class="c1"># 輸出會報錯</span>
+<span class="s2">&#34;&#34;&#34;
+</span><span class="s2">Traceback (most recent call last):
+</span><span class="s2">print(iter(foo))
+</span><span class="s2">TypeError: iter() returned non-iterator of type &#39;str&#39;
+</span><span class="s2">&#34;&#34;&#34;</span>
+
+</code></pre></td></tr></table></div>
+</div>
+</div><blockquote>
+<p>小結論:</p>
+</blockquote>
+<ol>
+<li>所有可 for loop 的 object 都是 Iterable。</li>
+<li>所有可作用於 <code>next()</code> 的 object 都是 Iterator。</li>
+<li><code>list</code>, <code>str</code>, <code>dict</code> 這些是 Iterable 不是 Iterator, 但可以使用 <code>iter()</code> return 一個 Iterator。</li>
+<li>可以自己做 class 做出 Iterator, 本質上 Iterator 可以 for loop 是由 <code>__iter__()</code> return self, 也就是 return object 自己去實現的，如此才能不斷繼續調用自己的 <code>__next__()</code> 如果 class 裡只實現 <code>__next__()</code>，那是不能使用 for loop 的，只能調用 next() 一個一個呼叫。</li>
+<li>那 <code>next()</code> return 什麼？ 你讓它 return 什麼它就 return 什麼。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-py" data-lang="py"><span class="n">iterator_</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">([[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">2</span><span class="p">,</span> <span class="p">{}])</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">iterator_</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">iterator_</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">iterator_</span><span class="p">)))</span>
+
+<span class="s2">&#34;&#34;&#34;
+</span><span class="s2">&lt;class &#39;list&#39;&gt;
+</span><span class="s2">&lt;class &#39;int&#39;&gt;
+</span><span class="s2">&lt;class &#39;dict&#39;&gt;
+</span><span class="s2">&#34;&#34;&#34;</span>
+
+<span class="c1"># 當然也是可以客製化 class 裡的 `__next__()`</span>
+</code></pre></td></tr></table></div>
+</div>
+</div><h4 id="關於前面提到-for-loop-的概念"><a href="#關於前面提到-for-loop-的概念" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:關於前面提到-for-loop-的概念" class="headings">關於前面提到 for loop 的概念:</a></h4>
+<ul>
+<li>for loop 的本質上就是通過不斷調用 <code>next()</code> 實現的。</li>
+</ul>
+<p>ex:</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-py" data-lang="py"><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]:</span>
+    <span class="k">pass</span>
+</code></pre></td></tr></table></div>
+</div>
+</div><p>實際上相當於是:</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-py" data-lang="py"><span class="c1"># 先得到 Iterator</span>
+<span class="n">iterator_</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iterator_</span><span class="p">)</span> <span class="c1">#獲得下一個值</span>
+    <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span> <span class="c1"># 遇到 StopIteration 就退出 loop</span>
+        <span class="k">break</span>
+</code></pre></td></tr></table></div>
+</div>
+</div><div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-py" data-lang="py"><span class="n">iterator_</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&#34;front======&#34;</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iterator_</span><span class="p">)</span> <span class="c1">#獲得下一個值</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&#34;back======&#34;</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span> <span class="c1"># 遇到 StopIteration 就退出 loop</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&#34;到底了======&#34;</span><span class="p">)</span>
+        <span class="k">break</span>
+        
+        
+<span class="c1"># 如果仔細這樣 print</span>
+<span class="s2">&#34;&#34;&#34;
+</span><span class="s2">front======
+</span><span class="s2">back======
+</span><span class="s2">1
+</span><span class="s2">front======
+</span><span class="s2">back======
+</span><span class="s2">2
+</span><span class="s2">front======
+</span><span class="s2">back======
+</span><span class="s2">3
+</span><span class="s2">front======
+</span><span class="s2">back======
+</span><span class="s2">4
+</span><span class="s2">front======
+</span><span class="s2">back======
+</span><span class="s2">5
+</span><span class="s2">front======
+</span><span class="s2">到底了======
+</span><span class="s2">&#34;&#34;&#34;</span>
+
+<span class="c1"># 會發現 第 6 次 call next(), 就出現 exception</span>
+</code></pre></td></tr></table></div>
+</div>
+</div><p>所以 for 語句是如何 loop 的:</p>
+<ul>
+<li>
+<ol>
+<li>先判斷是否為可迭代物件(Iterable)，不是的話直接報錯: TypeError: 'xxxx' object is not iterable，是的話調用 <code>__iter__()</code>，並 return 一個迭代器(Iterator)</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>不斷的調用迭代器(Iterato)的 <code>__next__()</code> 方法，每次都按照順序返回迭代器(Iterator)中的一個值</li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li>迭代到最後，已經沒有元素了，這時就會拋出 StopIteration，但是這個異常就像上面的例子一樣會做處理，Python 自己會處理掉，不會給 developer 看。</li>
+</ol>
+</li>
+</ul>
+<h2 id="收尾"><a href="#收尾" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:收尾" class="headings">收尾:</a></h2>
+<ul>
+<li>Iteration(迭代): 可以指一個概念，輪廓，操作過程，是一個廣義名詞，在程式中的例子有 for loop</li>
+<li>Iterable(可迭代物件): 一個物件，根據 Python 的定義，得出結論:
+<ol>
+<li>如果可以 for loop 它，就是 Iterable 的範疇</li>
+<li>但 Iterable 可以 for loop 是因為 Python 幫我們把它轉變成 Iterator</li>
+</ol>
+</li>
+<li>Iterator(迭代器): 一個物件，根據 Python 的定義，得出結論：
+<ol>
+<li>Python for loop 的原理就是需要 Iterator，然後不斷調用 Iterator 的 <code>__next__()</code></li>
+<li>產生 Iterator 的方式:
+<ul>
+<li>iter()</li>
+<li>自己客製化 class</li>
+<li>產生 generator iterator (或是叫做 generator object / generator)(是一種 Iterator，下篇會敘述)</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="the-end"><a href="#the-end" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:the-end" class="headings">The End:</a></h2>
+<h3 id="-self-checklist-"><a href="#-self-checklist-" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:-self-checklist-" class="headings"><strong>&lt; Self Checklist &gt;</strong>:</a></h3>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Explain what is <code>Iteration</code>.</li>
+<li><input checked="" disabled="" type="checkbox"> Explain what is <code>Iterable</code>.</li>
+<li><input checked="" disabled="" type="checkbox"> Explain what is <code>Iterator</code>.</li>
+<li><input checked="" disabled="" type="checkbox"> Can you tell what is the difference between <code>Iterable</code> and <code>Iterator</code>.</li>
+<li><input checked="" disabled="" type="checkbox"> Explain what is <code>Built-in Function</code>.</li>
+<li><input checked="" disabled="" type="checkbox"> Explain what is <code>Magic Methods</code>.</li>
+<li><input checked="" disabled="" type="checkbox"> Explain how Python <code>for loop</code> works.</li>
+<li><input checked="" disabled="" type="checkbox"> Use <code>hasattr()</code>, <code>next()</code>, <code>iter()</code></li>
+</ul>
+<h3 id="-reference-"><a href="#-reference-" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:-reference-" class="headings"><strong>&lt; Reference &gt;</strong>:</a></h3>
+<ul>
+<li><a href="https://docs.python.org/3/reference/datamodel.html#object.__iter__" target="_blank" rel="noopener">Python <code>__iter__()</code></a></li>
+<li><a href="https://docs.python.org/3/reference/datamodel.html#object.__getitem__" target="_blank" rel="noopener">Python <code>__getitem__()</code></a></li>
+<li><a href="https://docs.python.org/3/library/stdtypes.html#iterator-types" target="_blank" rel="noopener">Python Iterator</a></li>
+<li><a href="https://docs.python.org/3.9/glossary.html" target="_blank" rel="noopener">Python Glossary</a></li>
+<li><a href="https://docs.python.org/3/library/functions.html" target="_blank" rel="noopener">Python Built-In Function</a></li>
+<li><a href="https://docs.python.org/3/reference/datamodel.html#special-method-names" target="_blank" rel="noopener">Python Docs 3. Data model</a></li>
+<li><a href="https://www.kancloud.cn/smilesb101/python3_x/296095" target="_blank" rel="noopener">廖雪峰 Python 3.x</a></li>
+<li><a href="https://medium.com/citycoddee/python%E9%80%B2%E9%9A%8E%E6%8A%80%E5%B7%A7-6-%E8%BF%AD%E4%BB%A3%E9%82%A3%E4%BB%B6%E5%B0%8F%E4%BA%8B-%E6%B7%B1%E5%85%A5%E4%BA%86%E8%A7%A3-iteration-iterable-iterator-iter-getitem-next-fac5b4542cf4" target="_blank" rel="noopener">迭代那件小事：深入了解 Iteration / Iterable / Iterator / <strong>iter</strong> / <strong>getitem</strong> / <strong>next</strong> / yield</a></li>
+</ul>
+<h3 id="-next-下一篇-"><a href="#-next-下一篇-" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:-next-下一篇-" class="headings"><strong>&lt; Next 下一篇 &gt;</strong>:</a></h3>
+<p><a href="/blog/posts/08/210810/python的yield和scrapy的yield">Python 觀念(2) yield 是什麼?，那Scrapy 裡的 yield?</a></p>
+
+            </div>
+
+            
+
+
+        </article>
+
+        
+
+        
+
+        
+
+
+        <div class="post-share">
+
+        
+
+        <div class="share-items">
+
+            
+                <div class="share-item twitter">
+                    
+                    <a href="https://twitter.com/share?url=https://linooohon.com/blog/posts/07/210727/Python%20%E8%A7%80%E5%BF%B5%281%29%20-%20Iteration,%20Iterable,%20Iterator/&amp;text=Python%20%e8%a7%80%e5%bf%b5%281%29%20-%20Iteration,%20Iterable,%20Iterator&amp;hashtags=Python,Iterator,&amp;via=" title="分享到「Twitter」" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon twitter-icon"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg></a>
+                </div>
+            
+
+            
+                <div class="share-item facebook">
+                    
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=https://linooohon.com/blog/posts/07/210727/Python%20%E8%A7%80%E5%BF%B5%281%29%20-%20Iteration,%20Iterable,%20Iterator/&amp;hashtag=%23Python" title="分享到「Facebook」" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon facebook-icon"><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg></a>
+                </div>
+            
+
+            
+                <div class="share-item linkedin">
+                    
+                    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://linooohon.com/blog/posts/07/210727/Python%20%E8%A7%80%E5%BF%B5%281%29%20-%20Iteration,%20Iterable,%20Iterator/&amp;title=Python%20%e8%a7%80%e5%bf%b5%281%29%20-%20Iteration,%20Iterable,%20Iterator&amp;summary=Python%20Iteration%20%e5%a6%82%e4%bd%95%e9%81%8b%e8%a1%8c%ef%bc%8cfor%20loop%20%e6%9c%ac%e8%b3%aa%20-%20Iteration,%20Iterable,%20Iterator%20&amp;source=mitsukuchiph." title="分享到「LinkedIn」" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon linkedin-icon"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg></a>
+                </div>
+            
+
+            
+
+            
+
+            
+
+            
+
+            
+
+            
+                <div class="share-item qrcode">
+                    <div class="qrcode-container" title="透過「二維碼」"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon qrcode-icon"><path d="M0 224h192V32H0v192zM64 96h64v64H64V96zm192-64v192h192V32H256zm128 128h-64V96h64v64zM0 480h192V288H0v192zm64-128h64v64H64v-64zm352-64h32v128h-96v-32h-32v96h-64V288h96v32h64v-32zm0 160h32v32h-32v-32zm-64 0h32v32h-32v-32z"/></svg><div id="qrcode-img"></div>
+                    </div>
+                    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+
+<script>
+    var typeNumber = 0;
+    var errorCorrectionLevel = 'L';
+    var qr = qrcode(typeNumber, errorCorrectionLevel);
+    qr.addData('https:\/\/linooohon.com\/blog\/posts\/07\/210727\/Python%20%E8%A7%80%E5%BF%B5%281%29%20-%20Iteration,%20Iterable,%20Iterator\/');
+    qr.make();
+    document.getElementById('qrcode-img').innerHTML = qr.createImgTag();
+</script>
+
+                </div>
+            
+
+        </div>
+
+    </div>
+
+
+
+
+        
+    
+    
+        <div class="related-posts">
+            <h2 class="related-title">相關文章：<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon related-icon"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"/></svg></h2>
+            <ul class="related-list">
+                
+                    <li class="related-item">
+                        <a href="/blog/posts/06/210720/Django%20-%20part1.2:%20Official%20Docs%20Note" class="related-link">Django - part1.2: Official Docs Note</a>
+                    </li>
+                
+                    <li class="related-item">
+                        <a href="/blog/posts/05/210714/%E3%80%8C%E3%80%8CFlask%E3%80%8D02:%20Static%20File%20handling,%20Database%20connection/" class="related-link">「Flask」02: Static File handling, Database connection</a>
+                    </li>
+                
+                    <li class="related-item">
+                        <a href="/blog/posts/04/210710/%E3%80%8CFlask%E3%80%8D01:%20Basic,%20Route,%20Templates,%20GET,%20POST/" class="related-link">「Flask」01: Basic, Route, Templates, GET, POST</a>
+                    </li>
+                
+                    <li class="related-item">
+                        <a href="/blog/posts/08/210810/python%E7%9A%84yield%E5%92%8Cscrapy%E7%9A%84yield/" class="related-link">Python 觀念(2) yield, generator?，那 Scrapy 裡的 yield?</a>
+                    </li>
+                
+            </ul>
+        </div>
+    
+
+
+
+        
+    
+        <div class="post-tags">
+            
+                
+                
+                
+                
+                    
+                    <a href="/blog/tags/python/" rel="tag" class="post-tags-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon tag-icon"><path d="M0 252.118V48C0 21.49 21.49 0 48 0h204.118a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882L293.823 497.941c-18.745 18.745-49.137 18.745-67.882 0L14.059 286.059A48 48 0 0 1 0 252.118zM112 64c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48z"/></svg>Python</a>
+                
+            
+                
+                
+                
+                
+                    
+                    <a href="/blog/tags/iterator/" rel="tag" class="post-tags-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon tag-icon"><path d="M0 252.118V48C0 21.49 21.49 0 48 0h204.118a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882L293.823 497.941c-18.745 18.745-49.137 18.745-67.882 0L14.059 286.059A48 48 0 0 1 0 252.118zM112 64c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48z"/></svg>Iterator</a>
+                
+            
+        </div>
+    
+
+
+
+        
+
+
+        
+
+
+        
+    
+        
+        
+    
+    
+    
+    
+        <ul class="post-nav">
+            
+                <li class="post-nav-prev">
+                    <a href="/blog/posts/08/210810/python%E7%9A%84yield%E5%92%8Cscrapy%E7%9A%84yield/" rel="prev">&lt; Python 觀念(2) yield, generator?，那 Scrapy 裡的 yield?</a>
+                </li>
+            
+            
+                <li class="post-nav-next">
+                    <a href="/blog/posts/06/210720/Django%20-%20part1.2:%20Official%20Docs%20Note" rel="next">Django - part1.2: Official Docs Note &gt;</a>
+                </li>
+            
+        </ul>
+    
+
+
+
+        
+
+
+    </div>
+</main>
+
+
+            
+    <div id="back-to-top" class="back-to-top">
+        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon arrow-up"><path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/></svg></a>
+    </div>
+
+
+            
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="site-info">©&nbsp;&nbsp;mitsukuchiph.</div>
+
+            
+    
+        <ul class="socials"><li class="socials-item">
+                    <a href="/rss.xml" target="_blank" rel="external noopener" title="RSS"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon social-icon"><path d="M19.199 24C19.199 13.467 10.533 4.8 0 4.8V0c13.165 0 24 10.835 24 24h-4.801zM3.291 17.415c1.814 0 3.293 1.479 3.293 3.295 0 1.813-1.485 3.29-3.301 3.29C1.47 24 0 22.526 0 20.71s1.475-3.294 3.291-3.295zM15.909 24h-4.665c0-6.169-5.075-11.245-11.244-11.245V8.09c8.727 0 15.909 7.184 15.909 15.91z"/></svg></a>
+                </li><li class="socials-item">
+                    <a href="mailto:linooohon@gmail.com" target="_blank" rel="external noopener" title="Email"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon social-icon"><path d="M464 64H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm0 48v40.805c-22.422 18.259-58.168 46.651-134.587 106.49-16.841 13.247-50.201 45.072-73.413 44.701-23.208.375-56.579-31.459-73.413-44.701C106.18 199.465 70.425 171.067 48 152.805V112h416zM48 400V214.398c22.914 18.251 55.409 43.862 104.938 82.646 21.857 17.205 60.134 55.186 103.062 54.955 42.717.231 80.509-37.199 103.053-54.947 49.528-38.783 82.032-64.401 104.947-82.653V400H48z"/></svg></a>
+                </li><li class="socials-item">
+                    <a href="https://github.com/linooohon" target="_blank" rel="external noopener" title="GitHub"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon social-icon"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+                </li></ul>
+    
+
+<div class="site-copyright"></div><div class="custom-footer">Everyone you meet is fighting a battle you know nothing about. Be kind. Always.</div>
+
+            
+
+            
+        </div>
+    </footer>
+
+
+        </div>
+        
+
+        
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js"></script>
+
+<script>
+    mediumZoom(document.querySelectorAll('div.post-body img'), {
+        background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
+    })
+</script>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/instant.page@5.1.0/instantpage.min.js" type="module" defer></script>
+
+
+
+
+
+
+
+    </body>
+</html>
