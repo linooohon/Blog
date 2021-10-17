@@ -21,15 +21,15 @@
             <webMaster>linooohon@gmail.com (mitsukuchiph.)</webMaster>
         
         
-        <lastBuildDate>Sun, 17 Oct 2021 16:40:14 &#43;0800</lastBuildDate>
+        <lastBuildDate>Mon, 18 Oct 2021 07:50:04 &#43;0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://linooohon.com/blog/rss.xml" />
         
         
             <item>
                 <title>關於 Python 的幾種安裝與路徑(Python Install &amp; PATH)</title>
-                <link>https://linooohon.com/blog/posts/10/210915/python%E7%9A%84yield%E5%92%8Cscrapy%E7%9A%84yield/</link>
-                <guid isPermaLink="true">https://linooohon.com/blog/posts/10/210915/python%E7%9A%84yield%E5%92%8Cscrapy%E7%9A%84yield/</guid>
+                <link>https://linooohon.com/blog/posts/10/210915/%E9%97%9C%E6%96%BCPython%E7%9A%84%E5%B9%BE%E7%A8%AE%E5%AE%89%E8%A3%9D%E8%88%87%E8%B7%AF%E5%BE%91%28Python%20Install%20&amp;%20PATH%29/</link>
+                <guid isPermaLink="true">https://linooohon.com/blog/posts/10/210915/%E9%97%9C%E6%96%BCPython%E7%9A%84%E5%B9%BE%E7%A8%AE%E5%AE%89%E8%A3%9D%E8%88%87%E8%B7%AF%E5%BE%91%28Python%20Install%20&amp;%20PATH%29/</guid>
                 <pubDate>Wed, 15 Sep 2021 18:36:14 &#43;0800</pubDate>
                 
                     <author>linooohon@gmail.com (mitsukuchiph.)</author>
@@ -385,25 +385,19 @@ conda env create --file environment.yml --name env_from_yml
                                 
                                 
                                 
-                                    <category domain="https://linooohon.com/blog/tags/yield/">Yield</category>
-                                
-                            
-                                
-                                
-                                
                                     <category domain="https://linooohon.com/blog/tags/python/">Python</category>
                                 
                             
                                 
                                 
                                 
-                                    <category domain="https://linooohon.com/blog/tags/scrapy/">Scrapy</category>
+                                    <category domain="https://linooohon.com/blog/tags/pyenv/">Pyenv</category>
                                 
                             
                                 
                                 
                                 
-                                    <category domain="https://linooohon.com/blog/tags/generator/">Generator</category>
+                                    <category domain="https://linooohon.com/blog/tags/conda/">Conda</category>
                                 
                             
                         

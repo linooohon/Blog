@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-TW">
     <title type="text">mitsukuchiph.</title>
     <subtitle type="html">MemE 是一個強大且可高度定製的 GoHugo 部落格主題，專為個人部落格設計。</subtitle>
-    <updated>2021-10-17T16:40:14&#43;08:00</updated>
+    <updated>2021-10-18T07:50:04&#43;08:00</updated>
     <id>https://linooohon.com/blog/</id>
     <link rel="alternate" type="text/html" href="https://linooohon.com/blog/" />
     <link rel="self" type="application/atom&#43;xml" href="https://linooohon.com/blog/atom.xml" />
@@ -18,9 +18,9 @@
     <generator uri="https://gohugo.io/" version="0.83.1">Hugo</generator>
         <entry>
             <title type="text">關於 Python 的幾種安裝與路徑(Python Install &amp; PATH)</title>
-            <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/10/210915/python%E7%9A%84yield%E5%92%8Cscrapy%E7%9A%84yield/" />
-            <id>https://linooohon.com/blog/posts/10/210915/python%E7%9A%84yield%E5%92%8Cscrapy%E7%9A%84yield/</id>
-            <updated>2021-10-17T14:21:22&#43;08:00</updated>
+            <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/10/210915/%E9%97%9C%E6%96%BCPython%E7%9A%84%E5%B9%BE%E7%A8%AE%E5%AE%89%E8%A3%9D%E8%88%87%E8%B7%AF%E5%BE%91%28Python%20Install%20&amp;%20PATH%29/" />
+            <id>https://linooohon.com/blog/posts/10/210915/%E9%97%9C%E6%96%BCPython%E7%9A%84%E5%B9%BE%E7%A8%AE%E5%AE%89%E8%A3%9D%E8%88%87%E8%B7%AF%E5%BE%91%28Python%20Install%20&amp;%20PATH%29/</id>
+            <updated>2021-10-18T07:49:09&#43;08:00</updated>
             <published>2021-09-15T18:36:14&#43;08:00</published>
             <author>
                     <name>mitsukuchiph.</name>
@@ -378,25 +378,19 @@ conda env create --file environment.yml --name env_from_yml
                             
                             
                             
-                                <category scheme="https://linooohon.com/blog/tags/yield/" term="Yield" label="Yield" />
-                            
-                        
-                            
-                            
-                            
                                 <category scheme="https://linooohon.com/blog/tags/python/" term="Python" label="Python" />
                             
                         
                             
                             
                             
-                                <category scheme="https://linooohon.com/blog/tags/scrapy/" term="Scrapy" label="Scrapy" />
+                                <category scheme="https://linooohon.com/blog/tags/pyenv/" term="Pyenv" label="Pyenv" />
                             
                         
                             
                             
                             
-                                <category scheme="https://linooohon.com/blog/tags/generator/" term="Generator" label="Generator" />
+                                <category scheme="https://linooohon.com/blog/tags/conda/" term="Conda" label="Conda" />
                             
                         
                     
