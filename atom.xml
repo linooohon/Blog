@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-TW">
     <title type="text">mitsukuchiph.</title>
     <subtitle type="html">MemE 是一個強大且可高度定製的 GoHugo 部落格主題，專為個人部落格設計。</subtitle>
-    <updated>2021-10-03T11:23:13&#43;08:00</updated>
+    <updated>2021-10-17T16:40:14&#43;08:00</updated>
     <id>https://linooohon.com/blog/</id>
     <link rel="alternate" type="text/html" href="https://linooohon.com/blog/" />
     <link rel="self" type="application/atom&#43;xml" href="https://linooohon.com/blog/atom.xml" />
@@ -17,11 +17,698 @@
     
     <generator uri="https://gohugo.io/" version="0.83.1">Hugo</generator>
         <entry>
+            <title type="text">關於 Python 的幾種安裝與路徑(Python Install &amp; PATH)</title>
+            <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/10/210915/python%E7%9A%84yield%E5%92%8Cscrapy%E7%9A%84yield/" />
+            <id>https://linooohon.com/blog/posts/10/210915/python%E7%9A%84yield%E5%92%8Cscrapy%E7%9A%84yield/</id>
+            <updated>2021-10-17T14:21:22&#43;08:00</updated>
+            <published>2021-09-15T18:36:14&#43;08:00</published>
+            <author>
+                    <name>mitsukuchiph.</name>
+                    <uri>https://linooohon.com/portfolio</uri>
+                    <email>linooohon@gmail.com</email>
+                    </author>
+            <summary type="html">關於 Python 的幾種安裝與路徑(Python Install &amp;amp; PATH) &lt;img src=&#34;https://linooohon.com/blog/blog/images/10_210915/10_210915_pythoninstallandpath.png&#34; /&gt;</summary>
+            
+                <content type="html">&lt;h1 style=&#34;text-align:center&#34;&gt;
+關於 Python 的幾種安裝與路徑(Python Install &amp; PATH)
+&lt;/h1&gt;
+&lt;blockquote&gt;
+&lt;p&gt;在幫助公司建立 data monorepo 的過程，決定把 Python 的一些相關安裝和路徑筆記起來。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://linooohon.com/blog/blog/images/10_210915/10_210915_pythoninstallandpath.png&#34; alt=&#34;關於 Python 的幾種安裝與路徑(Python Install &amp; PATH)&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;-一-python-on-macos-docs-&#34;&gt;&lt;strong&gt;&amp;lt; 一. Python on MacOS Docs &amp;gt;&lt;/strong&gt;:&lt;/h2&gt;
+&lt;p&gt;Using Python on a Mac &lt;a href=&#34;https://docs.python.org/3/using/mac.html&#34;&gt;Python Docs&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;-二-安裝及路徑-&#34;&gt;&lt;strong&gt;&amp;lt; 二. 安裝及路徑 &amp;gt;&lt;/strong&gt;:&lt;/h2&gt;
+&lt;h3 id=&#34;--作業系統本身就有的-pythonapple-provided-build-of-python一種&#34;&gt;- 作業系統本身就有的 Python(Apple-provided build of Python):一種&lt;/h3&gt;
+&lt;h4 id=&#34;1-apple-provided-build-of-python&#34;&gt;1. Apple-provided build of Python&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Python.framework&lt;/code&gt; folder:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Path:&lt;code&gt;/System/Library/Frameworks/Python.framework&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;一些 Symlink file 和 一個 Regular file &lt;code&gt;python3&lt;/code&gt; (就我的查看結果)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Path: &lt;code&gt;/usr/bin/python&lt;/code&gt;
+&lt;img src=&#34;https://i.imgur.com/ZZRI4Ju.png&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;By Default, 一般會是 Python 2.7 已經被 Apple 先安裝了，所以上面的檔案才會看起來都是 2 的東西&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;根據 &lt;a href=&#34;https://www.python.org/downloads/&#34;&gt;python.org&lt;/a&gt;
+&lt;img src=&#34;https://i.imgur.com/9DLDTFE.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;但目前開發大都是用 Python3 了, Python2 也不再被 Support，Python3.6 也只 Support 到 2021 年底，所以底下分別歸類一些 Python developer 大多會使用的安裝方式。&lt;/p&gt;
+&lt;p style=&#34;color:#fc3503&#34;&gt;注意:&lt;/p&gt;
+&lt;p&gt;根據 Python 官方說法，Apple-provided build of Python 是內建 Python 不該去移動修改它，因為它有可能被 MacOS 系統及其他 3 party 所需要。&lt;/p&gt;
+&lt;h3 id=&#34;--user-自行安裝user-build-of-python好幾種&#34;&gt;- User 自行安裝(User build of Python):好幾種&lt;/h3&gt;
+&lt;h4 id=&#34;1-python-官網下載universal-binary-build-of-pythonpythonorghttpswwwpythonorgdownloads&#34;&gt;1. Python 官網下載(Universal Binary build of Python)&lt;a href=&#34;https://www.python.org/downloads/&#34;&gt;python.org&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;下載之後會有的東西:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Python 3.9&lt;/code&gt; folder:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Path: &lt;code&gt;/Applications/&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;裡面有:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;IDLE(Integrated Development and Learning Environment): Python 的整合開發與學習環境，簡單來說就是撰寫 Python 程式的工具，打開後可以在 shell window 寫 Python code&lt;/li&gt;
+&lt;li&gt;Python Launcher: 處理執行 python script 的作業&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href=&#34;https://docs.python.org/3/using/mac.html#how-to-run-a-python-script&#34;&gt;Refer to 5.1.1: How to run a Python script&lt;/a&gt;&lt;/p&gt;
+  &lt;p style=&#34;color: #4455dd&#34;&gt;
+  &gt; To run your script from the Finder you have two options:
+  &lt;/p&gt;
+  &lt;p style=&#34;color: #dd3ddd&#34;&gt;
+      1. Drag it to PythonLauncher&lt;br&gt;
+      2. Select PythonLauncher as the default application to open your script (or any .py script) through the finder Info window and double-click it. PythonLauncher has various preferences to control how your script is launched. Option-dragging allows you to change these for one invocation, or use its Preferences menu to change things globally.
+  &lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Python.framework&lt;/code&gt; folder:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Path: &lt;code&gt;/Library/Frameworks/Python.framework&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;裡面有:
+&lt;ul&gt;
+&lt;li&gt;Python executable code 和 libraries.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Symlink file:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Path: 在 &lt;code&gt;/usr/local/bin/&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;指向 &lt;code&gt;/Library/Frameworks/Python.framework&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;裡面有(假設install 的是 python3.9):
+&lt;ul&gt;
+&lt;li&gt;2to3:&lt;code&gt;../../../Library/Frameworks/Python.framework/Versions/3.9/bin/2to3&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;2to3-3.9:&lt;code&gt;../../../Library/Frameworks/Python.framework/Versions/3.9/bin/2to3-3.9&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;idle3:&lt;code&gt;../../../Library/Frameworks/Python.framework/Versions/3.9/bin/idle3&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;idle3.9:&lt;code&gt;../../../Library/Frameworks/Python.framework/Versions/3.9/bin/idle3.9&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;pip3:&lt;code&gt;../../../Library/Frameworks/Python.framework/Versions/3.9/bin/pip3&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;pip3.9: &lt;code&gt;../../../Library/Frameworks/Python.framework/Versions/3.9/bin/pip3.9&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;pydoc3: &lt;code&gt;../../../Library/Frameworks/Python.framework/Versions/3.9/bin/pydoc3&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;pydoc3.9:
+&lt;code&gt;../../../Library/Frameworks/Python.framework/Versions/3.9/bin/pydoc3.9&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;python3:
+&lt;code&gt;../../../Library/Frameworks/Python.framework/Versions/3.9/bin/python3&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;python3-config:
+&lt;code&gt;../../../Library/Frameworks/Python.framework/Versions/3.9/bin/python3-config&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;python3.9:
+&lt;code&gt;../../../Library/Frameworks/Python.framework/Versions/3.9/bin/python3.9&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;python3.9-config:
+&lt;code&gt;../../../Library/Frameworks/Python.framework/Versions/3.9/bin/python3.9-config&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;確認版本:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;只要去&lt;code&gt;Python 3.9&lt;/code&gt;folder 打開 IDLE 就可以看出來是 3.x.x。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;移除官方下載的 Python:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;同理，移除三樣東西就行，
+&lt;ul&gt;
+&lt;li&gt;移除 folder &lt;code&gt;/Applications/Python 3.9/&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;移除 folder &lt;code&gt;/Library/Frameworks/Python.framework/&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;移除 &lt;code&gt;/usr/local/bin/&lt;/code&gt; 底下的所有 Symlink (數個)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;2-homebrew-安裝&#34;&gt;2. Homebrew 安裝&lt;/h4&gt;
+&lt;p&gt;ex: 試著安裝最近 release 的 python3.10:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;brew install python@3.10
+&lt;span class=&#34;c1&#34;&gt;# Homebrew 會安裝需要的所有 dependencies&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Homebrew 會裝在 &lt;code&gt;/usr/local/Cellar&lt;/code&gt; 底下，經過查看發現多了很多東西🥲:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ca-certificates&lt;/li&gt;
+&lt;li&gt;gdbm&lt;/li&gt;
+&lt;li&gt;libnghttp2&lt;/li&gt;
+&lt;li&gt;mpdecimal&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;mailto:python@3.10&#34;&gt;python@3.10&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;mailto:python@3.9&#34;&gt;python@3.9&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;sqlite&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;同時也會在 &lt;code&gt;/usr/local/bin&lt;/code&gt; 建立一些 symlink&lt;/p&gt;
+&lt;h4 id=&#34;3-pyenv-安裝&#34;&gt;3. Pyenv 安裝&lt;/h4&gt;
+&lt;p&gt;如果使用 Homebrew 安裝 Pyenv 的話，本身 Pyenv 的 source code 也是在 &lt;code&gt;usr/local/Cellar/pyenv/&lt;/code&gt; &lt;a href=&#34;https://github.com/pyenv/pyenv&#34;&gt;source code&lt;/a&gt;&lt;/p&gt;
+&lt;h5 id=&#34;一開始先-init-source-codehttpsgithubcompyenvpyenvblobmasterlibexecpyenv-init&#34;&gt;一開始先 init &lt;a href=&#34;https://github.com/pyenv/pyenv/blob/master/libexec/pyenv-init&#34;&gt;source code&lt;/a&gt;:&lt;/h5&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;c1&#34;&gt;## 放到 ~/.zshrc 或是 ~/.bash_profile&lt;/span&gt;
+&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;PYENV_ROOT&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$HOME&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;/.pyenv&amp;#34;&lt;/span&gt;
+&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;PATH&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$PYENV_ROOT&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;/bin:&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$PATH&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;span class=&#34;nb&#34;&gt;eval&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;pyenv init -&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;這裡會修改 PATH 環境變數，加入 ${PYENV_ROOT}/shims/，使得之後指令會先選擇 shims 裡的指令執行，其他詳細的再研讀原始碼。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h5 id=&#34;重新啟動-shell&#34;&gt;重新啟動 shell:&lt;/h5&gt;
+&lt;pre&gt;&lt;code&gt;exec &amp;quot;$SHELL&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;pyenv install -v &amp;lt;想要的版本&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;至於使用 Pyenv 安裝 Python 的話，會是在:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;~/.pyenv/ 
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;底下生出來。&lt;/p&gt;
+&lt;h5 id=&#34;pyenv-切換-python-版本方式&#34;&gt;pyenv 切換 python 版本方式:&lt;/h5&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;pyenv global &amp;lt;版本&amp;gt; &lt;span class=&#34;c1&#34;&gt;##全域&lt;/span&gt;
+pyenv &lt;span class=&#34;nb&#34;&gt;local&lt;/span&gt; &amp;lt;版本&amp;gt; &lt;span class=&#34;c1&#34;&gt;##此資料夾&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h5 id=&#34;查看-pyenv-切換有無成功&#34;&gt;查看 pyenv 切換有無成功:&lt;/h5&gt;
+&lt;pre&gt;&lt;code&gt;pyenv versions
+python --version
+&lt;/code&gt;&lt;/pre&gt;&lt;h5 id=&#34;查看-python-路徑&#34;&gt;查看 python 路徑:&lt;/h5&gt;
+&lt;pre&gt;&lt;code&gt;pyenv which python
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;如果單純使用 &lt;code&gt;which python&lt;/code&gt; 是看不出來的。會得到 ~/.pyenv/shims，那 shims 裡面的內容其實就是一個接收的人，負責轉換。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;shims&lt;/code&gt; folder 主要就是負責接收輸入 pyenv command 時的參數，所以在一開始 init 的時候就有 config 了。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;pyenv exec&lt;/code&gt;: &lt;code&gt;shims&lt;/code&gt; 會把該帶的參數丟給 &lt;code&gt;pyenv exec&lt;/code&gt; 執行。&lt;a href=&#34;https://github.com/pyenv/pyenv/blob/master/libexec/pyenv-exec&#34;&gt;source code&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; PYENV_VERSION
+&lt;span class=&#34;nv&#34;&gt;PYENV_COMMAND_PATH&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;pyenv-which &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$PYENV_COMMAND&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;span class=&#34;nv&#34;&gt;PYENV_BIN_PATH&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;PYENV_COMMAND_PATH&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;%/*&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
+
+&lt;span class=&#34;nv&#34;&gt;OLDIFS&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$IFS&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;span class=&#34;nv&#34;&gt;IFS&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;$&amp;#39;\n&amp;#39;&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;scripts&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=(&lt;/span&gt;&lt;span class=&#34;sb&#34;&gt;`&lt;/span&gt;pyenv-hooks &lt;span class=&#34;nb&#34;&gt;exec&lt;/span&gt;&lt;span class=&#34;sb&#34;&gt;`&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;nv&#34;&gt;IFS&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$OLDIFS&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; script in &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;scripts&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[@]&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;do&lt;/span&gt;
+  &lt;span class=&#34;nb&#34;&gt;source&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$script&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;done&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id=&#34;4-conda&#34;&gt;4. Conda&lt;/h4&gt;
+&lt;p&gt;可以透過 Anaconda 或是 Miniconda
+，我自己是使用 Miniconda&lt;/p&gt;
+&lt;h5 id=&#34;第一種-default-path-安裝&#34;&gt;第一種. Default PATH 安裝:&lt;/h5&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;conda create --name &amp;lt;環境名&amp;gt; &lt;span class=&#34;nv&#34;&gt;python&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;3.7
+&lt;span class=&#34;c1&#34;&gt;# e.g.&lt;/span&gt;
+conda create --name python3.7 &lt;span class=&#34;nv&#34;&gt;python&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;3.7
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;如此 Python 就會被安裝在&lt;code&gt;~/opt/miniconda3/envs/&lt;/code&gt; 底下:
+&lt;ul&gt;
+&lt;li&gt;PATH: &lt;code&gt;~/opt/miniconda3/envs/python3.7/bin/python&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h5 id=&#34;第二種-在自己目前所在的-folder-裡安裝-python&#34;&gt;第二種. 在自己目前所在的 folder 裡安裝 Python:&lt;/h5&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;conda create --prefix &amp;lt;env名字&amp;gt; &lt;span class=&#34;nv&#34;&gt;python&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&amp;lt;想要裝的python版本&amp;gt;
+&lt;span class=&#34;c1&#34;&gt;# e.g.&lt;/span&gt;
+conda create --prefix conda_env &lt;span class=&#34;nv&#34;&gt;python&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;3.8
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;這時就會在當前目錄生出包含 python3.8 的環境:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;`root/`
+    |___`conda_env/`
+            |___`bin/`
+            |___`conda-meta/`
+            |___`include/`
+            |___`lib/`
+            |___`share/`
+            |___`ssl/`
+&lt;/code&gt;&lt;/pre&gt;&lt;h6 id=&#34;進入環境&#34;&gt;進入環境:&lt;/h6&gt;
+&lt;pre&gt;&lt;code&gt;conda activate ./conda_env
+&lt;/code&gt;&lt;/pre&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;python -V
+&lt;span class=&#34;c1&#34;&gt;# 會發現版本已經切換成剛剛的需求 python=3.8&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;which python
+&lt;span class=&#34;c1&#34;&gt;# 會發現 python 的路徑已經是當前目錄 `conda_env/bin/python`&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h6 id=&#34;把目前環境打包成-yml-檔&#34;&gt;把目前環境打包成 yml 檔:&lt;/h6&gt;
+&lt;pre&gt;&lt;code&gt;conda env export --prefix ./conda_env &amp;gt; environment.yml
+&lt;/code&gt;&lt;/pre&gt;&lt;h6 id=&#34;依照當前-yml-檔把環境建立在當前相同路徑下&#34;&gt;依照當前 yml 檔，把環境建立在當前相同路徑下:&lt;/h6&gt;
+&lt;pre&gt;&lt;code&gt;conda env create --prefix ./conda_env --file environment.yml
+&lt;/code&gt;&lt;/pre&gt;&lt;h6 id=&#34;依照當前-yml-檔把環境建立在-conda-的-default-path&#34;&gt;依照當前 yml 檔，把環境建立在 Conda 的 Default Path:&lt;/h6&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;conda env create --file environment.yml
+&lt;span class=&#34;c1&#34;&gt;# OR: conda env create --file &amp;lt;yaml檔名&amp;gt; --name &amp;lt;想建成的環境資料夾名&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;# e.g&lt;/span&gt;
+conda env create --file environment.yml --name env_from_yml
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;但是記得 yml 的 name 要修改一下，這會是之後裝在 &lt;code&gt;opt/miniconda3/envs&lt;/code&gt; 底下的 folder 名字。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/opuGaJs.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;-the-end-&#34;&gt;&lt;strong&gt;&amp;lt; The End &amp;gt;&lt;/strong&gt;:&lt;/h2&gt;
+&lt;h3 id=&#34;self-checklist&#34;&gt;Self Checklist:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; How to install Python through different ways.&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; What is Environment Variable &lt;code&gt;$PATH&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; The meaning of &lt;code&gt;echo $PATH&lt;/code&gt; .&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; What is the difference between &lt;code&gt;pyenv python&lt;/code&gt; and &lt;code&gt;Apple-provided build of Python&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Understand all the path where python will be placed when download python.&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Understand what is &lt;code&gt;symlink&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Understand what is &lt;code&gt;IDLE&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Understand what is &lt;code&gt;Python Launcher&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;reference&#34;&gt;Reference:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://josix.tw/pyenv-deep-dive/&#34;&gt;PyConTW DevTeam的大大-Josix&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#cloning-an-environment&#34;&gt;Conda Docs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/using/mac.html#how-to-run-a-python-script&#34;&gt;Python Docs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://medium.com/denix-daily/macos%E4%B8%8A%E7%9A%84python%E8%B7%AF%E5%BE%91%E5%95%8F%E9%A1%8C-%E5%AE%89%E8%A3%9D%E6%96%B9%E6%B3%95-a10c01cc42a&#34;&gt;Denis Hsieh&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;-next-下一篇-&#34;&gt;&lt;strong&gt;&amp;lt; Next 下一篇 &amp;gt;&lt;/strong&gt;:&lt;/h2&gt;
+&lt;!-- &lt;a href=&#34;https://linooohon.com/blog/blog/posts/08/210805/python的yield和scrapy的yield&#34;&gt;Python 觀念(2) yield 是什麼?，那Scrapy 裡的 yield?&lt;/a&gt; --&gt;
+</content>
+            
+            
+            
+            
+            
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/categories/202109/" term="202109" label="202109" />
+                            
+                        
+                    
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/tags/yield/" term="Yield" label="Yield" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/tags/python/" term="Python" label="Python" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/tags/scrapy/" term="Scrapy" label="Scrapy" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/tags/generator/" term="Generator" label="Generator" />
+                            
+                        
+                    
+                
+            
+        </entry>
+    
+        <entry>
+            <title type="text">關於 Session 與 Cookie - &lt; Session篇 &gt; 紀錄</title>
+            <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/09/210813/python%E7%9A%84yield%E5%92%8Cscrapy%E7%9A%84yield/" />
+            <id>https://linooohon.com/blog/posts/09/210813/python%E7%9A%84yield%E5%92%8Cscrapy%E7%9A%84yield/</id>
+            <updated>2021-10-17T16:36:21&#43;08:00</updated>
+            <published>2021-08-13T18:36:14&#43;08:00</published>
+            <author>
+                    <name>mitsukuchiph.</name>
+                    <uri>https://linooohon.com/portfolio</uri>
+                    <email>linooohon@gmail.com</email>
+                    </author>
+            <summary type="html">關於 Session 與 Cookie - Session篇紀錄&lt;img src=&#34;https://linooohon.com/blog/blog/images/09_210813/09_210813_session.png&#34; /&gt;</summary>
+            
+                <content type="html">&lt;h1 style=&#34;text-align:center&#34;&gt;
+關於 Session 與 Cookie - &lt; Session篇 &gt; 紀錄
+&lt;/h1&gt;
+&lt;blockquote&gt;
+&lt;p&gt;前陣子在幫忙開發公司的 Nodejs 專案，在處理上，發現自己對 Cookie 和 Session 的概念還沒有很清晰，所以研究了一下，在此紀錄，也順便分享出來。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://linooohon.com/blog/blog/images/09_210813/09_210813_session.png&#34; alt=&#34;關於 Session 與 Cookie - &lt; Session篇 &gt; 紀錄&#34;&gt;&lt;/p&gt;
+&lt;p&gt;雖然我的 Blog 應該是 SEO 差到爆的邊緣 Blog, 不過自己也滿喜歡紀錄的，就邊學邊整理下來，有緣人若看到此篇，歡迎與我討論，如果有錯煩請指教。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;底下的紀錄也參考了諸多篇文章與大大的 Blog, 如有一些雷同的敘述，請見諒 🙏&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;要搞懂一個東西，就要不斷問 &amp;quot;為什麼&amp;quot; 和 &amp;quot;如何&amp;quot; 。
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;-此次紀錄重點-&#34;&gt;&lt;strong&gt;&amp;lt; 此次紀錄重點 &amp;gt;&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;雖然很多人在解釋 Session 時會與 Cookie 一起解釋，但此篇我想先盡量專注在 Session ，先不與 Cookie 混著談。&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&#34;-什麼是-session-統整-&#34;&gt;&lt;strong&gt;&amp;lt; 什麼是 Session 統整 &amp;gt;&lt;/strong&gt;&lt;/h2&gt;
+&lt;h3 id=&#34;各方解釋&#34;&gt;各方解釋:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;從字本身語義切入&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;具有狀態的一段時間&lt;/li&gt;
+&lt;li&gt;上下文&lt;/li&gt;
+&lt;li&gt;中文翻譯: &amp;quot;會話&amp;quot;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;生活例子: 有始有終的一系列動作/消息&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ex: 打電話是從拿起電話撥號到掛斷電話，這中間的一系列過程稱之為一個 session&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;當 Session 與網路協議相關時:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;有連接或保持狀態的意思&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;當 Session 在 Web 開發領域時有一些詮釋:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;概念:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;將 Client端 與 Server端之間交互的過程，抽象為&amp;quot;會話&amp;quot;，進而衍生出 &amp;quot;會話的狀態&amp;quot;(偵測/觀測交互過程的狀態)，也就是說這時的 Session 是一種概念&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;狀態管理的解決方案/機制/實現:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;i. Client端 與 Server端之間保持狀態的 &amp;quot;解決方案(機制)&amp;quot;，也就是說這時後，Session 指的是一種狀態管理的解決方式(機制)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;ii. Session 是一種 Server端的機制，Server 使用一種類似於 Hash Table(雜湊表/散列表/哈希表) (也可能就是 Hash Table)的結構來保存訊息，在這 Session 指的也是一種狀態管理的解決方式(機制)&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;儲存結構:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Client端 與 Server端之間保持狀態的 &amp;quot;解決方案(機制)的存儲結構&amp;quot;，也就是說這時候，Session 指的是一種狀態管理的解決方式(機制)的 &amp;quot;儲存結構&amp;quot;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;資料(狀態/資訊)本身:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;因為 1. 的概念而衍伸出，在建立 2. 的狀態管理的解決機制後我們透過 3. 的儲存結構去把所要儲存的狀態儲存起來，這些狀態有時會看到有人寫直接就說是 Session Information(Session 資訊)。所以有時候人家說 Session 也有可能指的是 Session 資訊本身，&lt;code&gt;Session == Session 資訊 ?&lt;/code&gt; 所以我覺得概念還是要懂，比次溝通才會比較順，默契也比較好，因為技術名詞有時候就是有點曖昧，說到這自己的實力還是不行啊....加油！&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;-什麼是-session-自我統整-&#34;&gt;&lt;strong&gt;&amp;lt; 什麼是 Session 自我統整 &amp;gt;&lt;/strong&gt;&lt;/h2&gt;
+&lt;h3 id=&#34;所以會發現當我們單純說-session-時其實有太多定義模糊的空間&#34;&gt;所以會發現當我們單純說 Session 時，其實有太多定義模糊的空間。&lt;/h3&gt;
+&lt;p&gt;自己統整後，&lt;/p&gt;
+&lt;h4 id=&#34;session-的含義可以有以下數種&#34;&gt;Session 的含義可以有以下數種:&lt;/h4&gt;
+&lt;h5 id=&#34;1-含義1&#34;&gt;1. 含義1:&lt;/h5&gt;
+&lt;p&gt;在平常生活上單單就單字用法就是指具有狀態的一段時間、會議、開會、一次交流。
+如果有在跳舞的人可能常聽到 Session 這個字眼，每當聽到這個詞時，可能會是指一次比賽的出場，一次活動，一個round, 一段時間內彼此的跳舞交流時間。&lt;/p&gt;
+&lt;h5 id=&#34;2-含義2&#34;&gt;2. 含義2:&lt;/h5&gt;
+&lt;p&gt;接下來開始試著慢慢引導到 Web 相關的含義。
+Session 與網路協議相關時，有時是「連接」的意思:
+舉例1. 比如當你要建立通信的渠道，像是打電話，你要確定對方接了電話通信才開始，這也是 Session 的含義之一。
+舉例2. 一樣是建立通信的渠道, 像是寫信，你寫出去時不確定地址對不對，雖然收信人不一定能收到，但僅僅對於發信人來說，他也會認為這個 Session 已經開始了，這也是一種 Session 的表現。&lt;/p&gt;
+&lt;h5 id=&#34;3-含義3&#34;&gt;3. 含義3:&lt;/h5&gt;
+&lt;p&gt;Session 與網路協議相關時，另一個意思是「保持狀態」的意思:
+這個保持狀態指的是，在連接之餘，連接的一方能夠把一系列相關的訊息(狀態/資訊)關聯起來，比如說常去吃的麵攤老闆娘她一眼就能記得上次你忘記帶錢說要這次來再付，也記得你最愛點的海鮮麵，直接就幫你做了，這類「保持狀態」的例子有「一個 TCP session」, 「一個 POP3 session」&lt;/p&gt;
+&lt;h5 id=&#34;4-含義4&#34;&gt;4. 含義4:&lt;/h5&gt;
+&lt;p&gt;Session 進到 Web App的領域時:
+Session 在現今 Web開發領域下，可以指 Client 端與 Server 端之間交互的過程，有時會把這個過程統整成「會話」這個詞，此時的 Session 是一種整體的概念。&lt;/p&gt;
+&lt;h5 id=&#34;5-含義5&#34;&gt;5. 含義5:&lt;/h5&gt;
+&lt;p&gt;當我們知道 Session 可以指有始有終的一系列動作(狀態/消息)時，ex: 像是打電話從撥號到掛斷的一系列過程。
+所以有時看到「在一個 Browser 的會話期間..」是指從瀏覽器視窗打開到關閉的這個期間就叫做一個 Session。&lt;/p&gt;
+&lt;h5 id=&#34;6-含義6&#34;&gt;6. 含義6:&lt;/h5&gt;
+&lt;p&gt;有時看到「 Client 的一次會話期間..」可以指同個目的的一系列動作，像是從登錄到選購商品到結帳登出，這樣的一個過程可以稱作一個 Session, 同時也可被稱為是在資料處理上的一次 transaction，所以在「 Client 的一次會話期間..」的解釋下，開發者在彼此溝通時要理解這個過程的頭跟尾到底彼此指的一不一樣。因為有時候可能 A 想的只是一次性的某個動作期間，但 B 所想的是好幾個動作合起來的期間。&lt;/p&gt;
+&lt;h5 id=&#34;7-含義7&#34;&gt;7. 含義7:&lt;/h5&gt;
+&lt;p&gt;所以當我們從含義4, 5, 6 解釋過來會發現，這個交互的過程其實也從一種概念演變成實際運行的機制，也就變成較偏向大家所認知的 Session 定義的其中一種，就是 Client端與 Server端之間保持狀態的「機制(解決方案)」。&lt;/p&gt;
+&lt;h5 id=&#34;8-含義8&#34;&gt;8. 含義8:&lt;/h5&gt;
+&lt;p&gt;那當有人問說你是「存在 Cookie 還是 Session時?」這句話在我以前剛學程式時，覺得問這樣的一個問題沒什麼，也挺專業的(太無知了..)，但經過我的研讀和查閱，我認為事實是問問題還是必須問的精確一點比較好，此篇不討論 Cookie，Cookie 確實是一個儲存的空間，但存在 Session 就有點不太精確，硬要解釋，大部分都是解釋成實作 Session 這種機制的作法，把資料存在一些可以存資料的地方，像是記憶體(Memory)、快取(Cache)、Cookie、資料庫(Database)，所以當這樣的一個問題出現時，無法去定義此時的 Session 是什麼，我們可以猜測的是也許此刻的 Session 指的是資料放的地方。或是另一個含義像是含義 9。&lt;/p&gt;
+&lt;h5 id=&#34;9-含義9&#34;&gt;9. 含義9:&lt;/h5&gt;
+&lt;p&gt;根據含義8，有時 Session 也會指實踐 Session 機制時，資料被儲存時本身的資料結構。&lt;/p&gt;
+&lt;h5 id=&#34;10-含義10&#34;&gt;10. 含義10:&lt;/h5&gt;
+&lt;p&gt;根據含義7, 8, 9，我們可以知道資料(狀態/資訊)本身，也有機會被稱為 Session，當我們說「拿 Session 資料」，雖然比較不會被認為 Session 本身就是資料，但還是要記得有這麼一個可能性。&lt;/p&gt;
+&lt;h5 id=&#34;11-含義11&#34;&gt;11. 含義11:&lt;/h5&gt;
+&lt;p&gt;不同的語言及框架在實踐 Session 概念時，也會有不同作法，此時的 Session 就會因此而有些各方實作及定義上的差異。&lt;/p&gt;
+&lt;h2 id=&#34;-為什麼出現-session-&#34;&gt;&lt;strong&gt;&amp;lt; 為什麼出現 Session &amp;gt;&lt;/strong&gt;&lt;/h2&gt;
+&lt;h3 id=&#34;各方解釋-1&#34;&gt;各方解釋:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;HTTP Stateless:以無狀態角度切入&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;由於 Http 為 Stateless protocol(無狀態協議)，但在 Web 領域中，server 時常需要紀錄 User 的狀態，但 Http 是無狀態的，所以就需要某種機制來紀錄識別用戶的狀態，而 Session 就出場了。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;我認為合理的簡單解釋:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;解決無狀態，Session 出現幫忙&lt;/li&gt;
+&lt;li&gt;根據 &lt;a href=&#34;https://datatracker.ietf.org/doc/html/rfc2109&#34;&gt;RFC 2109&lt;/a&gt; session 可以指一種交互狀態(關係)，這裡面包括 Client 的 Request 和 Server 的 Response 之間的交互內容，最早會出現，裡面也提及是因為要建立 Stateful，裡面說道:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;3.  STATE AND SESSIONS
+
+   This document describes a way to create stateful sessions with HTTP
+   requests and responses.  Currently, HTTP servers respond to each
+   client request without relating that request to previous or
+   subsequent requests; the technique allows clients and servers that
+   wish to exchange state information to place HTTP requests and
+   responses within a larger context, which we term a &amp;quot;session&amp;quot;.  This
+   context might be used to create, for example, a &amp;quot;shopping cart&amp;quot;, in
+   which user selections can be aggregated before purchase, or a
+   magazine browsing system, in which a user&#39;s previous reading affects
+   which offerings are presented.
+
+   There are, of course, many different potential contexts and thus many
+   different potential types of session.  The designers&#39; paradigm for
+   sessions created by the exchange of cookies has these key attributes:
+
+      1.  Each session has a beginning and an end.
+
+      2.  Each session is relatively short-lived.
+
+      3.  Either the user agent or the origin server may terminate a
+          session.
+
+      4.  The session is implicit in the exchange of state information.
+&lt;/code&gt;&lt;/pre&gt;&lt;p style=&#34;color: #549e76&#34;&gt;
+This document describes &lt;span style=&#34;color: #ed61cb&#34;&gt;a way to create stateful sessions with HTTP
+   requests and responses.&lt;/span&gt; Currently, HTTP servers respond to each
+   client request without relating that request to previous or
+   subsequent requests;
+&lt;/p&gt;
+&lt;p style=&#34;color: #549e76&#34;&gt;
+the technique &lt;span style=&#34;color: #ed61cb&#34;&gt;allows clients and servers that
+   wish to exchange state information to place HTTP requests and
+   responses within a larger context&lt;/span&gt;, which we term a &lt;span style=&#34;color: #e35040&#34;&gt;&#34;session&#34;&lt;/span&gt;.
+&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;更詳細可以參考: &lt;a href=&#34;https://blog.techbridge.cc/2019/08/10/session-and-cookie-rfc/&#34;&gt;Huli大大這篇&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;-session-資訊-儲存位置-&#34;&gt;&lt;strong&gt;&amp;lt; Session 資訊 儲存位置 &amp;gt;&lt;/strong&gt;&lt;/h2&gt;
+&lt;h3 id=&#34;1-記憶體&#34;&gt;1. 記憶體&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;小應用在開發環境時，如果不需要共享狀態的情況下，存記憶體是個方便的方式，但除此之外也沒有什麼好處。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;2-cookie&#34;&gt;2. Cookie&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;把 Session 資訊存在 Cookie，也就是不是 Server 存狀態了，是 Client 存，所以每次 request 都會直接帶上 Session 資訊，所以不用擔心需要共享狀態的問題，安全性問題的話，按照一般做法一定會做處理(比如說 SignedCookie的作法)等等，真正比較大的問題是資料傳輸的量變大。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;3-快取-ex-redis&#34;&gt;3. 快取 (ex: Redis)&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;這是大部份最常用的方式，特點快，也可以共享狀態，相比存在 Cookie ，當 Session 資訊量大的時候，可以節省網路的傳輸。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;4-資料庫&#34;&gt;4. 資料庫&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;依需求使用，一般不常出現。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;-實踐-session-概念機制的兩種方式-&#34;&gt;&lt;strong&gt;&amp;lt; 實踐 Session 概念(機制)的兩種方式 &amp;gt;&lt;/strong&gt;&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Cookie-Based Session (也就是 Client Side Session)&lt;/li&gt;
+&lt;li&gt;使用 SessionID (也就是 Server Side Session )&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;ol&gt;
+&lt;li&gt;所謂 Cookie-based session 指的是，今天要存的資料(狀態)都放在 cookie ，有可能是明文存，也有可能是處理過(編碼、加密)存，但基本上安全性問題，就算放基本上都會加密，缺點是：存太多東西在 Cookie ，會變得太笨重。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;SessionID 的使用方式是，把資料、狀態存在 Server，然後 Server 傳的 Set-cookie 是傳一個 SessionID，這個 SessionID 的做用就是當 Browser 傳過來 Server 時，Server 會去比對這個 SessionID 是不是跟當初一開始發給 Browser 時的紀錄是一樣的，相當於一個 Key，利用這個 SessionID 去換存在 Server 的資料、狀態，如此在 Server 和 Browser 就可以維持狀態紀錄，解決 HTTP Stateless&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;RFC 6265 提到關於 SessionID 的例子&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&amp;lt; RFC 6265 &amp;gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://datatracker.ietf.org/doc/html/rfc6265&#34;&gt;rfc6265 (ietf.org)&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Using the Set-Cookie header, a server can send the user agent a short string in an HTTP response that the user agent will return in future HTTP requests that are within the scope of the cookie. For example, the server can send the user agent a &amp;quot;session identifier&amp;quot; named SID with the value 31d4d96e407aad42. The user agent then returns the session identifier in subsequent requests.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;-實踐-session-概念機制的其他種方式-&#34;&gt;&lt;strong&gt;&amp;lt; 實踐 Session 概念(機制)的其他種方式 &amp;gt;&lt;/strong&gt;&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;form 裡面放一個 hidden 的欄位&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;form name=&amp;quot;testform&amp;quot; action=&amp;quot;/xxx&amp;quot;&amp;gt;
+&amp;lt;input type=&amp;quot;hidden&amp;quot; name=&amp;quot;jsessionid&amp;quot; value=&amp;quot;ByOK3vjFD75aPnrF7C2HmdnV6QZcEbzWoWiBYEnLerjQ99zWpBng!-145788764&amp;quot;&amp;gt;
+&amp;lt;input type=&amp;quot;text&amp;quot;&amp;gt;
+&amp;lt;/form&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;網址列帶資訊(URL重寫)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;http://...../xxx;jsessionid= ByOK3vjFD75aPnrF7C2HmdnV6QZcEbzWoWiBYEnLerjQ99zWpBng!-145788764
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;http://...../xxx?jsessionid=ByOK3vjFD75aPnrF7C2HmdnV6QZcEbzWoWiBYEnLerjQ99zWpBng!-145788764
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;-實踐-session-概念機制最常見做法-&#34;&gt;&lt;strong&gt;&amp;lt; 實踐 Session 概念(機制)最常見做法 &amp;gt;&lt;/strong&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Server 如果需要 session (概念or機制or結構)。看怎麼解釋，但通常大家在說的就是，存某些狀態在 Server。那最常見的就是，Server 它想初始化一個 session，於是它就回傳一個 Set-Cookie 的 Header 到 User Agent, 如果這時候 Browser 決定繼續這個 session 的話，可以回傳 Cookie 這個 Header。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;這也是當初 RFC2109 &lt;a href=&#34;https://datatracker.ietf.org/doc/html/rfc2109&#34;&gt;rfc2109 (ietf.org)&lt;/a&gt;的片段所描述的，也是我們現在常常在做的事，利用 Cookie 去實現 session 這個功能。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;-the-end-&#34;&gt;&lt;strong&gt;&amp;lt; The End &amp;gt;&lt;/strong&gt;&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;接下來再找時間寫 Cookie 及其他相關紀錄&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;self-checklist&#34;&gt;Self Checklist:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Explain what is &lt;code&gt;Session&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Understand &lt;code&gt;Session&lt;/code&gt; can means lots of things.&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Know how to resolve problem with &lt;code&gt;Session&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;reference&#34;&gt;Reference:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.zhihu.com/question/19786827&#34;&gt;https://www.zhihu.com/question/19786827&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://blog.techbridge.cc/2019/08/10/session-and-cookie-rfc/&#34;&gt;https://blog.techbridge.cc/2019/08/10/session-and-cookie-rfc/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://datatracker.ietf.org/doc/html/rfc2109&#34;&gt;https://datatracker.ietf.org/doc/html/rfc2109&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://fred-zone.blogspot.com/2014/01/web-session.html&#34;&gt;https://fred-zone.blogspot.com/2014/01/web-session.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://iter01.com/194145.html&#34;&gt;https://iter01.com/194145.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://blog.hellojcc.tw/introduce-session-and-cookie/&#34;&gt;https://blog.hellojcc.tw/introduce-session-and-cookie/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://wiki.jikexueyuan.com/project/node-lessons/cookie-session.html&#34;&gt;https://wiki.jikexueyuan.com/project/node-lessons/cookie-session.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://juejin.cn/post/6844904073934667790&#34;&gt;https://juejin.cn/post/6844904073934667790&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://yken919.pixnet.net/blog/post/45702341&#34;&gt;https://yken919.pixnet.net/blog/post/45702341&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;-next-下一篇-&#34;&gt;&lt;strong&gt;&amp;lt; Next 下一篇 &amp;gt;&lt;/strong&gt;&lt;/h2&gt;
+</content>
+            
+            
+            
+            
+            
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/categories/202108/" term="202108" label="202108" />
+                            
+                        
+                    
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/tags/session/" term="Session" label="Session" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/tags/web/" term="Web" label="Web" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/tags/cookie/" term="Cookie" label="Cookie" />
+                            
+                        
+                    
+                
+            
+        </entry>
+    
+        <entry>
             <title type="text">Python 觀念(2) yield, generator?，那 Scrapy 裡的 yield?</title>
-            <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/08/210810/python%E7%9A%84yield%E5%92%8Cscrapy%E7%9A%84yield/" />
-            <id>https://linooohon.com/blog/posts/08/210810/python%E7%9A%84yield%E5%92%8Cscrapy%E7%9A%84yield/</id>
-            <updated>2021-10-03T11:11:37&#43;08:00</updated>
-            <published>2021-08-10T18:36:14&#43;08:00</published>
+            <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/08/210805/python%E7%9A%84yield%E5%92%8Cscrapy%E7%9A%84yield/" />
+            <id>https://linooohon.com/blog/posts/08/210805/python%E7%9A%84yield%E5%92%8Cscrapy%E7%9A%84yield/</id>
+            <updated>2021-10-13T08:04:25&#43;08:00</updated>
+            <published>2021-08-05T18:36:14&#43;08:00</published>
             <author>
                     <name>mitsukuchiph.</name>
                     <uri>https://linooohon.com/portfolio</uri>
@@ -3241,18 +3928,18 @@ $ git rebase -i &amp;lt;SHA-1&amp;gt;
     
         <entry>
             <title type="text">Hi Blog, YUI - TOKYO</title>
-            <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/01/210603/first-post/" />
-            <id>https://linooohon.com/blog/posts/01/210603/first-post/</id>
-            <updated>2021-10-02T15:51:47&#43;08:00</updated>
-            <published>2021-06-03T18:36:14&#43;08:00</published>
+            <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/01/210503/first-post/" />
+            <id>https://linooohon.com/blog/posts/01/210503/first-post/</id>
+            <updated>2021-10-17T16:26:28&#43;08:00</updated>
+            <published>2021-05-03T18:36:14&#43;08:00</published>
             <author>
                     <name>mitsukuchiph.</name>
                     <uri>https://linooohon.com/portfolio</uri>
                     <email>linooohon@gmail.com</email>
                     </author>
-            <summary type="html">Blog. 你好，多多指教 &lt;img width=&#34;80%&#34; src=&#34;https://linooohon.com/blog/blog/images/01_210603/01_210603_firstpost.jpg&#34; /&gt;</summary>
+            <summary type="html">Blog. 你好，多多指教 &lt;img width=&#34;80%&#34; src=&#34;https://linooohon.com/blog/blog/images/01_210503/01_210503_firstpost.jpg&#34; /&gt;</summary>
             
-                <content type="html">&lt;p&gt;&lt;img src=&#34;https://linooohon.com/blog/blog/images/01_210603/01_210603_firstpost.jpg&#34; alt=&#34;Hi Blog, YUI - TOKYO&#34;&gt;&lt;/p&gt;
+                <content type="html">&lt;p&gt;&lt;img src=&#34;https://linooohon.com/blog/blog/images/01_210503/01_210503_firstpost.jpg&#34; alt=&#34;Hi Blog, YUI - TOKYO&#34;&gt;&lt;/p&gt;
 &lt;h5 id=&#34;try-to-share-the-things-i-experienced-and-some-of-my-ideas-on-this-platform-thanks&#34;&gt;Try to share the things I experienced and some of my ideas on this platform, thanks!&lt;/h5&gt;
 &lt;h5 id=&#34;so&#34;&gt;So,&lt;/h5&gt;
 &lt;h5 id=&#34;for-the-first-post-of-the-new-site-im-going-to-share-the-lyrics-of-the-songs-that-i-really-love-recently&#34;&gt;for the first post of the new site, I&#39;m going to share the lyrics of the songs that I really love recently.&lt;/h5&gt;
@@ -3341,7 +4028,7 @@ At least I know that much.
                             
                             
                             
-                                <category scheme="https://linooohon.com/blog/categories/202106/" term="202106" label="202106" />
+                                <category scheme="https://linooohon.com/blog/categories/202105/" term="202105" label="202105" />
                             
                         
                     

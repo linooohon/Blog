@@ -918,7 +918,11 @@ admin.site.register(Choice)
                     </li>
                 
                     <li class="related-item">
-                        <a href="/blog/posts/08/210810/python%E7%9A%84yield%E5%92%8Cscrapy%E7%9A%84yield/" class="related-link">Python 觀念(2) yield, generator?，那 Scrapy 裡的 yield?</a>
+                        <a href="/blog/posts/10/210915/python%E7%9A%84yield%E5%92%8Cscrapy%E7%9A%84yield/" class="related-link">關於 Python 的幾種安裝與路徑(Python Install &amp; PATH)</a>
+                    </li>
+                
+                    <li class="related-item">
+                        <a href="/blog/posts/09/210813/python%E7%9A%84yield%E5%92%8Cscrapy%E7%9A%84yield/" class="related-link">關於 Session 與 Cookie - &lt; Session篇 &gt; 紀錄</a>
                     </li>
                 
             </ul>
