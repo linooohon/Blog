@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-TW">
     <title type="text">mitsukuchiph.</title>
     <subtitle type="html">MemE 是一個強大且可高度定製的 GoHugo 部落格主題，專為個人部落格設計。</subtitle>
-    <updated>2021-10-29T16:43:55&#43;08:00</updated>
+    <updated>2021-10-29T16:44:43&#43;08:00</updated>
     <id>https://linooohon.com/blog/</id>
     <link rel="alternate" type="text/html" href="https://linooohon.com/blog/" />
     <link rel="self" type="application/atom&#43;xml" href="https://linooohon.com/blog/atom.xml" />
@@ -18,9 +18,9 @@
     <generator uri="https://gohugo.io/" version="0.83.1">Hugo</generator>
         <entry>
             <title type="text">關於在 Nuxt.js 開發時渲染 HTML 的小坑紀錄，不同瀏覽器的差異..</title>
-            <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/11/211011/" />
-            <id>https://linooohon.com/blog/posts/11/211011/</id>
-            <updated>2021-10-29T16:43:48&#43;08:00</updated>
+            <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/11/211011/Nuxtjs_Note/" />
+            <id>https://linooohon.com/blog/posts/11/211011/Nuxtjs_Note/</id>
+            <updated>2021-10-29T16:44:36&#43;08:00</updated>
             <published>2021-10-11T18:36:14&#43;08:00</published>
             <author>
                     <name>mitsukuchiph.</name>
