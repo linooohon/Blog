@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-TW">
     <title type="text">mitsukuchiph.</title>
     <subtitle type="html">MemE 是一個強大且可高度定製的 GoHugo 部落格主題，專為個人部落格設計。</subtitle>
-    <updated>2021-10-18T07:50:04&#43;08:00</updated>
+    <updated>2021-10-29T14:12:15&#43;08:00</updated>
     <id>https://linooohon.com/blog/</id>
     <link rel="alternate" type="text/html" href="https://linooohon.com/blog/" />
     <link rel="self" type="application/atom&#43;xml" href="https://linooohon.com/blog/atom.xml" />
@@ -16,6 +16,119 @@
             </author>
     
     <generator uri="https://gohugo.io/" version="0.83.1">Hugo</generator>
+        <entry>
+            <title type="text">關於在 Nuxt.js 開發時渲染 HTML 的小坑紀錄，不同瀏覽器的差異..</title>
+            <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/11/211011/%E9%97%9C%E6%96%BCNuxt.js%E9%96%8B%E7%99%BC%E6%99%82%E7%9A%84%E5%B0%8F%E5%9D%91%E7%B4%80%E9%8C%84" />
+            <id>https://linooohon.com/blog/posts/11/211011/%E9%97%9C%E6%96%BCNuxt.js%E9%96%8B%E7%99%BC%E6%99%82%E7%9A%84%E5%B0%8F%E5%9D%91%E7%B4%80%E9%8C%84</id>
+            <updated>2021-10-29T14:11:22&#43;08:00</updated>
+            <published>2021-10-11T18:36:14&#43;08:00</published>
+            <author>
+                    <name>mitsukuchiph.</name>
+                    <uri>https://linooohon.com/portfolio</uri>
+                    <email>linooohon@gmail.com</email>
+                    </author>
+            <summary type="html">在 PyConTW2021 Dev Team 開發紀錄，關於在 Nuxt.js 開發時渲染 HTML 的小坑紀錄&lt;img src=&#34;https://linooohon.com/blog/blog/images/11_211011/11_211011_PyCon_Nuxt_01.png&#34; /&gt;</summary>
+            
+                <content type="html">&lt;h1 style=&#34;text-align:center&#34;&gt;
+今年 PyCon2021 也圓滿落幕了，小弟第一次參加，非常感謝組員的指導和幫忙，繼續加油，希望自己也能夠成長變成分享的那個人。
+&lt;/h1&gt;
+&lt;blockquote&gt;
+&lt;p&gt;在 PyConTW2021 Dev Team 開發紀錄，關於在 Nuxt.js 開發時渲染 HTML 的小坑紀錄。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;!-- ![在 PyConTW2021 Dev Team 開發紀錄，關於在 Nuxt.js 開發時渲染 HTML 的小坑紀錄](/blog/images/11_211011/11_211011_PyCon_Nuxt_01.png) --&gt;
+&lt;h2 id=&#34;-bug-&#34;&gt;&lt;strong&gt;&amp;lt; Bug &amp;gt;:&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;今年在 PyConTW 開發組幫忙開發 2021 Conference 時，發生了一個小Bug。&lt;/p&gt;
+&lt;p&gt;「也就是每一頁的 &lt;code&gt;&amp;lt;h1&amp;gt;title&amp;lt;/h1&amp;gt;&lt;/code&gt; 在 &amp;quot;iOS 與 Safari&amp;quot; 都會自動產生換行!」&lt;/p&gt;
+&lt;p&gt;但在 html 裡面始終找不到出錯點在哪，因為看起來都非常正常。
+且如果從 Chrome 以及其他瀏覽器瀏覽器也不會有問題，所以可以肯定的是，
+不同瀏覽器解釋間的差異，造成 iOS 和 Safari 會有換行問題。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;那為什麼會換行，是什麼造成的，後來發現與 tag 中夾帶的 text 中的空格有關。&lt;/strong&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;後來實際去查看渲染過後的 html code 發現 tag 裡的 text 渲染出來會夾帶空格，至於為什麼會有什麼空格，與渲染時 template 的 format 有關係。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://linooohon.com/blog/blog/images/11_211011/11_211011_PyCon_Nuxt_01.png&#34; alt=&#34;在 PyConTW2021 Dev Team 開發紀錄，關於在 Nuxt.js 開發時渲染 HTML 的小坑紀錄&#34;&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;當 template 是如下的格式時，選染出來的 tag 裡的 text 會夾帶空格(如上)。
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;https://linooohon.com/blog/blog/images/11_211011/11_211011_PyCon_Nuxt_02.png&#34; alt=&#34;在 PyConTW2021 Dev Team 開發紀錄，關於在 Nuxt.js 開發時渲染 HTML 的小坑紀錄&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;-解決-&#34;&gt;&lt;strong&gt;&amp;lt; 解決 &amp;gt;:&lt;/strong&gt;&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;發現問題後，想到的第一個解決方式是:
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;solve1&#34;&gt;solve.1&lt;/h3&gt;
+&lt;p&gt;&amp;lt;solve.1&amp;gt; 當我們可以把格式調整成與 &lt;code&gt;&amp;lt;&amp;gt;&lt;/code&gt; &lt;code&gt;&amp;lt;/&amp;gt;&lt;/code&gt; 相連，如此渲染時， 就不會產生空格。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://linooohon.com/blog/blog/images/11_211011/11_211011_PyCon_Nuxt_03.png&#34; alt=&#34;在 PyConTW2021 Dev Team 開發紀錄，關於在 Nuxt.js 開發時渲染 HTML 的小坑紀錄&#34;&gt;&lt;/p&gt;
+&lt;p&gt;接著因為我們開發有固定的 format 格式，所以 &lt;code&gt;solve.1&lt;/code&gt; 的解法，兩個 approach&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;可以破壞 formatter 規則解決&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;或是&lt;/p&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;縮減 html 字量，直到連在一起的程度&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;solve2&#34;&gt;solve.2&lt;/h3&gt;
+&lt;p&gt;&amp;lt;solve.2&amp;gt; 解法是使用 &lt;code&gt;white-space: nowrap&lt;/code&gt;
+但這個比較偏硬幹，只能適應特定情況。(ex: title 字數夠少)&lt;/p&gt;
+&lt;h2 id=&#34;-後記-&#34;&gt;&lt;strong&gt;&amp;lt; 後記 &amp;gt;:&lt;/strong&gt;&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;最後我們選擇了 &lt;code&gt;solve.1&lt;/code&gt; 的縮減 html 字量，也是這個情況想到的最好解法。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;一開始還真沒想到可以縮減，我竟然沒想到，經過組長 Matt 修了之後，才恍然大悟這件事應該早就要想到...不然我一開始是用 &lt;code&gt;solve.2&lt;/code&gt; 去硬修..&lt;/p&gt;
+&lt;hr&gt;
+&lt;pre&gt;&lt;code&gt;從發現問題，到找到關鍵點，這之中的搜索常常是大海撈針，不過也挺酷的，訓練自己搜索資料的能力。
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;-the-end-&#34;&gt;&lt;strong&gt;&amp;lt; The End &amp;gt;&lt;/strong&gt;:&lt;/h2&gt;
+&lt;h3 id=&#34;self-checklist&#34;&gt;Self Checklist:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; What is &lt;code&gt;white-space&lt;/code&gt; in CSS properties&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Understand different browser will have different behavior.&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Format somehow is possible to cause render problem sometimes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;references&#34;&gt;References:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/pycontw/pycontw-2021/pull/123&#34;&gt;PyConTW2021. PR#123&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.w3.org/TR/css-text-3/#soft-wrap-opportunity&#34;&gt;www.w3.org - Line Breaking and Soft wrap 調查&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.w3.org/TR/css-text-3/#propdef-white-space&#34;&gt;www.w3.org - White Space and Wrapping 調查&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;-next-下一篇-&#34;&gt;&lt;strong&gt;&amp;lt; Next 下一篇 &amp;gt;&lt;/strong&gt;:&lt;/h2&gt;
+&lt;!-- &lt;a href=&#34;https://linooohon.com/blog/blog/posts/08/210805/python的yield和scrapy的yield&#34;&gt;Python 觀念(2) yield 是什麼?，那Scrapy 裡的 yield?&lt;/a&gt; --&gt;
+</content>
+            
+            
+            
+            
+            
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/categories/202110/" term="202110" label="202110" />
+                            
+                        
+                    
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/tags/pycon/" term="PyCon" label="PyCon" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/tags/nuxt/" term="Nuxt" label="Nuxt" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/tags/vue/" term="Vue" label="Vue" />
+                            
+                        
+                    
+                
+            
+        </entry>
+    
         <entry>
             <title type="text">關於 Python 的幾種安裝與路徑(Python Install &amp; PATH)</title>
             <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/10/210915/%E9%97%9C%E6%96%BCPython%E7%9A%84%E5%B9%BE%E7%A8%AE%E5%AE%89%E8%A3%9D%E8%88%87%E8%B7%AF%E5%BE%91%28Python%20Install%20&amp;%20PATH%29/" />
