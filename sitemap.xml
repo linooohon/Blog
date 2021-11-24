@@ -2,10 +2,31 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://linooohon.com/blog/categories/202110/</loc>
-    <lastmod>2021-10-29T16:44:36+08:00</lastmod>
+    <loc>https://linooohon.com/blog/categories/202111/</loc>
+    <lastmod>2021-11-24T20:40:38+08:00</lastmod>
+  </url><url>
+    <loc>https://linooohon.com/blog/tags/data/</loc>
+    <lastmod>2021-11-24T20:40:38+08:00</lastmod>
+  </url><url>
+    <loc>https://linooohon.com/blog/tags/docker/</loc>
+    <lastmod>2021-11-24T20:40:38+08:00</lastmod>
+  </url><url>
+    <loc>https://linooohon.com/blog/tags/gitlab/</loc>
+    <lastmod>2021-11-24T20:40:38+08:00</lastmod>
+  </url><url>
+    <loc>https://linooohon.com/blog/tags/linux/</loc>
+    <lastmod>2021-11-24T20:40:38+08:00</lastmod>
   </url><url>
     <loc>https://linooohon.com/blog/</loc>
+    <lastmod>2021-11-24T20:49:30+08:00</lastmod>
+  </url><url>
+    <loc>https://linooohon.com/blog/tags/python/</loc>
+    <lastmod>2021-11-24T20:40:38+08:00</lastmod>
+  </url><url>
+    <loc>https://linooohon.com/blog/posts/12/211124/GitLab_CI-CD/</loc>
+    <lastmod>2021-11-24T20:40:38+08:00</lastmod>
+  </url><url>
+    <loc>https://linooohon.com/blog/categories/202110/</loc>
     <lastmod>2021-10-29T16:44:36+08:00</lastmod>
   </url><url>
     <loc>https://linooohon.com/blog/tags/nuxt/</loc>
@@ -27,9 +48,6 @@
     <lastmod>2021-10-18T07:49:09+08:00</lastmod>
   </url><url>
     <loc>https://linooohon.com/blog/tags/pyenv/</loc>
-    <lastmod>2021-10-18T07:49:09+08:00</lastmod>
-  </url><url>
-    <loc>https://linooohon.com/blog/tags/python/</loc>
     <lastmod>2021-10-18T07:49:09+08:00</lastmod>
   </url><url>
     <loc>https://linooohon.com/blog/posts/10/210915/%E9%97%9C%E6%96%BCPython%E7%9A%84%E5%B9%BE%E7%A8%AE%E5%AE%89%E8%A3%9D%E8%88%87%E8%B7%AF%E5%BE%91%28Python%20Install%20&amp;%20PATH%29/</loc>
@@ -99,7 +117,7 @@
     <lastmod>2021-10-02T15:54:40+08:00</lastmod>
   </url><url>
     <loc>https://linooohon.com/blog/about/</loc>
-    <lastmod>2021-09-08T01:19:59+08:00</lastmod>
+    <lastmod>2021-11-24T20:49:30+08:00</lastmod>
   </url><url>
     <loc>https://linooohon.com/blog/categories/</loc>
     <lastmod>2021-07-25T21:20:22+08:00</lastmod>
@@ -118,5 +136,7 @@
   </url><url>
     <loc>https://linooohon.com/blog/tags/life/</loc>
     <lastmod>2021-10-17T16:26:28+08:00</lastmod>
+  </url><url>
+    <loc>https://linooohon.com/blog/tags/ci/cd/</loc>
   </url>
 </urlset>
