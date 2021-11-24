@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-TW">
     <title type="text">mitsukuchiph.</title>
     <subtitle type="html">MemE 是一個強大且可高度定製的 GoHugo 部落格主題，專為個人部落格設計。</subtitle>
-    <updated>2021-11-24T20:51:40&#43;08:00</updated>
+    <updated>2021-11-24T21:06:46&#43;08:00</updated>
     <id>https://linooohon.com/blog/</id>
     <link rel="alternate" type="text/html" href="https://linooohon.com/blog/" />
     <link rel="self" type="application/atom&#43;xml" href="https://linooohon.com/blog/atom.xml" />
@@ -20,7 +20,7 @@
             <title type="text">幫 Data Team 設置 GitLab 的 CI/CD</title>
             <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/12/211124/GitLab_CI-CD/" />
             <id>https://linooohon.com/blog/posts/12/211124/GitLab_CI-CD/</id>
-            <updated>2021-11-24T20:40:38&#43;08:00</updated>
+            <updated>2021-11-24T21:06:33&#43;08:00</updated>
             <published>2021-11-24T18:36:14&#43;08:00</published>
             <author>
                     <name>mitsukuchiph.</name>
@@ -341,6 +341,12 @@ sudo systemctl &lt;span class=&#34;nb&#34;&gt;enable&lt;/span&gt; containerd.ser
                             
                             
                                 <category scheme="https://linooohon.com/blog/categories/202111/" term="202111" label="202111" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/categories/ci/cd/" term="CI/CD" label="CI/CD" />
                             
                         
                     
