@@ -21,7 +21,7 @@
             <webMaster>linooohon@gmail.com (mitsukuchiph.)</webMaster>
         
         
-        <lastBuildDate>Wed, 24 Nov 2021 21:06:46 &#43;0800</lastBuildDate>
+        <lastBuildDate>Wed, 24 Nov 2021 21:10:11 &#43;0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://linooohon.com/blog/rss.xml" />
         
@@ -348,12 +348,6 @@ sudo systemctl &lt;span class=&#34;nb&#34;&gt;enable&lt;/span&gt; containerd.ser
                                 
                                 
                                     <category domain="https://linooohon.com/blog/categories/202111/">202111</category>
-                                
-                            
-                                
-                                
-                                
-                                    <category domain="https://linooohon.com/blog/categories/ci/cd/">CI/CD</category>
                                 
                             
                         
