@@ -21,7 +21,7 @@
             <webMaster>linooohon@gmail.com (mitsukuchiph.)</webMaster>
         
         
-        <lastBuildDate>Fri, 26 Nov 2021 01:47:07 &#43;0800</lastBuildDate>
+        <lastBuildDate>Fri, 26 Nov 2021 10:56:33 &#43;0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://linooohon.com/blog/rss.xml" />
         
@@ -347,7 +347,13 @@ sudo systemctl &lt;span class=&#34;nb&#34;&gt;enable&lt;/span&gt; containerd.ser
                                 
                                 
                                 
-                                    <category domain="https://linooohon.com/blog/categories/202111/">202111</category>
+                                    <category domain="https://linooohon.com/blog/categories/2021/">2021</category>
+                                
+                            
+                                
+                                
+                                
+                                    <category domain="https://linooohon.com/blog/categories/cicd/">cicd</category>
                                 
                             
                         
@@ -1193,7 +1199,13 @@ ValueError: Pool is still running
                                 
                                 
                                 
-                                    <category domain="https://linooohon.com/blog/categories/202110/">202110</category>
+                                    <category domain="https://linooohon.com/blog/categories/2021/">2021</category>
+                                
+                            
+                                
+                                
+                                
+                                    <category domain="https://linooohon.com/blog/categories/python/">python</category>
                                 
                             
                         
@@ -1309,7 +1321,13 @@ ValueError: Pool is still running
                                 
                                 
                                 
-                                    <category domain="https://linooohon.com/blog/categories/202110/">202110</category>
+                                    <category domain="https://linooohon.com/blog/categories/2021/">2021</category>
+                                
+                            
+                                
+                                
+                                
+                                    <category domain="https://linooohon.com/blog/categories/nuxt/">nuxt</category>
                                 
                             
                         
@@ -1688,7 +1706,13 @@ conda env create --file environment.yml --name env_from_yml
                                 
                                 
                                 
-                                    <category domain="https://linooohon.com/blog/categories/202109/">202109</category>
+                                    <category domain="https://linooohon.com/blog/categories/2021/">2021</category>
+                                
+                            
+                                
+                                
+                                
+                                    <category domain="https://linooohon.com/blog/categories/python/">python</category>
                                 
                             
                         
@@ -1984,7 +2008,13 @@ the technique &lt;span style=&#34;color: #ed61cb&#34;&gt;allows clients and serv
                                 
                                 
                                 
-                                    <category domain="https://linooohon.com/blog/categories/202108/">202108</category>
+                                    <category domain="https://linooohon.com/blog/categories/2021/">2021</category>
+                                
+                            
+                                
+                                
+                                
+                                    <category domain="https://linooohon.com/blog/categories/http/">http</category>
                                 
                             
                         
@@ -2007,6 +2037,12 @@ the technique &lt;span style=&#34;color: #ed61cb&#34;&gt;allows clients and serv
                                 
                                 
                                     <category domain="https://linooohon.com/blog/tags/cookie/">Cookie</category>
+                                
+                            
+                                
+                                
+                                
+                                    <category domain="https://linooohon.com/blog/tags/http/">Http</category>
                                 
                             
                         
@@ -2735,7 +2771,13 @@ print(isinstance(bytes_1, Generator))
                                 
                                 
                                 
-                                    <category domain="https://linooohon.com/blog/categories/202108/">202108</category>
+                                    <category domain="https://linooohon.com/blog/categories/2021/">2021</category>
+                                
+                            
+                                
+                                
+                                
+                                    <category domain="https://linooohon.com/blog/categories/python/">python</category>
                                 
                             
                         
@@ -3492,7 +3534,13 @@ TypeError: &#39;str&#39; object is not an iterator
                                 
                                 
                                 
-                                    <category domain="https://linooohon.com/blog/categories/202107/">202107</category>
+                                    <category domain="https://linooohon.com/blog/categories/2021/">2021</category>
+                                
+                            
+                                
+                                
+                                
+                                    <category domain="https://linooohon.com/blog/categories/python/">python</category>
                                 
                             
                         
@@ -4064,7 +4112,19 @@ admin.site.register(Choice)
                                 
                                 
                                 
-                                    <category domain="https://linooohon.com/blog/categories/202107/">202107</category>
+                                    <category domain="https://linooohon.com/blog/categories/2021/">2021</category>
+                                
+                            
+                                
+                                
+                                
+                                    <category domain="https://linooohon.com/blog/categories/python/">python</category>
+                                
+                            
+                                
+                                
+                                
+                                    <category domain="https://linooohon.com/blog/categories/django/">django</category>
                                 
                             
                         
@@ -4523,7 +4583,19 @@ def insert_data&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;self, insert_dic&lt;s
                                 
                                 
                                 
-                                    <category domain="https://linooohon.com/blog/categories/202107/">202107</category>
+                                    <category domain="https://linooohon.com/blog/categories/2021/">2021</category>
+                                
+                            
+                                
+                                
+                                
+                                    <category domain="https://linooohon.com/blog/categories/python/">python</category>
+                                
+                            
+                                
+                                
+                                
+                                    <category domain="https://linooohon.com/blog/categories/flask/">flask</category>
                                 
                             
                         
@@ -4836,7 +4908,19 @@ def submit():
                                 
                                 
                                 
-                                    <category domain="https://linooohon.com/blog/categories/202107/">202107</category>
+                                    <category domain="https://linooohon.com/blog/categories/2021/">2021</category>
+                                
+                            
+                                
+                                
+                                
+                                    <category domain="https://linooohon.com/blog/categories/python/">python</category>
+                                
+                            
+                                
+                                
+                                
+                                    <category domain="https://linooohon.com/blog/categories/flask/">flask</category>
                                 
                             
                         
@@ -5017,7 +5101,13 @@ git rebase --continue
                                 
                                 
                                 
-                                    <category domain="https://linooohon.com/blog/categories/202106/">202106</category>
+                                    <category domain="https://linooohon.com/blog/categories/2021/">2021</category>
+                                
+                            
+                                
+                                
+                                
+                                    <category domain="https://linooohon.com/blog/categories/git/">git</category>
                                 
                             
                         
@@ -5198,7 +5288,13 @@ $ git rebase -i &amp;lt;SHA-1&amp;gt;
                                 
                                 
                                 
-                                    <category domain="https://linooohon.com/blog/categories/202106/">202106</category>
+                                    <category domain="https://linooohon.com/blog/categories/2021/">2021</category>
+                                
+                            
+                                
+                                
+                                
+                                    <category domain="https://linooohon.com/blog/categories/git/">git</category>
                                 
                             
                         
@@ -5315,7 +5411,13 @@ At least I know that much.
                                 
                                 
                                 
-                                    <category domain="https://linooohon.com/blog/categories/202105/">202105</category>
+                                    <category domain="https://linooohon.com/blog/categories/2021/">2021</category>
+                                
+                            
+                                
+                                
+                                
+                                    <category domain="https://linooohon.com/blog/categories/life/">life</category>
                                 
                             
                         

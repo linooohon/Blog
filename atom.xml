@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-TW">
     <title type="text">mitsukuchiph.</title>
     <subtitle type="html">MemE 是一個強大且可高度定製的 GoHugo 部落格主題，專為個人部落格設計。</subtitle>
-    <updated>2021-11-26T01:47:07&#43;08:00</updated>
+    <updated>2021-11-26T10:56:33&#43;08:00</updated>
     <id>https://linooohon.com/blog/</id>
     <link rel="alternate" type="text/html" href="https://linooohon.com/blog/" />
     <link rel="self" type="application/atom&#43;xml" href="https://linooohon.com/blog/atom.xml" />
@@ -20,11 +20,11 @@
             <title type="text">[CI/CD]幫 Data Team 設置 GitLab 的 CI/CD</title>
             <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/13/211124/GitLab_CI-CD/" />
             <id>https://linooohon.com/blog/posts/13/211124/GitLab_CI-CD/</id>
-            <updated>2021-11-26T01:43:00&#43;08:00</updated>
+            <updated>2021-11-26T10:48:38&#43;08:00</updated>
             <published>2021-11-24T18:36:14&#43;08:00</published>
             <author>
                     <name>mitsukuchiph.</name>
-                    <uri>https://linooohon.com/portfolio</uri>
+                    <uri>https://linooohon.com</uri>
                     <email>linooohon@gmail.com</email>
                     </author>
             <summary type="html">最近在公司開始整理一些 Legacy Code，在標記的同時，也開始設置 Python 版的 Monorepo，這裡紀錄一下目前幫 Data Team 初期設置的 GitLab CI/CD &lt;img src=&#34;https://linooohon.com/blog/blog/images/13_211124/13_211124_gitlabcicd.png&#34; /&gt;</summary>
@@ -340,7 +340,13 @@ sudo systemctl &lt;span class=&#34;nb&#34;&gt;enable&lt;/span&gt; containerd.ser
                             
                             
                             
-                                <category scheme="https://linooohon.com/blog/categories/202111/" term="202111" label="202111" />
+                                <category scheme="https://linooohon.com/blog/categories/2021/" term="2021" label="2021" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/categories/cicd/" term="cicd" label="cicd" />
                             
                         
                     
@@ -392,11 +398,11 @@ sudo systemctl &lt;span class=&#34;nb&#34;&gt;enable&lt;/span&gt; containerd.ser
             <title type="text">[Python]Multi-processing 操作方式: fork, multiprocessing, subprocess</title>
             <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/12/211020/Python_multiprocessing_usage/" />
             <id>https://linooohon.com/blog/posts/12/211020/Python_multiprocessing_usage/</id>
-            <updated>2021-11-26T01:47:00&#43;08:00</updated>
+            <updated>2021-11-26T10:48:08&#43;08:00</updated>
             <published>2021-10-20T18:36:14&#43;08:00</published>
             <author>
                     <name>mitsukuchiph.</name>
-                    <uri>https://linooohon.com/portfolio</uri>
+                    <uri>https://linooohon.com</uri>
                     <email>linooohon@gmail.com</email>
                     </author>
             <summary type="html">Multi-processing 在 Python 上實作的方式紀錄 &lt;img src=&#34;https://linooohon.com/blog/blog/images/12_211020/12_211020_python_multiprocessing使用方式.png&#34; /&gt;</summary>
@@ -1189,7 +1195,13 @@ ValueError: Pool is still running
                             
                             
                             
-                                <category scheme="https://linooohon.com/blog/categories/202110/" term="202110" label="202110" />
+                                <category scheme="https://linooohon.com/blog/categories/2021/" term="2021" label="2021" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/categories/python/" term="python" label="python" />
                             
                         
                     
@@ -1229,11 +1241,11 @@ ValueError: Pool is still running
             <title type="text">關於在 Nuxt.js 開發時渲染 HTML 的小坑紀錄，不同瀏覽器的差異..</title>
             <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/11/211011/Nuxtjs_Note/" />
             <id>https://linooohon.com/blog/posts/11/211011/Nuxtjs_Note/</id>
-            <updated>2021-10-29T16:44:36&#43;08:00</updated>
+            <updated>2021-11-26T10:47:23&#43;08:00</updated>
             <published>2021-10-11T18:36:14&#43;08:00</published>
             <author>
                     <name>mitsukuchiph.</name>
-                    <uri>https://linooohon.com/portfolio</uri>
+                    <uri>https://linooohon.com</uri>
                     <email>linooohon@gmail.com</email>
                     </author>
             <summary type="html">在 PyConTW2021 Dev Team 開發紀錄，關於在 Nuxt.js 開發時渲染 HTML 的小坑紀錄&lt;img src=&#34;https://linooohon.com/blog/blog/images/11_211011/11_211011_PyCon_Nuxt_01.png&#34; /&gt;</summary>
@@ -1308,7 +1320,13 @@ ValueError: Pool is still running
                             
                             
                             
-                                <category scheme="https://linooohon.com/blog/categories/202110/" term="202110" label="202110" />
+                                <category scheme="https://linooohon.com/blog/categories/2021/" term="2021" label="2021" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/categories/nuxt/" term="nuxt" label="nuxt" />
                             
                         
                     
@@ -1342,11 +1360,11 @@ ValueError: Pool is still running
             <title type="text">[Python]關於 Python 的幾種安裝與路徑(Python Install &amp; PATH)</title>
             <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/10/210915/%E9%97%9C%E6%96%BCPython%E7%9A%84%E5%B9%BE%E7%A8%AE%E5%AE%89%E8%A3%9D%E8%88%87%E8%B7%AF%E5%BE%91%28Python%20Install%20&amp;%20PATH%29/" />
             <id>https://linooohon.com/blog/posts/10/210915/%E9%97%9C%E6%96%BCPython%E7%9A%84%E5%B9%BE%E7%A8%AE%E5%AE%89%E8%A3%9D%E8%88%87%E8%B7%AF%E5%BE%91%28Python%20Install%20&amp;%20PATH%29/</id>
-            <updated>2021-11-26T01:42:19&#43;08:00</updated>
+            <updated>2021-11-26T10:47:13&#43;08:00</updated>
             <published>2021-09-15T18:36:14&#43;08:00</published>
             <author>
                     <name>mitsukuchiph.</name>
-                    <uri>https://linooohon.com/portfolio</uri>
+                    <uri>https://linooohon.com</uri>
                     <email>linooohon@gmail.com</email>
                     </author>
             <summary type="html">關於 Python 的幾種安裝與路徑(Python Install &amp;amp; PATH) &lt;img src=&#34;https://linooohon.com/blog/blog/images/10_210915/10_210915_pythoninstallandpath.png&#34; /&gt;</summary>
@@ -1690,7 +1708,13 @@ conda env create --file environment.yml --name env_from_yml
                             
                             
                             
-                                <category scheme="https://linooohon.com/blog/categories/202109/" term="202109" label="202109" />
+                                <category scheme="https://linooohon.com/blog/categories/2021/" term="2021" label="2021" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/categories/python/" term="python" label="python" />
                             
                         
                     
@@ -1724,11 +1748,11 @@ conda env create --file environment.yml --name env_from_yml
             <title type="text">關於 Session 與 Cookie - &lt; Session篇 &gt; 紀錄</title>
             <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/09/210813/python%E7%9A%84yield%E5%92%8Cscrapy%E7%9A%84yield/" />
             <id>https://linooohon.com/blog/posts/09/210813/python%E7%9A%84yield%E5%92%8Cscrapy%E7%9A%84yield/</id>
-            <updated>2021-10-17T16:36:21&#43;08:00</updated>
+            <updated>2021-11-26T10:47:02&#43;08:00</updated>
             <published>2021-08-13T18:36:14&#43;08:00</published>
             <author>
                     <name>mitsukuchiph.</name>
-                    <uri>https://linooohon.com/portfolio</uri>
+                    <uri>https://linooohon.com</uri>
                     <email>linooohon@gmail.com</email>
                     </author>
             <summary type="html">關於 Session 與 Cookie - Session篇紀錄&lt;img src=&#34;https://linooohon.com/blog/blog/images/09_210813/09_210813_session.png&#34; /&gt;</summary>
@@ -1989,7 +2013,13 @@ the technique &lt;span style=&#34;color: #ed61cb&#34;&gt;allows clients and serv
                             
                             
                             
-                                <category scheme="https://linooohon.com/blog/categories/202108/" term="202108" label="202108" />
+                                <category scheme="https://linooohon.com/blog/categories/2021/" term="2021" label="2021" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/categories/http/" term="http" label="http" />
                             
                         
                     
@@ -2014,6 +2044,12 @@ the technique &lt;span style=&#34;color: #ed61cb&#34;&gt;allows clients and serv
                                 <category scheme="https://linooohon.com/blog/tags/cookie/" term="Cookie" label="Cookie" />
                             
                         
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/tags/http/" term="Http" label="Http" />
+                            
+                        
                     
                 
             
@@ -2023,11 +2059,11 @@ the technique &lt;span style=&#34;color: #ed61cb&#34;&gt;allows clients and serv
             <title type="text">[Python]觀念(2) yield, generator?，那 Scrapy 裡的 yield?</title>
             <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/08/210805/python%E7%9A%84yield%E5%92%8Cscrapy%E7%9A%84yield/" />
             <id>https://linooohon.com/blog/posts/08/210805/python%E7%9A%84yield%E5%92%8Cscrapy%E7%9A%84yield/</id>
-            <updated>2021-11-26T01:43:21&#43;08:00</updated>
+            <updated>2021-11-26T10:46:46&#43;08:00</updated>
             <published>2021-08-05T18:36:14&#43;08:00</published>
             <author>
                     <name>mitsukuchiph.</name>
-                    <uri>https://linooohon.com/portfolio</uri>
+                    <uri>https://linooohon.com</uri>
                     <email>linooohon@gmail.com</email>
                     </author>
             <summary type="html">繼上篇 Iterator 紀錄，這次對 yield 的概念在此統整一下，同時也追了一下 Scrapy 的 source code &lt;img src=&#34;https://linooohon.com/blog/blog/images/08_210805/08_210805_pythonyield_intro.png&#34; /&gt;</summary>
@@ -2743,7 +2779,13 @@ print(isinstance(bytes_1, Generator))
                             
                             
                             
-                                <category scheme="https://linooohon.com/blog/categories/202108/" term="202108" label="202108" />
+                                <category scheme="https://linooohon.com/blog/categories/2021/" term="2021" label="2021" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/categories/python/" term="python" label="python" />
                             
                         
                     
@@ -2783,11 +2825,11 @@ print(isinstance(bytes_1, Generator))
             <title type="text">[Python]觀念(1) - Iteration, Iterable, Iterator</title>
             <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/07/210727/Python%20%E8%A7%80%E5%BF%B5%281%29%20-%20Iteration,%20Iterable,%20Iterator/" />
             <id>https://linooohon.com/blog/posts/07/210727/Python%20%E8%A7%80%E5%BF%B5%281%29%20-%20Iteration,%20Iterable,%20Iterator/</id>
-            <updated>2021-11-26T01:43:25&#43;08:00</updated>
+            <updated>2021-11-26T10:45:50&#43;08:00</updated>
             <published>2021-07-27T18:36:14&#43;08:00</published>
             <author>
                     <name>mitsukuchiph.</name>
-                    <uri>https://linooohon.com/portfolio</uri>
+                    <uri>https://linooohon.com</uri>
                     <email>linooohon@gmail.com</email>
                     </author>
             <summary type="html">Python Iteration 如何運行，for loop 本質 - Iteration, Iterable, Iterator &lt;img src=&#34;https://linooohon.com/blog/blog/images/07_210727/07_210727_python_iteration.png&#34; /&gt;</summary>
@@ -3503,7 +3545,13 @@ TypeError: &#39;str&#39; object is not an iterator
                             
                             
                             
-                                <category scheme="https://linooohon.com/blog/categories/202107/" term="202107" label="202107" />
+                                <category scheme="https://linooohon.com/blog/categories/2021/" term="2021" label="2021" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/categories/python/" term="python" label="python" />
                             
                         
                     
@@ -3531,11 +3579,11 @@ TypeError: &#39;str&#39; object is not an iterator
             <title type="text">[Django] - part1.2: Official Docs Note</title>
             <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/06/210720/Django%20-%20part1.2:%20Official%20Docs%20Note" />
             <id>https://linooohon.com/blog/posts/06/210720/Django%20-%20part1.2:%20Official%20Docs%20Note</id>
-            <updated>2021-11-26T01:41:22&#43;08:00</updated>
+            <updated>2021-11-26T10:46:24&#43;08:00</updated>
             <published>2021-07-20T18:36:14&#43;08:00</published>
             <author>
                     <name>mitsukuchiph.</name>
-                    <uri>https://linooohon.com/portfolio</uri>
+                    <uri>https://linooohon.com</uri>
                     <email>linooohon@gmail.com</email>
                     </author>
             <summary type="html">關於 Django 的官方文件筆記(EN)&lt;img src=&#34;https://linooohon.com/blog/blog/images/06_210720/06_210720_django.png&#34; /&gt;</summary>
@@ -4078,7 +4126,19 @@ admin.site.register(Choice)
                             
                             
                             
-                                <category scheme="https://linooohon.com/blog/categories/202107/" term="202107" label="202107" />
+                                <category scheme="https://linooohon.com/blog/categories/2021/" term="2021" label="2021" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/categories/python/" term="python" label="python" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/categories/django/" term="django" label="django" />
                             
                         
                     
@@ -4112,11 +4172,11 @@ admin.site.register(Choice)
             <title type="text">「Flask」02: Static File handling, Database connection</title>
             <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/05/210714/%E3%80%8C%E3%80%8CFlask%E3%80%8D02:%20Static%20File%20handling,%20Database%20connection/" />
             <id>https://linooohon.com/blog/posts/05/210714/%E3%80%8C%E3%80%8CFlask%E3%80%8D02:%20Static%20File%20handling,%20Database%20connection/</id>
-            <updated>2021-10-02T15:55:34&#43;08:00</updated>
+            <updated>2021-11-26T10:46:17&#43;08:00</updated>
             <published>2021-07-14T18:36:14&#43;08:00</published>
             <author>
                     <name>mitsukuchiph.</name>
-                    <uri>https://linooohon.com/portfolio</uri>
+                    <uri>https://linooohon.com</uri>
                     <email>linooohon@gmail.com</email>
                     </author>
             <summary type="html">上次紀錄了 Flask 基本處理，這次紀錄 Static File 和 DB 連線(EN) &lt;img src=&#34;https://linooohon.com/blog/blog/images/04_05_210710/04_05_210710_flask_intro.png&#34; /&gt;</summary>
@@ -4540,7 +4600,19 @@ def insert_data&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;self, insert_dic&lt;s
                             
                             
                             
-                                <category scheme="https://linooohon.com/blog/categories/202107/" term="202107" label="202107" />
+                                <category scheme="https://linooohon.com/blog/categories/2021/" term="2021" label="2021" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/categories/python/" term="python" label="python" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/categories/flask/" term="flask" label="flask" />
                             
                         
                     
@@ -4574,11 +4646,11 @@ def insert_data&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;self, insert_dic&lt;s
             <title type="text">「Flask」01: Basic, Route, Templates, GET, POST</title>
             <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/04/210710/%E3%80%8CFlask%E3%80%8D01:%20Basic,%20Route,%20Templates,%20GET,%20POST/" />
             <id>https://linooohon.com/blog/posts/04/210710/%E3%80%8CFlask%E3%80%8D01:%20Basic,%20Route,%20Templates,%20GET,%20POST/</id>
-            <updated>2021-10-02T15:55:54&#43;08:00</updated>
+            <updated>2021-11-26T10:46:02&#43;08:00</updated>
             <published>2021-07-10T18:36:14&#43;08:00</published>
             <author>
                     <name>mitsukuchiph.</name>
-                    <uri>https://linooohon.com/portfolio</uri>
+                    <uri>https://linooohon.com</uri>
                     <email>linooohon@gmail.com</email>
                     </author>
             <summary type="html">前陣子實做了 Flask App 紀錄一下基本處理! (EN) &lt;img src=&#34;https://linooohon.com/blog/blog/images/04_05_210710/04_05_210710_flask_intro.png&#34; /&gt;</summary>
@@ -4856,7 +4928,19 @@ def submit():
                             
                             
                             
-                                <category scheme="https://linooohon.com/blog/categories/202107/" term="202107" label="202107" />
+                                <category scheme="https://linooohon.com/blog/categories/2021/" term="2021" label="2021" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/categories/python/" term="python" label="python" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/categories/flask/" term="flask" label="flask" />
                             
                         
                     
@@ -4890,11 +4974,11 @@ def submit():
             <title type="text">02「Git 介紹」git rebase -i</title>
             <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/03/210620/02%E3%80%8CGit%20%E4%BB%8B%E7%B4%B9%E3%80%8Dgit%20rebase%20-i/" />
             <id>https://linooohon.com/blog/posts/03/210620/02%E3%80%8CGit%20%E4%BB%8B%E7%B4%B9%E3%80%8Dgit%20rebase%20-i/</id>
-            <updated>2021-10-02T15:54:58&#43;08:00</updated>
+            <updated>2021-11-26T10:45:31&#43;08:00</updated>
             <published>2021-06-20T18:36:14&#43;08:00</published>
             <author>
                     <name>mitsukuchiph.</name>
-                    <uri>https://linooohon.com/portfolio</uri>
+                    <uri>https://linooohon.com</uri>
                     <email>linooohon@gmail.com</email>
                     </author>
             <summary type="html">Git 第二篇, git rebase -i 互動模式 &lt;img src=&#34;https://linooohon.com/blog/blog/images/03_210620/03_210620_git_rebase_2.png&#34; /&gt;</summary>
@@ -5040,7 +5124,13 @@ git rebase --continue
                             
                             
                             
-                                <category scheme="https://linooohon.com/blog/categories/202106/" term="202106" label="202106" />
+                                <category scheme="https://linooohon.com/blog/categories/2021/" term="2021" label="2021" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/categories/git/" term="git" label="git" />
                             
                         
                     
@@ -5062,11 +5152,11 @@ git rebase --continue
             <title type="text">01「Git 介紹」什麼是 git rebase</title>
             <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/02/210615/01%E3%80%8CGit%20%E4%BB%8B%E7%B4%B9%E3%80%8D%E4%BB%80%E9%BA%BC%E6%98%AF%20git%20rebase/" />
             <id>https://linooohon.com/blog/posts/02/210615/01%E3%80%8CGit%20%E4%BB%8B%E7%B4%B9%E3%80%8D%E4%BB%80%E9%BA%BC%E6%98%AF%20git%20rebase/</id>
-            <updated>2021-10-02T15:54:40&#43;08:00</updated>
+            <updated>2021-11-26T10:45:34&#43;08:00</updated>
             <published>2021-06-15T18:36:14&#43;08:00</published>
             <author>
                     <name>mitsukuchiph.</name>
-                    <uri>https://linooohon.com/portfolio</uri>
+                    <uri>https://linooohon.com</uri>
                     <email>linooohon@gmail.com</email>
                     </author>
             <summary type="html">最近又整理了一下自己對 git 的概念，分享一下 &lt;img src=&#34;https://linooohon.com/blog/blog/images/02_210615/02_210615_git_rebase.png&#34; /&gt;</summary>
@@ -5224,7 +5314,13 @@ $ git rebase -i &amp;lt;SHA-1&amp;gt;
                             
                             
                             
-                                <category scheme="https://linooohon.com/blog/categories/202106/" term="202106" label="202106" />
+                                <category scheme="https://linooohon.com/blog/categories/2021/" term="2021" label="2021" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/categories/git/" term="git" label="git" />
                             
                         
                     
@@ -5246,11 +5342,11 @@ $ git rebase -i &amp;lt;SHA-1&amp;gt;
             <title type="text">Hi Blog, YUI - TOKYO</title>
             <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/01/210503/first-post/" />
             <id>https://linooohon.com/blog/posts/01/210503/first-post/</id>
-            <updated>2021-10-17T16:26:28&#43;08:00</updated>
+            <updated>2021-11-26T10:54:28&#43;08:00</updated>
             <published>2021-05-03T18:36:14&#43;08:00</published>
             <author>
                     <name>mitsukuchiph.</name>
-                    <uri>https://linooohon.com/portfolio</uri>
+                    <uri>https://linooohon.com</uri>
                     <email>linooohon@gmail.com</email>
                     </author>
             <summary type="html">Blog. 你好，多多指教 &lt;img width=&#34;80%&#34; src=&#34;https://linooohon.com/blog/blog/images/01_210503/01_210503_firstpost.jpg&#34; /&gt;</summary>
@@ -5344,7 +5440,13 @@ At least I know that much.
                             
                             
                             
-                                <category scheme="https://linooohon.com/blog/categories/202105/" term="202105" label="202105" />
+                                <category scheme="https://linooohon.com/blog/categories/2021/" term="2021" label="2021" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://linooohon.com/blog/categories/life/" term="life" label="life" />
                             
                         
                     
