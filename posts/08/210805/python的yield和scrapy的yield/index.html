@@ -27,7 +27,8 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB&#43;Garamond:ital,wght@0,400;0,500;0,700;1,400;1,700&amp;family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" media="print" onload="this.media='all'" />
         <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB&#43;Garamond:ital,wght@0,400;0,500;0,700;1,400;1,700&amp;family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" /></noscript>
 
-    <meta name="author" content="linooohon" /><meta name="description" content="繼上篇 Iterator 紀錄，這次對 yield 的概念在此統整一下，同時也追了一下 Scrapy 的 source code " />
+    <meta name="author" content="linooohon" /><meta name="description" content="繼上篇 Iterator 紀錄，這次對 yield 的概念在此統整一下，同時也追了一下 Scrapy 的 source code
+" />
 
     <link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon" />
     <link rel="mask-icon" href="/blog/icons/safari-pinned-tab.svg" color="#2a6df4" />
@@ -54,10 +55,10 @@
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         "datePublished": "2021-08-05T18:36:14+08:00",
-        "dateModified": "2021-11-26T10:46:46+08:00",
+        "dateModified": "2021-11-28T14:18:52+08:00",
         "url": "https://linooohon.com/blog/posts/08/210805/python%E7%9A%84yield%E5%92%8Cscrapy%E7%9A%84yield/",
         "headline": "[Python]觀念(2) yield, generator?，那 Scrapy 裡的 yield?",
-        "description": "繼上篇 Iterator 紀錄，這次對 yield 的概念在此統整一下，同時也追了一下 Scrapy 的 source code ",
+        "description": "繼上篇 Iterator 紀錄，這次對 yield 的概念在此統整一下，同時也追了一下 Scrapy 的 source code\n",
         "inLanguage" : "zh-TW",
         "articleSection": "posts",
         "wordCount":  2946 ,
@@ -98,13 +99,14 @@
 
 
 <meta property="og:title" content="[Python]觀念(2) yield, generator?，那 Scrapy 裡的 yield?" />
-<meta property="og:description" content="繼上篇 Iterator 紀錄，這次對 yield 的概念在此統整一下，同時也追了一下 Scrapy 的 source code " />
+<meta property="og:description" content="繼上篇 Iterator 紀錄，這次對 yield 的概念在此統整一下，同時也追了一下 Scrapy 的 source code
+" />
 <meta property="og:url" content="https://linooohon.com/blog/posts/08/210805/python%E7%9A%84yield%E5%92%8Cscrapy%E7%9A%84yield/" />
 <meta property="og:site_name" content="mitsukuchiph." />
 <meta property="og:locale" content="zh-tw" /><meta property="og:image" content="https://linooohon.com/blog/blog/images/08_210805/08_210805_pythonyield_intro.png" />
 <meta property="og:type" content="article" />
     <meta property="article:published_time" content="2021-08-05T18:36:14&#43;08:00" />
-    <meta property="article:modified_time" content="2021-11-26T10:46:46&#43;08:00" />
+    <meta property="article:modified_time" content="2021-11-28T14:18:52&#43;08:00" />
     
     <meta property="article:section" content="posts" />
 
@@ -1019,7 +1021,7 @@ print(isinstance(bytes_1, Generator))
             
                 <div class="share-item linkedin">
                     
-                    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://linooohon.com/blog/posts/08/210805/python%E7%9A%84yield%E5%92%8Cscrapy%E7%9A%84yield/&amp;title=[Python]%e8%a7%80%e5%bf%b5%282%29%20yield,%20generator?%ef%bc%8c%e9%82%a3%20Scrapy%20%e8%a3%a1%e7%9a%84%20yield?&amp;summary=%e7%b9%bc%e4%b8%8a%e7%af%87%20Iterator%20%e7%b4%80%e9%8c%84%ef%bc%8c%e9%80%99%e6%ac%a1%e5%b0%8d%20yield%20%e7%9a%84%e6%a6%82%e5%bf%b5%e5%9c%a8%e6%ad%a4%e7%b5%b1%e6%95%b4%e4%b8%80%e4%b8%8b%ef%bc%8c%e5%90%8c%e6%99%82%e4%b9%9f%e8%bf%bd%e4%ba%86%e4%b8%80%e4%b8%8b%20Scrapy%20%e7%9a%84%20source%20code%20&amp;source=mitsukuchiph." title="分享到「LinkedIn」" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon linkedin-icon"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg></a>
+                    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://linooohon.com/blog/posts/08/210805/python%E7%9A%84yield%E5%92%8Cscrapy%E7%9A%84yield/&amp;title=[Python]%e8%a7%80%e5%bf%b5%282%29%20yield,%20generator?%ef%bc%8c%e9%82%a3%20Scrapy%20%e8%a3%a1%e7%9a%84%20yield?&amp;summary=%e7%b9%bc%e4%b8%8a%e7%af%87%20Iterator%20%e7%b4%80%e9%8c%84%ef%bc%8c%e9%80%99%e6%ac%a1%e5%b0%8d%20yield%20%e7%9a%84%e6%a6%82%e5%bf%b5%e5%9c%a8%e6%ad%a4%e7%b5%b1%e6%95%b4%e4%b8%80%e4%b8%8b%ef%bc%8c%e5%90%8c%e6%99%82%e4%b9%9f%e8%bf%bd%e4%ba%86%e4%b8%80%e4%b8%8b%20Scrapy%20%e7%9a%84%20source%20code%0a&amp;source=mitsukuchiph." title="分享到「LinkedIn」" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon linkedin-icon"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg></a>
                 </div>
             
 
