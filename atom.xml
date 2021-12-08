@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-TW">
     <title type="text">mitsukuchiph.</title>
     <subtitle type="html">MemE 是一個強大且可高度定製的 GoHugo 部落格主題，專為個人部落格設計。</subtitle>
-    <updated>2021-12-08T11:23:55&#43;08:00</updated>
+    <updated>2021-12-08T11:26:33&#43;08:00</updated>
     <id>https://linooohon.com/blog/</id>
     <link rel="alternate" type="text/html" href="https://linooohon.com/blog/" />
     <link rel="self" type="application/atom&#43;xml" href="https://linooohon.com/blog/atom.xml" />
@@ -17,17 +17,17 @@
     
     <generator uri="https://gohugo.io/" version="0.83.1">Hugo</generator>
         <entry>
-            <title type="text">[Character Encoding]Part1.字元編碼 ASCII, Unicode, UCS, UTF</title>
+            <title type="text">[Character set &amp; Encoding]Part1.字元編碼 ASCII, Unicode, UCS, UTF</title>
             <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/14/211206/Character_Encoding%E5%AD%97%E5%85%83%E7%B7%A8%E7%A2%BC/Part1/" />
             <id>https://linooohon.com/blog/posts/14/211206/Character_Encoding%E5%AD%97%E5%85%83%E7%B7%A8%E7%A2%BC/Part1/</id>
-            <updated>2021-12-08T11:23:12&#43;08:00</updated>
+            <updated>2021-12-08T11:25:48&#43;08:00</updated>
             <published>2021-12-06T18:36:14&#43;08:00</published>
             <author>
                     <name>mitsukuchiph.</name>
                     <uri>https://linooohon.com</uri>
                     <email>linooohon@gmail.com</email>
                     </author>
-            <summary type="html">&lt;p align=&#34;center&#34;&gt;一直以來對幾個字元編碼相關的名詞都理解得有點模糊，區別不開，所以這次紀錄一下我理解的過程。&lt;/p&gt; &lt;img src=&#34;https://linooohon.com/blog/blog/images/14_211206/14_211206_ASCII_Unicode_UCS_UTF.png&#34; width=&#34;20%&#34;/&gt;</summary>
+            <summary type="html">&lt;p align=&#34;center&#34;&gt;一直以來對幾個字元編碼相關的名詞都理解得有點模糊，區別不開，所以這次紀錄一下我理解的過程。&lt;/p&gt; &lt;img src=&#34;https://linooohon.com/blog/blog/images/14_211206/14_211206_ASCII_Unicode_UCS_UTF.png&#34; width=&#34;70%&#34;/&gt;</summary>
             
                 <content type="html">&lt;h2 id=&#34;-basic-&#34;&gt;&lt;strong&gt;&amp;lt; Basic &amp;gt;&lt;/strong&gt;&lt;/h2&gt;
 &lt;blockquote&gt;
