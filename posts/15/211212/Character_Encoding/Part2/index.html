@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+    <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
+    <meta charset="UTF-8" />
+
+    <meta name="generator" content="Hugo 0.83.1" /><meta name="theme-color" content="#fff" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <title>[Character set &amp; Encoding]Part2. Python 在編碼上的操作與例子 | mitsukuchiph.</title>
+
+    <link rel="stylesheet" href="/blog/css/meme.min.b839f4681fa3611632a14c5ba9c9988c24cac3a1fac80e6d06fa3b67d4a417e5.css"/>
+
+    
+    
+        <script src="/blog/js/meme.min.1296eae7a1970c0bbd9d8315daae36c344017e9de3e57edc689779153976ec28.js"></script>
+
+    
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB&#43;Garamond:ital,wght@0,400;0,500;0,700;1,400;1,700&amp;family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" media="print" onload="this.media='all'" />
+        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB&#43;Garamond:ital,wght@0,400;0,500;0,700;1,400;1,700&amp;family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" /></noscript>
+
+    <meta name="author" content="linooohon" /><meta name="description" content="上一篇紀錄了編碼與 Unicode 的脈絡與區別，這裡紀錄一下在 Python 上的操作轉換
+" />
+
+    <link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon" />
+    <link rel="mask-icon" href="/blog/icons/safari-pinned-tab.svg" color="#2a6df4" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/blog/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="mitsukuchiph." />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="mitsukuchiph." />
+    <meta name="msapplication-starturl" content="../../../../../../" />
+    <meta name="msapplication-TileColor" content="#fff" />
+    <meta name="msapplication-TileImage" content="../../../../../../icons/mstile-150x150.png" />
+    <link rel="manifest" href="/blog/manifest.json" />
+
+    
+    
+
+    
+    <link rel="canonical" href="https://linooohon.com/blog/posts/15/211212/Character_Encoding/Part2/" />
+    
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "datePublished": "2021-12-12T18:36:14+08:00",
+        "dateModified": "2021-12-13T15:59:29+08:00",
+        "url": "https://linooohon.com/blog/posts/15/211212/Character_Encoding/Part2/",
+        "headline": "[Character set \u0026 Encoding]Part2. Python 在編碼上的操作與例子",
+        "description": "上一篇紀錄了編碼與 Unicode 的脈絡與區別，這裡紀錄一下在 Python 上的操作轉換\n",
+        "inLanguage" : "zh-TW",
+        "articleSection": "posts",
+        "wordCount":  1798 ,
+        "image": "https://linooohon.com/icons/apple-touch-icon.png",
+        "author": {
+            "@type": "Person",
+            "description": "這是簡介",
+            "email": "linooohon@gmail.com",
+            "image": "https://linooohon.com/icons/apple-touch-icon.png",
+            "url": "https://linooohon.com",
+            "name": "mitsukuchiph."
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "mitsukuchiph.",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://linooohon.com/icons/apple-touch-icon.png"
+            },
+            "url": "https://linooohon.com/"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebSite",
+            "@id": "https://linooohon.com/"
+        }
+    }
+</script>
+
+    
+
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:creator" content="@linooohon" />
+
+    
+
+
+
+<meta property="og:title" content="[Character set &amp; Encoding]Part2. Python 在編碼上的操作與例子" />
+<meta property="og:description" content="上一篇紀錄了編碼與 Unicode 的脈絡與區別，這裡紀錄一下在 Python 上的操作轉換
+" />
+<meta property="og:url" content="https://linooohon.com/blog/posts/15/211212/Character_Encoding/Part2/" />
+<meta property="og:site_name" content="mitsukuchiph." />
+<meta property="og:locale" content="zh-tw" /><meta property="og:image" content="https://linooohon.com/icons/apple-touch-icon.png" />
+    <meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2021-12-12T18:36:14&#43;08:00" />
+    <meta property="article:modified_time" content="2021-12-13T15:59:29&#43;08:00" />
+    
+    <meta property="article:section" content="posts" />
+
+
+
+    
+    
+
+    
+</head>
+
+    <body>
+        <div class="container">
+            
+    <header class="header">
+        
+            <div class="header-wrapper">
+                <div class="header-inner single">
+                    
+    <div class="site-brand">
+        
+            <a href="/blog/" class="brand">mitsukuchiph.</a>
+        
+    </div>
+
+                    <nav class="nav">
+    <ul class="menu" id="menu">
+        
+            
+        
+        
+        
+        
+            
+                <li class="menu-item"><a href="/blog/posts/"><span class="menu-item-name">pos</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/blog/categories/"><span class="menu-item-name">cat</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/blog/tags/"><span class="menu-item-name">tag</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/blog/about/"><span class="menu-item-name">abt</span></a>
+                </li>
+            
+        
+            
+                
+                    
+                    
+                        <li class="menu-item">
+                            <a id="theme-switcher" href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon theme-icon-light"><path d="M193.2 104.5l48.8-97.5a18 18 0 0128 0l48.8 97.5 103.4 -34.5a18 18 0 0119.8 19.8l-34.5 103.4l97.5 48.8a18 18 0 010 28l-97.5 48.8 34.5 103.4a18 18 0 01-19.8 19.8l-103.4-34.5-48.8 97.5a18 18 0 01-28 0l-48.8-97.5l-103.4 34.5a18 18 0 01-19.8-19.8l34.5-103.4-97.5-48.8a18 18 0 010-28l97.5-48.8-34.5-103.4a18 18 0 0119.8-19.8zM256 128a128 128 0 10.01 0M256 160a96 96 0 10.01 0"/></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon theme-icon-dark"><path d="M27 412a256 256 0 10154-407a11.5 11.5 0 00-5 20a201.5 201.5 0 01-134 374a11.5 11.5 0 00-15 13"/></svg></a>
+                        </li>
+                    
+                
+            
+        
+            
+                
+            
+        
+    </ul>
+</nav>
+
+                    
+                </div>
+            </div>
+            
+    <input type="checkbox" id="nav-toggle" aria-hidden="true" />
+    <label for="nav-toggle" class="nav-toggle"></label>
+    <label for="nav-toggle" class="nav-curtain"></label>
+
+
+        
+    </header>
+
+
+
+
+            
+            
+    <main class="main single" id="main">
+    <div class="main-inner">
+
+        
+
+        <article class="content post h-entry" data-align="justify" data-type="posts">
+
+            <h1 class="post-title p-name">[Character set &amp; Encoding]Part2. Python 在編碼上的操作與例子</h1>
+
+            <div class="post-subtitle p-name">Character Encoding in Python</div>
+            
+
+            
+                
+            
+
+            
+                
+
+<div class="post-meta">
+    
+        
+        <time datetime="2021-12-12T18:36:14&#43;08:00" class="post-meta-item published dt-published"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon post-meta-icon"><path d="M148 288h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12zm108-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 96v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm192 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96-260v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h48c26.5 0 48 21.5 48 48zm-48 346V160H48v298c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z"/></svg>&nbsp;2021.12.12</time>
+    
+    
+    
+    
+        
+        
+        
+            
+                <span class="post-meta-item category"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M464 128H272l-54.63-54.63c-6-6-14.14-9.37-22.63-9.37H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V176c0-26.51-21.49-48-48-48zm0 272H48V112h140.12l54.63 54.63c6 6 14.14 9.37 22.63 9.37H464v224z"/></svg>&nbsp;<a href="/blog/categories/2021/" class="category-link p-category">2021</a>/<a href="/blog/categories/encoding/" class="category-link p-category">encoding</a>/<a href="/blog/categories/python/" class="category-link p-category">python</a></span>
+            
+        
+    
+    
+    
+    
+    
+</div>
+
+            
+
+            <nav class="contents">
+  <h2 id="contents" class="contents-title">目錄</h2><ol class="toc">
+    <li><a id="contents:前提" href="#前提">前提:</a></li>
+    <li><a id="contents:basic" href="#basic">Basic:</a>
+      <ol>
+        <li><a id="contents:1-python3-的字串是以什麼編碼" href="#1-python3-的字串是以什麼編碼">1. Python3 的字串是以什麼編碼？</a></li>
+        <li><a id="contents:2-ordstr_-得到對應的-unicode-碼點但是以十進位表示" href="#2-ordstr_-得到對應的-unicode-碼點但是以十進位表示">2. <code>ord(str_)</code>: 得到對應的 Unicode 碼點，但是以十進位表示</a></li>
+        <li><a id="contents:3-formatordstr_-x-得到對應的-unicode-碼點搭配-format-將碼點轉換成十六進位所以會得到-unicode-最普遍使用的十六進位表示碼點" href="#3-formatordstr_-x-得到對應的-unicode-碼點搭配-format-將碼點轉換成十六進位所以會得到-unicode-最普遍使用的十六進位表示碼點">3. <code>format(ord(str_), 'x')</code>: 得到對應的 Unicode 碼點，搭配 format(), 將碼點轉換成十六進位，所以會得到 Unicode 最普遍使用的十六進位表示碼點</a></li>
+        <li><a id="contents:4-chrint_-給-unicode十進位得到對應字串" href="#4-chrint_-給-unicode十進位得到對應字串">4. <code>chr(int_)</code>: 給 Unicode十進位，得到對應字串</a></li>
+        <li><a id="contents:5-str_encodeencodingrule_-給字串然後取得對應編碼規則的編碼並以-bytes-形式顯示但如果是-ascii-的守備範圍那就不以-bytes-顯示而是直接顯示" href="#5-str_encodeencodingrule_-給字串然後取得對應編碼規則的編碼並以-bytes-形式顯示但如果是-ascii-的守備範圍那就不以-bytes-顯示而是直接顯示">5. <code>str_.encode(encodingrule_)</code>: 給字串然後取得對應編碼規則的編碼，並以 bytes 形式顯示，但如果是 ASCII 的守備範圍，那就不以 bytes 顯示，而是直接顯示。</a></li>
+        <li><a id="contents:6-bytes_decodeencodingrule_--給-bytes-然後取得對應編碼規則的字串" href="#6-bytes_decodeencodingrule_--給-bytes-然後取得對應編碼規則的字串">6. <code>bytes_.decode(encodingrule_)</code> : 給 bytes 然後取得對應編碼規則的字串。</a></li>
+        <li><a id="contents:7----coding-encodingrule_---" href="#7----coding-encodingrule_---">7. <code>-*- coding: encodingrule_ -*-</code></a></li>
+        <li><a id="contents:8-只要看到-x-就知道是-byte-的呈現一個-x碼號-就代表-1-byte" href="#8-只要看到-x-就知道是-byte-的呈現一個-x碼號-就代表-1-byte">8. 只要看到 <code>\x</code> 就知道是 byte 的呈現，一個 <code>\x</code>+<code>碼號</code> 就代表 1 byte</a></li>
+        <li><a id="contents:9-rstr_" href="#9-rstr_">9. <code>r'str_'</code></a></li>
+        <li><a id="contents:10-特別釐清-unicode-的碼點與-utf-8-的編碼是兩回事看一下在-python-裡的範例分辨差別" href="#10-特別釐清-unicode-的碼點與-utf-8-的編碼是兩回事看一下在-python-裡的範例分辨差別">10. 特別釐清: Unicode 的碼點與 UTF-8 的編碼是兩回事，看一下在 Python 裡的範例，分辨差別。</a></li>
+        <li><a id="contents:11-一些轉換補充" href="#11-一些轉換補充">11. 一些轉換補充</a></li>
+        <li><a id="contents:12-references" href="#12-references">12. References:</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav><div class="post-body e-content">
+                <p>本篇紀錄一下，字符(字串)編碼在 Python 上的實現。</p>
+<h2 id="前提"><a href="#前提" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:前提" class="headings">前提:</a></h2>
+<ul>
+<li>基本編碼知識</li>
+<li>理解 ASCII, Unicode, UTF-8 之間的差別</li>
+</ul>
+<h2 id="basic"><a href="#basic" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:basic" class="headings">Basic:</a></h2>
+<h3 id="1-python3-的字串是以什麼編碼"><a href="#1-python3-的字串是以什麼編碼" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:1-python3-的字串是以什麼編碼" class="headings">1. Python3 的字串是以什麼編碼？</a></h3>
+<pre><code>- UTF-8(實踐 Unicode)，所以 Python 支持多語言字串
+</code></pre>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="s2">&#34;嗨Hiおはよう&#34;</span><span class="p">)</span>
+<span class="c1"># 嗨Hiおはよう</span>
+</code></pre></td></tr></table></div>
+</div>
+</div><h3 id="2-ordstr_-得到對應的-unicode-碼點但是以十進位表示"><a href="#2-ordstr_-得到對應的-unicode-碼點但是以十進位表示" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:2-ordstr_-得到對應的-unicode-碼點但是以十進位表示" class="headings">2. <code>ord(str_)</code>: 得到對應的 Unicode 碼點，但是以十進位表示</a></h3>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">))</span> <span class="c1"># 65</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">))</span> <span class="c1"># 97</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;林&#39;</span><span class="p">))</span> <span class="c1"># 26519</span>
+</code></pre></td></tr></table></div>
+</div>
+</div><ul>
+<li>用途:
+<ol>
+<li>HTML Code</li>
+</ol>
+<pre><code class="language-htmlembedded" data-lang="htmlembedded"># 65 -&gt; &amp;#65;
+# 97 -&gt; &amp;#97;
+# 26519 -&gt; &amp;#26519;
+&lt;!-- 使用方式 --&gt;
+&lt;p&gt;&amp;#65;&lt;/p&gt; 
+&lt;p&gt;&amp;#97;&lt;/p&gt;
+&lt;p&gt;&amp;#26519;&lt;/p&gt;
+</code></pre></li>
+</ul>
+<h3 id="3-formatordstr_-x-得到對應的-unicode-碼點搭配-format-將碼點轉換成十六進位所以會得到-unicode-最普遍使用的十六進位表示碼點"><a href="#3-formatordstr_-x-得到對應的-unicode-碼點搭配-format-將碼點轉換成十六進位所以會得到-unicode-最普遍使用的十六進位表示碼點" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:3-formatordstr_-x-得到對應的-unicode-碼點搭配-format-將碼點轉換成十六進位所以會得到-unicode-最普遍使用的十六進位表示碼點" class="headings">3. <code>format(ord(str_), 'x')</code>: 得到對應的 Unicode 碼點，搭配 format(), 將碼點轉換成十六進位，所以會得到 Unicode 最普遍使用的十六進位表示碼點</a></h3>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="n">format</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">),</span> <span class="s1">&#39;x&#39;</span><span class="p">))</span> <span class="c1"># 41 -&gt; U+0041</span>
+<span class="k">print</span><span class="p">(</span><span class="n">format</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">),</span> <span class="s1">&#39;x&#39;</span><span class="p">))</span> <span class="c1"># 61 -&gt; U+0061</span>
+<span class="k">print</span><span class="p">(</span><span class="n">format</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;林&#39;</span><span class="p">),</span> <span class="s1">&#39;x&#39;</span><span class="p">))</span> <span class="c1"># 6797 -&gt; U+6797</span>
+<span class="k">print</span><span class="p">(</span><span class="n">format</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;🤢&#39;</span><span class="p">),</span> <span class="s1">&#39;x&#39;</span><span class="p">))</span> <span class="c1"># 1f922 -&gt; U+1f922</span>
+<span class="k">print</span><span class="p">(</span><span class="n">format</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;📸&#39;</span><span class="p">),</span> <span class="s1">&#39;x&#39;</span><span class="p">))</span> <span class="c1"># 1f4f8 -&gt; U+1f4f8</span>
+<span class="k">print</span><span class="p">(</span><span class="n">format</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;臺&#39;</span><span class="p">),</span> <span class="s1">&#39;x&#39;</span><span class="p">))</span> <span class="c1"># 81fa -&gt; U+81fa</span>
+<span class="k">print</span><span class="p">(</span><span class="n">format</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;灣&#39;</span><span class="p">),</span> <span class="s1">&#39;x&#39;</span><span class="p">))</span> <span class="c1"># 7063 -&gt; U+7063</span>
+</code></pre></td></tr></table></div>
+</div>
+</div><ul>
+<li>用途:
+<ol>
+<li>得到真正的 Unicode Code Point(主流的十六進位碼 Unicode HEX)</li>
+</ol>
+<pre><code># 41 -&gt; U+0041
+# 61 -&gt; U+0061
+# 6797 -&gt; U+6797
+# 1f922 -&gt; U+1f922
+# 1f4f8 -&gt; U+1f4f8
+# 81fa -&gt; U+81fa
+# 7063 -&gt; U+7063
+</code></pre><ol start="2">
+<li>單純印出: <code>\u + 4碼</code> or <code>超過4碼補零到8碼，並改成大寫U</code></li>
+</ol>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"> <span class="k">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\u0041</span><span class="s1">&#39;</span><span class="p">)</span>
+ <span class="k">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\u0061</span><span class="s1">&#39;</span><span class="p">)</span>
+ <span class="k">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\u6797</span><span class="s1">&#39;</span><span class="p">)</span>
+ <span class="k">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\U0001f922</span><span class="s1">&#39;</span><span class="p">)</span>
+ <span class="k">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\U0001f4f8</span><span class="s1">&#39;</span><span class="p">)</span>
+ <span class="k">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\u81fa</span><span class="s1">&#39;</span><span class="p">)</span>
+ <span class="k">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\u7063</span><span class="s1">&#39;</span><span class="p">)</span>
+ <span class="k">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\u81fa\u7063</span><span class="s1">&#39;</span><span class="p">)</span>
+
+ <span class="s2">&#34;&#34;&#34;
+</span><span class="s2"> A
+</span><span class="s2"> a
+</span><span class="s2"> 林
+</span><span class="s2"> 🤢
+</span><span class="s2"> 📸
+</span><span class="s2"> 臺
+</span><span class="s2"> 灣
+</span><span class="s2"> 臺灣
+</span><span class="s2"> &#34;&#34;&#34;</span>
+</code></pre></td></tr></table></div>
+</div>
+</div><ol start="3">
+<li>HTML Code</li>
+</ol>
+<pre><code class="language-htmlembedded" data-lang="htmlembedded"> # 41 -&gt; &amp;#x41; or &amp;#x0041;
+ # 61 -&gt; &amp;#x61; or &amp;#x0061;
+ # 6797 -&gt; &amp;#x6797;
+ # 1f922 -&gt; &amp;#x1f922;
+ # 1f4f8 -&gt; &amp;#x1f4f8;
+
+ &lt;!-- 使用方式 --&gt;
+ &lt;p&gt;&amp;#x41;&lt;/p&gt; 
+ &lt;p&gt;&amp;#x61;&lt;/p&gt;
+ &lt;p&gt;&amp;#x6797;&lt;/p&gt;
+ &lt;p&gt;&amp;#x1f922;&lt;/p&gt;
+ &lt;p&gt;&amp;#x1f4f8;&lt;/p&gt;
+
+ &lt;!-- 顯示 --&gt;
+ A
+ a
+ 林
+ 🤢
+ 📸
+</code></pre><ol start="4">
+<li>CSS Code</li>
+</ol>
+<pre><code class="language-htmlembedded" data-lang="htmlembedded"># 41 -&gt; \41
+# 61 -&gt; \61
+# 6797 -&gt; \6797
+# 1f922 -&gt; \1f922
+# 1f4f8 -&gt; \1f4f8
+&lt;!-- 使用方式 --&gt;
+
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+   &lt;meta charset=&quot;UTF-8&quot;&gt;
+   &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
+   &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+   &lt;title&gt;Document&lt;/title&gt;
+   &lt;style&gt;
+       .testing:hover:after {
+           content: '\1f4f8'
+       }
+   &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+   &lt;p&gt;&amp;#x41;&lt;/p&gt;
+   &lt;p&gt;&amp;#65;&lt;/p&gt;
+   &lt;p class=&quot;testing&quot;&gt;&amp;#97;&lt;/p&gt;
+   &lt;p&gt;&amp;#26519;&lt;/p&gt;
+   &lt;p&gt;&amp;#x1f922;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></li>
+</ul>
+<h3 id="4-chrint_-給-unicode十進位得到對應字串"><a href="#4-chrint_-給-unicode十進位得到對應字串" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:4-chrint_-給-unicode十進位得到對應字串" class="headings">4. <code>chr(int_)</code>: 給 Unicode十進位，得到對應字串</a></h3>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="nb">chr</span><span class="p">(</span><span class="mi">65</span><span class="p">))</span> <span class="c1">#A</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">chr</span><span class="p">(</span><span class="mi">97</span><span class="p">))</span> <span class="c1"># a</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">chr</span><span class="p">(</span><span class="mi">26519</span><span class="p">))</span> <span class="c1"># 林</span>
+</code></pre></td></tr></table></div>
+</div>
+</div><h3 id="5-str_encodeencodingrule_-給字串然後取得對應編碼規則的編碼並以-bytes-形式顯示但如果是-ascii-的守備範圍那就不以-bytes-顯示而是直接顯示"><a href="#5-str_encodeencodingrule_-給字串然後取得對應編碼規則的編碼並以-bytes-形式顯示但如果是-ascii-的守備範圍那就不以-bytes-顯示而是直接顯示" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:5-str_encodeencodingrule_-給字串然後取得對應編碼規則的編碼並以-bytes-形式顯示但如果是-ascii-的守備範圍那就不以-bytes-顯示而是直接顯示" class="headings">5. <code>str_.encode(encodingrule_)</code>: 給字串然後取得對應編碼規則的編碼，並以 bytes 形式顯示，但如果是 ASCII 的守備範圍，那就不以 bytes 顯示，而是直接顯示。</a></h3>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="s1">&#39;ABC&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;ascii&#39;</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;ABC&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf8&#39;</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="s1">&#39;ABC&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf8&#39;</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;臺灣&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf8&#39;</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;臺灣&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;big5&#39;</span><span class="p">))</span>
+
+<span class="s2">&#34;&#34;&#34;
+</span><span class="s2">b&#39;ABC&#39;
+</span><span class="s2">b&#39;ABC&#39;
+</span><span class="s2">b&#39;ABC&#39;
+</span><span class="s2">&lt;class &#39;bytes&#39;&gt;
+</span><span class="s2">b&#39;</span><span class="se">\xe8\x87\xba\xe7\x81\xa3</span><span class="s2">&#39;
+</span><span class="s2">b&#39;</span><span class="se">\xbb</span><span class="s2">O</span><span class="se">\xc6</span><span class="s2">W&#39;
+</span><span class="s2">&#34;&#34;&#34;</span>
+</code></pre></td></tr></table></div>
+</div>
+</div><h3 id="6-bytes_decodeencodingrule_--給-bytes-然後取得對應編碼規則的字串"><a href="#6-bytes_decodeencodingrule_--給-bytes-然後取得對應編碼規則的字串" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:6-bytes_decodeencodingrule_--給-bytes-然後取得對應編碼規則的字串" class="headings">6. <code>bytes_.decode(encodingrule_)</code> : 給 bytes 然後取得對應編碼規則的字串。</a></h3>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;ABC&#39;</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;ascii&#39;</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;ABC&#39;</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf8&#39;</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\xe8\x87\xba\xe7\x81\xa3</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf8&#39;</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\xbb</span><span class="s1">O</span><span class="se">\xc6</span><span class="s1">W&#39;</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;big5&#39;</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x82\xe0\x82\xb5\x82\xe0\x82\xb5</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;shift-jis&#39;</span><span class="p">))</span>
+
+<span class="s2">&#34;&#34;&#34;
+</span><span class="s2">ABC
+</span><span class="s2">ABC
+</span><span class="s2">臺灣
+</span><span class="s2">臺灣
+</span><span class="s2">もしもし
+</span><span class="s2">&#34;&#34;&#34;</span>
+</code></pre></td></tr></table></div>
+</div>
+</div><h3 id="7----coding-encodingrule_---"><a href="#7----coding-encodingrule_---" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:7----coding-encodingrule_---" class="headings">7. <code>-*- coding: encodingrule_ -*-</code></a></h3>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="err">此為</span> <span class="n">Python2</span> <span class="err">時，申明此文件是以</span> <span class="sb">`UTF-8`</span> <span class="err">編碼</span><span class="p">,</span> <span class="err">基本上在</span> <span class="n">Python3</span> <span class="err">已不需要，除非有特殊需求，有不同編碼在專案中應用，才會使用。不然</span> <span class="n">Python3</span> <span class="n">by</span> <span class="n">default</span> <span class="err">就是</span> <span class="sb">`UTF-8`</span> <span class="err">編碼</span>
+</code></pre></td></tr></table></div>
+</div>
+</div><div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="err">如果</span> <span class="n">shebang</span> <span class="err">有出現，那</span> <span class="n">coding</span> <span class="err">就放第二行</span>
+</code></pre></td></tr></table></div>
+</div>
+</div><div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># -*- coding: cp1252 -*-</span>
+<span class="err">如果想要其他編碼可以自己申明</span>
+</code></pre></td></tr></table></div>
+</div>
+</div><h3 id="8-只要看到-x-就知道是-byte-的呈現一個-x碼號-就代表-1-byte"><a href="#8-只要看到-x-就知道是-byte-的呈現一個-x碼號-就代表-1-byte" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:8-只要看到-x-就知道是-byte-的呈現一個-x碼號-就代表-1-byte" class="headings">8. 只要看到 <code>\x</code> 就知道是 byte 的呈現，一個 <code>\x</code>+<code>碼號</code> 就代表 1 byte</a></h3>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="s1">&#39;臺灣&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf8&#39;</span><span class="p">))</span>
+<span class="c1"># b&#39;\xe8\x87\xba\xe7\x81\xa3&#39;</span>
+
+<span class="c1"># 臺 佔 3 bytes \xe8 \x87 \xba</span>
+<span class="c1"># 灣 佔 3 bytes \xe7 \x81 \xa3</span>
+<span class="c1"># 所以臺灣共佔 6 bytes</span>
+<span class="c1"># 那為什麼 6 bytes 請先了解 ASCII, Unicode, UTF-8 之間的關係，就會知道</span>
+</code></pre></td></tr></table></div>
+</div>
+</div><h3 id="9-rstr_"><a href="#9-rstr_" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:9-rstr_" class="headings">9. <code>r'str_'</code></a></h3>
+<p>以 r 開頭的字串，可以完整呈現每個字符
+ex:</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;123\n&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;123\n&#39;</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;123</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="s1">&#39;123</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">))</span>
+
+<span class="c1"># 會是這樣:</span>
+<span class="s2">&#34;&#34;&#34;
+</span><span class="s2">123</span><span class="se">\n</span><span class="s2">
+</span><span class="s2">5
+</span><span class="s2">123
+</span><span class="s2">
+</span><span class="s2">4
+</span><span class="s2">&#34;&#34;&#34;</span>
+</code></pre></td></tr></table></div>
+</div>
+</div><h3 id="10-特別釐清-unicode-的碼點與-utf-8-的編碼是兩回事看一下在-python-裡的範例分辨差別"><a href="#10-特別釐清-unicode-的碼點與-utf-8-的編碼是兩回事看一下在-python-裡的範例分辨差別" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:10-特別釐清-unicode-的碼點與-utf-8-的編碼是兩回事看一下在-python-裡的範例分辨差別" class="headings">10. 特別釐清: Unicode 的碼點與 UTF-8 的編碼是兩回事，看一下在 Python 裡的範例，分辨差別。</a></h3>
+<p>(如果還不清楚編碼是什麼，可以先看這篇)</p>
+<blockquote>
+<p><a href="posts/14/211206/Character_Encoding字元編碼/Part1">[Character set &amp; Encoding]Part1.字元編碼 ASCII, Unicode, UCS, UTF</a></p>
+</blockquote>
+<p>依照前面的這些範例，</p>
+<ol>
+<li>先來看一下 <code>臺</code> 的 Unicode 的碼點怎麼獲取?</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">string_</span> <span class="o">=</span> <span class="s2">&#34;臺&#34;</span>
+<span class="n">unicode_hex_code_point</span> <span class="o">=</span> <span class="n">format</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">string_</span><span class="p">),</span> <span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">unicode_hex_code_point</span><span class="p">)</span>
+<span class="c1"># 印出</span>
+<span class="c1"># 81fa </span>
+</code></pre></td></tr></table></div>
+</div>
+</div><p>81fa 就是<code>臺</code>這個字 在 Unicode 的字符集定義中<code>臺</code>的碼點 -&gt; U+81fa</p>
+<ol start="2">
+<li>再來看一下 <code>臺</code> 的 UTF-8 實現的編碼怎麼獲取</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">string_</span> <span class="o">=</span> <span class="s2">&#34;臺&#34;</span>
+<span class="n">bytes_</span> <span class="o">=</span> <span class="n">string_</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="s2">&#34;x&#34;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">bytes_</span><span class="p">]))</span>
+<span class="c1"># 印出</span>
+<span class="c1"># e887ba</span>
+</code></pre></td></tr></table></div>
+</div>
+</div><p>為了比較出差別，我這邊也把編碼過後的<code>臺</code> 換成 16進位表示法，得到 e887ba
+所以可以看出來，同樣都是 16 進位表示，81fa 和 e887ba，完全不一樣，如果能了解這裡的區別，編碼的基本概念我覺得就算清楚了，基本上就是 Unicode 的碼位歸碼位，在 UTF-8 的規則下，還會再進行一次編碼，所以兩者長的不一樣。</p>
+<p>同理，轉二進位比較也不一樣:</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">string_</span> <span class="o">=</span> <span class="s2">&#34;臺&#34;</span>
+<span class="n">unicode_hex_code_point</span> <span class="o">=</span> <span class="n">format</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">string_</span><span class="p">),</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">unicode_hex_code_point</span><span class="p">)</span> <span class="c1"># 1000000111111010</span>
+
+<span class="n">bytes_</span> <span class="o">=</span> <span class="n">string_</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">bytes_</span><span class="p">)</span> <span class="c1"># b&#39;\xe8\x87\xba&#39;</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="s2">&#34;b&#34;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">bytes_</span><span class="p">]))</span> <span class="c1"># 111010001000011110111010</span>
+</code></pre></td></tr></table></div>
+</div>
+</div><h3 id="11-一些轉換補充"><a href="#11-一些轉換補充" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:11-一些轉換補充" class="headings">11. 一些轉換補充</a></h3>
+<ol>
+<li>字符串轉 bytes, 16進位、2進位表示</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">string_</span> <span class="o">=</span> <span class="s2">&#34;臺&#34;</span> 
+<span class="n">binary_converted</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">ba_</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">string_</span><span class="p">,</span> <span class="s2">&#34;utf-8&#34;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">ba_</span><span class="p">)</span> <span class="c1"># bytearray(b&#39;\xe8\x87\xba&#39;)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ba_</span><span class="p">:</span>
+    <span class="n">binary_</span> <span class="o">=</span> <span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="s2">&#34;x&#34;</span><span class="p">)</span>
+    <span class="n">binary_converted</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">binary_</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">binary_converted</span><span class="p">))</span> <span class="c1"># e887ba</span>
+</code></pre></td></tr></table></div>
+</div>
+</div><div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">string_</span> <span class="o">=</span> <span class="s2">&#34;臺&#34;</span> 
+<span class="nb">map</span><span class="p">(</span><span class="nb">bin</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">string_</span><span class="p">,</span> <span class="s2">&#34;utf-8&#34;</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">bin</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">string_</span><span class="p">,</span> <span class="s2">&#34;utf-8&#34;</span><span class="p">))))</span> <span class="c1"># 0b111010000b100001110b10111010</span>
+</code></pre></td></tr></table></div>
+</div>
+</div><ol start="2">
+<li>十進位數字轉成以二進位表示字串</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="nb">bin</span><span class="p">(</span><span class="mi">9</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="nb">bin</span><span class="p">(</span><span class="mi">9</span><span class="p">)))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">format</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="s2">&#34;b&#34;</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">format</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="s2">&#34;b&#34;</span><span class="p">)))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;{0:b}&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">9</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="s2">&#34;{0:b}&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">9</span><span class="p">)))</span>
+
+<span class="s2">&#34;&#34;&#34;
+</span><span class="s2">0b1001
+</span><span class="s2">&lt;class &#39;str&#39;&gt;
+</span><span class="s2">1001
+</span><span class="s2">&lt;class &#39;str&#39;&gt;
+</span><span class="s2">1001
+</span><span class="s2">&lt;class &#39;str&#39;&gt;
+</span><span class="s2">&#34;&#34;&#34;</span>
+
+</code></pre></td></tr></table></div>
+</div>
+</div><p>學習過程有參考網路資源，如紀錄中有雷同請見諒！</p>
+<h3 id="12-references"><a href="#12-references" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:12-references" class="headings">12. References:</a></h3>
+<ul>
+<li><a href="https://docs.python.org/3/howto/unicode.html" target="_blank" rel="noopener">Python Docs - Unicode HOWTO</a></li>
+<li><a href="https://docs.python.org/3/reference/lexical_analysis.html#literals" target="_blank" rel="noopener">Python Docs - Literals</a></li>
+</ul>
+<p><strong>&lt; 上一篇 &gt;</strong>
+<a href="posts/14/211206/Character_Encoding字元編碼/Part1">[Character set &amp; Encoding]Part1.字元編碼 ASCII, Unicode, UCS, UTF</a></p>
+
+            </div>
+
+            
+
+
+        </article>
+
+        
+
+        
+
+        
+
+
+        <div class="post-share">
+
+        
+
+        <div class="share-items">
+
+            
+                <div class="share-item twitter">
+                    
+                    <a href="https://twitter.com/share?url=https://linooohon.com/blog/posts/15/211212/Character_Encoding/Part2/&amp;text=[Character%20set%20&amp;%20Encoding]Part2.%20Python%20%e5%9c%a8%e7%b7%a8%e7%a2%bc%e4%b8%8a%e7%9a%84%e6%93%8d%e4%bd%9c%e8%88%87%e4%be%8b%e5%ad%90&amp;hashtags=Encoding,Decoding,Unicode,ACSII,UTF/UCS,OS,Binary,Hexadecimal,Python,&amp;via=" title="分享到「Twitter」" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon twitter-icon"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg></a>
+                </div>
+            
+
+            
+                <div class="share-item facebook">
+                    
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=https://linooohon.com/blog/posts/15/211212/Character_Encoding/Part2/&amp;hashtag=%23Encoding" title="分享到「Facebook」" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon facebook-icon"><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg></a>
+                </div>
+            
+
+            
+                <div class="share-item linkedin">
+                    
+                    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://linooohon.com/blog/posts/15/211212/Character_Encoding/Part2/&amp;title=[Character%20set%20&amp;%20Encoding]Part2.%20Python%20%e5%9c%a8%e7%b7%a8%e7%a2%bc%e4%b8%8a%e7%9a%84%e6%93%8d%e4%bd%9c%e8%88%87%e4%be%8b%e5%ad%90&amp;summary=%e4%b8%8a%e4%b8%80%e7%af%87%e7%b4%80%e9%8c%84%e4%ba%86%e7%b7%a8%e7%a2%bc%e8%88%87%20Unicode%20%e7%9a%84%e8%84%88%e7%b5%a1%e8%88%87%e5%8d%80%e5%88%a5%ef%bc%8c%e9%80%99%e8%a3%a1%e7%b4%80%e9%8c%84%e4%b8%80%e4%b8%8b%e5%9c%a8%20Python%20%e4%b8%8a%e7%9a%84%e6%93%8d%e4%bd%9c%e8%bd%89%e6%8f%9b%0a&amp;source=mitsukuchiph." title="分享到「LinkedIn」" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon linkedin-icon"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg></a>
+                </div>
+            
+
+            
+
+            
+
+            
+
+            
+
+            
+
+            
+                <div class="share-item qrcode">
+                    <div class="qrcode-container" title="透過「二維碼」"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon qrcode-icon"><path d="M0 224h192V32H0v192zM64 96h64v64H64V96zm192-64v192h192V32H256zm128 128h-64V96h64v64zM0 480h192V288H0v192zm64-128h64v64H64v-64zm352-64h32v128h-96v-32h-32v96h-64V288h96v32h64v-32zm0 160h32v32h-32v-32zm-64 0h32v32h-32v-32z"/></svg><div id="qrcode-img"></div>
+                    </div>
+                    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+
+<script>
+    var typeNumber = 0;
+    var errorCorrectionLevel = 'L';
+    var qr = qrcode(typeNumber, errorCorrectionLevel);
+    qr.addData('https:\/\/linooohon.com\/blog\/posts\/15\/211212\/Character_Encoding\/Part2\/');
+    qr.make();
+    document.getElementById('qrcode-img').innerHTML = qr.createImgTag();
+</script>
+
+                </div>
+            
+
+        </div>
+
+    </div>
+
+
+
+
+        
+    
+    
+        <div class="related-posts">
+            <h2 class="related-title">相關文章：<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon related-icon"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"/></svg></h2>
+            <ul class="related-list">
+                
+                    <li class="related-item">
+                        <a href="/blog/posts/14/211206/Character_Encoding%E5%AD%97%E5%85%83%E7%B7%A8%E7%A2%BC/Part1/" class="related-link">[Character set &amp; Encoding]Part1.字元編碼 ASCII, Unicode, UCS, UTF</a>
+                    </li>
+                
+                    <li class="related-item">
+                        <a href="/blog/posts/12/211020/Python_multiprocessing_usage/" class="related-link">[Python]Multi-processing 操作方式: fork, multiprocessing, subprocess</a>
+                    </li>
+                
+                    <li class="related-item">
+                        <a href="/blog/posts/10/210915/%E9%97%9C%E6%96%BCPython%E7%9A%84%E5%B9%BE%E7%A8%AE%E5%AE%89%E8%A3%9D%E8%88%87%E8%B7%AF%E5%BE%91%28Python%20Install%20&amp;%20PATH%29/" class="related-link">[Python]關於 Python 的幾種安裝與路徑(Python Install &amp; PATH)</a>
+                    </li>
+                
+                    <li class="related-item">
+                        <a href="/blog/posts/08/210805/python%E7%9A%84yield%E5%92%8Cscrapy%E7%9A%84yield/" class="related-link">[Python]觀念(2) yield, generator?，那 Scrapy 裡的 yield?</a>
+                    </li>
+                
+                    <li class="related-item">
+                        <a href="/blog/posts/07/210727/Python%20%E8%A7%80%E5%BF%B5%281%29%20-%20Iteration,%20Iterable,%20Iterator/" class="related-link">[Python]觀念(1) - Iteration, Iterable, Iterator</a>
+                    </li>
+                
+            </ul>
+        </div>
+    
+
+
+
+        
+    
+        <div class="post-tags">
+            
+                
+                
+                
+                
+                    
+                    <a href="/blog/tags/encoding/" rel="tag" class="post-tags-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon tag-icon"><path d="M0 252.118V48C0 21.49 21.49 0 48 0h204.118a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882L293.823 497.941c-18.745 18.745-49.137 18.745-67.882 0L14.059 286.059A48 48 0 0 1 0 252.118zM112 64c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48z"/></svg>Encoding</a>
+                
+            
+                
+                
+                
+                
+                    
+                    <a href="/blog/tags/decoding/" rel="tag" class="post-tags-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon tag-icon"><path d="M0 252.118V48C0 21.49 21.49 0 48 0h204.118a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882L293.823 497.941c-18.745 18.745-49.137 18.745-67.882 0L14.059 286.059A48 48 0 0 1 0 252.118zM112 64c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48z"/></svg>Decoding</a>
+                
+            
+                
+                
+                
+                
+                    
+                    <a href="/blog/tags/unicode/" rel="tag" class="post-tags-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon tag-icon"><path d="M0 252.118V48C0 21.49 21.49 0 48 0h204.118a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882L293.823 497.941c-18.745 18.745-49.137 18.745-67.882 0L14.059 286.059A48 48 0 0 1 0 252.118zM112 64c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48z"/></svg>Unicode</a>
+                
+            
+                
+                
+                
+                
+                    
+                    <a href="/blog/tags/acsii/" rel="tag" class="post-tags-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon tag-icon"><path d="M0 252.118V48C0 21.49 21.49 0 48 0h204.118a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882L293.823 497.941c-18.745 18.745-49.137 18.745-67.882 0L14.059 286.059A48 48 0 0 1 0 252.118zM112 64c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48z"/></svg>ACSII</a>
+                
+            
+                
+                
+                
+                
+                    
+                    <a href="/blog/tags/utf/ucs/" rel="tag" class="post-tags-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon tag-icon"><path d="M0 252.118V48C0 21.49 21.49 0 48 0h204.118a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882L293.823 497.941c-18.745 18.745-49.137 18.745-67.882 0L14.059 286.059A48 48 0 0 1 0 252.118zM112 64c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48z"/></svg>UTF/UCS</a>
+                
+            
+                
+                
+                
+                
+                    
+                    <a href="/blog/tags/os/" rel="tag" class="post-tags-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon tag-icon"><path d="M0 252.118V48C0 21.49 21.49 0 48 0h204.118a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882L293.823 497.941c-18.745 18.745-49.137 18.745-67.882 0L14.059 286.059A48 48 0 0 1 0 252.118zM112 64c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48z"/></svg>OS</a>
+                
+            
+                
+                
+                
+                
+                    
+                    <a href="/blog/tags/binary/" rel="tag" class="post-tags-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon tag-icon"><path d="M0 252.118V48C0 21.49 21.49 0 48 0h204.118a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882L293.823 497.941c-18.745 18.745-49.137 18.745-67.882 0L14.059 286.059A48 48 0 0 1 0 252.118zM112 64c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48z"/></svg>Binary</a>
+                
+            
+                
+                
+                
+                
+                    
+                    <a href="/blog/tags/hexadecimal/" rel="tag" class="post-tags-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon tag-icon"><path d="M0 252.118V48C0 21.49 21.49 0 48 0h204.118a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882L293.823 497.941c-18.745 18.745-49.137 18.745-67.882 0L14.059 286.059A48 48 0 0 1 0 252.118zM112 64c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48z"/></svg>Hexadecimal</a>
+                
+            
+                
+                
+                
+                
+                    
+                    <a href="/blog/tags/python/" rel="tag" class="post-tags-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon tag-icon"><path d="M0 252.118V48C0 21.49 21.49 0 48 0h204.118a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882L293.823 497.941c-18.745 18.745-49.137 18.745-67.882 0L14.059 286.059A48 48 0 0 1 0 252.118zM112 64c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48z"/></svg>Python</a>
+                
+            
+        </div>
+    
+
+
+
+        
+
+
+        
+
+
+        
+    
+        
+        
+    
+    
+    
+    
+        <ul class="post-nav">
+            
+            
+                <li class="post-nav-next">
+                    <a href="/blog/posts/14/211206/Character_Encoding%E5%AD%97%E5%85%83%E7%B7%A8%E7%A2%BC/Part1/" rel="next">[Character set &amp; Encoding]Part1.字元編碼 ASCII, Unicode, UCS, UTF &gt;</a>
+                </li>
+            
+        </ul>
+    
+
+
+
+        
+    
+
+        
+
+        
+            <div id="disqus_thread"></div>
+        
+
+        
+
+        
+
+        
+    
+
+
+
+    </div>
+</main>
+
+
+            
+    <div id="back-to-top" class="back-to-top">
+        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon arrow-up"><path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/></svg></a>
+    </div>
+
+
+            
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="site-info">©&nbsp;&nbsp;mitsukuchiph.</div>
+
+            
+    
+        <ul class="socials"><li class="socials-item">
+                    <a href="/rss.xml" target="_blank" rel="external noopener" title="RSS"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon social-icon"><path d="M19.199 24C19.199 13.467 10.533 4.8 0 4.8V0c13.165 0 24 10.835 24 24h-4.801zM3.291 17.415c1.814 0 3.293 1.479 3.293 3.295 0 1.813-1.485 3.29-3.301 3.29C1.47 24 0 22.526 0 20.71s1.475-3.294 3.291-3.295zM15.909 24h-4.665c0-6.169-5.075-11.245-11.244-11.245V8.09c8.727 0 15.909 7.184 15.909 15.91z"/></svg></a>
+                </li><li class="socials-item">
+                    <a href="mailto:linooohon@gmail.com" target="_blank" rel="external noopener" title="Email"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon social-icon"><path d="M464 64H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm0 48v40.805c-22.422 18.259-58.168 46.651-134.587 106.49-16.841 13.247-50.201 45.072-73.413 44.701-23.208.375-56.579-31.459-73.413-44.701C106.18 199.465 70.425 171.067 48 152.805V112h416zM48 400V214.398c22.914 18.251 55.409 43.862 104.938 82.646 21.857 17.205 60.134 55.186 103.062 54.955 42.717.231 80.509-37.199 103.053-54.947 49.528-38.783 82.032-64.401 104.947-82.653V400H48z"/></svg></a>
+                </li><li class="socials-item">
+                    <a href="https://github.com/linooohon" target="_blank" rel="external noopener" title="GitHub"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon social-icon"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+                </li></ul>
+    
+
+<div class="site-copyright"></div><div class="custom-footer">Everyone you meet is fighting a battle you know nothing about. Be kind. Always.</div>
+
+            
+
+            
+        </div>
+    </footer>
+
+
+        </div>
+        
+
+        
+
+
+
+
+
+
+    
+
+        
+            <script>
+    function loadComments() {
+        if (typeof DISQUS === 'undefined') {
+            var disqus_config = function() {
+                this.page.url = 'https:\/\/linooohon.com\/blog\/posts\/15\/211212\/Character_Encoding\/Part2\/';
+                this.page.identifier = '\/blog\/posts\/15\/211212\/Character_Encoding\/Part2\/';
+                this.page.title = '[Character set \u0026 Encoding]Part2. Python 在編碼上的操作與例子';
+            };
+            (function() {
+                var d = document, s = d.createElement('script'); s.async = true;
+                s.src = 'https://mitsukuchiph.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        } else {
+            DISQUS.reset({
+                reload: true,
+                config: function() {
+                    this.page.url = 'https:\/\/linooohon.com\/blog\/posts\/15\/211212\/Character_Encoding\/Part2\/';
+                    this.page.identifier = '\/blog\/posts\/15\/211212\/Character_Encoding\/Part2\/';
+                    this.page.title = '[Character set \u0026 Encoding]Part2. Python 在編碼上的操作與例子';
+                }
+            });
+        }
+    }
+</script>
+
+        
+
+        
+
+        
+
+        
+
+    
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js"></script>
+
+<script>
+    mediumZoom(document.querySelectorAll('div.post-body img'), {
+        background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
+    })
+</script>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/instant.page@5.1.0/instantpage.min.js" type="module" defer></script>
+
+
+
+
+
+
+
+    </body>
+</html>
