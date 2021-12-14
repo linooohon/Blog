@@ -21,7 +21,7 @@
             <webMaster>linooohon@gmail.com (mitsukuchiph.)</webMaster>
         
         
-        <lastBuildDate>Mon, 13 Dec 2021 15:59:43 &#43;0800</lastBuildDate>
+        <lastBuildDate>Tue, 14 Dec 2021 17:58:38 &#43;0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://linooohon.com/blog/rss.xml" />
         
@@ -391,7 +391,7 @@ ex:&lt;/p&gt;
 &lt;/div&gt;&lt;h3 id=&#34;10-特別釐清-unicode-的碼點與-utf-8-的編碼是兩回事看一下在-python-裡的範例分辨差別&#34;&gt;10. 特別釐清: Unicode 的碼點與 UTF-8 的編碼是兩回事，看一下在 Python 裡的範例，分辨差別。&lt;/h3&gt;
 &lt;p&gt;(如果還不清楚編碼是什麼，可以先看這篇)&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;&lt;a href=&#34;posts/14/211206/Character_Encoding字元編碼/Part1&#34;&gt;[Character set &amp;amp; Encoding]Part1.字元編碼 ASCII, Unicode, UCS, UTF&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://linooohon.com/blog/blog/posts/14/211206/Character_Encoding字元編碼/Part1&#34;&gt;[Character set &amp;amp; Encoding]Part1.字元編碼 ASCII, Unicode, UCS, UTF&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;依照前面的這些範例，&lt;/p&gt;
 &lt;ol&gt;
@@ -546,7 +546,7 @@ ex:&lt;/p&gt;
 &lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/reference/lexical_analysis.html#literals&#34;&gt;Python Docs - Literals&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;strong&gt;&amp;lt; 上一篇 &amp;gt;&lt;/strong&gt;
-&lt;a href=&#34;posts/14/211206/Character_Encoding字元編碼/Part1&#34;&gt;[Character set &amp;amp; Encoding]Part1.字元編碼 ASCII, Unicode, UCS, UTF&lt;/a&gt;&lt;/p&gt;
+&lt;a href=&#34;https://linooohon.com/blog/blog/posts/14/211206/Character_Encoding字元編碼/Part1&#34;&gt;[Character set &amp;amp; Encoding]Part1.字元編碼 ASCII, Unicode, UCS, UTF&lt;/a&gt;&lt;/p&gt;
 </description>
                 
                 
@@ -1069,6 +1069,8 @@ ISO 出的 4 bytes 編碼方式, 從 &lt;code&gt;U+00000000&lt;/code&gt; ~ &lt;c
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;&amp;lt; 下一篇Part2 &amp;gt;&lt;/strong&gt;
+&lt;a href=&#34;https://linooohon.com/blog/blog/posts/15/211212/Character_Encoding/Part2&#34;&gt;[Character set &amp;amp; Encoding]Part1.字元編碼 ASCII, Unicode, UCS, UTF&lt;/a&gt;&lt;/p&gt;
 </description>
                 
                 
