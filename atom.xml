@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-TW">
     <title type="text">mitsukuchiph.</title>
     <subtitle type="html">MemE 是一個強大且可高度定製的 GoHugo 部落格主題，專為個人部落格設計。</subtitle>
-    <updated>2021-12-24T20:12:21&#43;08:00</updated>
+    <updated>2021-12-24T20:23:41&#43;08:00</updated>
     <id>https://linooohon.com/blog/</id>
     <link rel="alternate" type="text/html" href="https://linooohon.com/blog/" />
     <link rel="self" type="application/atom&#43;xml" href="https://linooohon.com/blog/atom.xml" />
@@ -20,21 +20,21 @@
             <title type="text">2021年度回顧</title>
             <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/17/211224/2021%E5%B9%B4%E5%BA%A6%E5%9B%9E%E9%A1%A7/" />
             <id>https://linooohon.com/blog/posts/17/211224/2021%E5%B9%B4%E5%BA%A6%E5%9B%9E%E9%A1%A7/</id>
-            <updated>2021-12-24T20:04:02&#43;08:00</updated>
+            <updated>2021-12-24T20:23:06&#43;08:00</updated>
             <published>2021-12-24T15:36:14&#43;08:00</published>
             <author>
                     <name>mitsukuchiph.</name>
                     <uri>https://linooohon.com</uri>
                     <email>linooohon@gmail.com</email>
                     </author>
-            <summary type="html">&lt;p align=&#34;center&#34;&gt;這一年我的整個變化很多，經歷去年退伍後的放空、探索。&lt;/p&gt; &lt;img src=&#34;https://linooohon.com/blog/blog/images/17_211224/17_211224.JPG&#34; width=&#34;50%&#34;/&gt;</summary>
+            <summary type="html">&lt;p align=&#34;center&#34;&gt;這一年我的整個變化很多，經歷去年退伍後的放空、探索。&lt;/p&gt; &lt;img src=&#34;https://linooohon.com/blog/blog/images/17_211224/17_211224.jpg&#34; width=&#34;50%&#34;/&gt;</summary>
             
                 <content type="html">&lt;p&gt;這一年我的整個變化很多，經歷去年退伍後的放空、探索。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;程式、攝影、音樂、女友、PyCon、疫情、面試&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;!-- ![https://linooohon.com/blog](/blog/images/17_211224/17_211224.JPG) --&gt;
-&lt;img src=&#34;https://linooohon.com/blog/blog/images/17_211224/17_211224.JPG&#34; width=&#34;70%&#34; style=&#34;border-radius: 50%;&#34;/&gt;
+&lt;img src=&#34;https://linooohon.com/blog/blog/images/17_211224/17_211224.jpg&#34; width=&#34;70%&#34; style=&#34;border-radius: 50%;&#34;/&gt;
 &lt;ul&gt;
 &lt;li&gt;2020-5月退伍後：&lt;/li&gt;
 &lt;/ul&gt;
