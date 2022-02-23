@@ -21,10 +21,92 @@
             <webMaster>linooohon@gmail.com (mitsukuchiph.)</webMaster>
         
         
-        <lastBuildDate>Sun, 20 Feb 2022 22:43:02 &#43;0800</lastBuildDate>
+        <lastBuildDate>Thu, 24 Feb 2022 00:34:38 &#43;0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://linooohon.com/blog/rss.xml" />
         
+        
+            <item>
+                <title>Pasteboard - Flipper</title>
+                <link>https://linooohon.com/blog/posts/20/220221/Pasteboard-Flipper/</link>
+                <guid isPermaLink="true">https://linooohon.com/blog/posts/20/220221/Pasteboard-Flipper/</guid>
+                <pubDate>Mon, 21 Feb 2022 00:36:14 &#43;0800</pubDate>
+                
+                    <author>linooohon@gmail.com (mitsukuchiph.)</author>
+                
+                
+                
+                    <description>&lt;!-- ![Pasteboard - Flipper](/blog/images/20_220221/20_220221_pasteboard_flipper.png) --&gt;
+&lt;p&gt;&lt;img width=&#34;30%&#34; src=&#34;https://linooohon.com/blog/blog/images/20_220221/20_220221_pasteboard_flipper.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Pasteboard - Flipper(2006)&lt;/em&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;重くのし掛かるプレッシャー
+軽くはねのけてフリッパー
+低く押しよせるプレッシャー 
+高く蹴り上げてフリッパー
+青く塗り替えるプレッシャー
+上手くすり抜けてフリッパー
+酷く切りかけるプレッシャー
+強く笑い飛ばせフリッパー
+弾け飛ぶクラッカー
+回り出すプレーヤー
+掻き鳴らせよギター
+踏み込んでフランジャー
+鳴り響くスピーカー
+鳴らされてるヒーター
+止まないでフランジャー
+盛り上げてフリッパー
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;crazy....不安を感じる...loop....&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=7cblWCUyYbs&#34;&gt;https://www.youtube.com/watch?v=7cblWCUyYbs&lt;/a&gt;&lt;/p&gt;
+&lt;!-- &lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/7cblWCUyYbs&#34; title=&#34;YouTube video player&#34; frameborder=&#34;0&#34; allow=&#34;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture&#34; allowfullscreen&gt;&lt;/iframe&gt; --&gt;
+</description>
+                
+                
+                
+                
+                
+                    
+                        
+                            
+                                
+                                
+                                
+                                    <category domain="https://linooohon.com/blog/categories/2022/">2022</category>
+                                
+                            
+                                
+                                
+                                
+                                    <category domain="https://linooohon.com/blog/categories/life/">life</category>
+                                
+                            
+                                
+                                
+                                
+                                    <category domain="https://linooohon.com/blog/categories/music/">music</category>
+                                
+                            
+                        
+                    
+                        
+                            
+                                
+                                
+                                
+                                    <category domain="https://linooohon.com/blog/tags/life/">Life</category>
+                                
+                            
+                                
+                                
+                                
+                                    <category domain="https://linooohon.com/blog/tags/music/">Music</category>
+                                
+                            
+                        
+                    
+                
+            </item>
         
             <item>
                 <title>關於 Session 與 Cookie - &lt; Cookie篇 &gt; 紀錄</title>
@@ -5593,8 +5675,8 @@ TypeError: &#39;str&#39; object is not an iterator
         
             <item>
                 <title>[Django] - part1.2: Official Docs Note</title>
-                <link>https://linooohon.com/blog/posts/06/210720/Django%20-%20part1.2:%20Official%20Docs%20Note</link>
-                <guid isPermaLink="true">https://linooohon.com/blog/posts/06/210720/Django%20-%20part1.2:%20Official%20Docs%20Note</guid>
+                <link>https://linooohon.com/blog/posts/06/210720/Django-Note/</link>
+                <guid isPermaLink="true">https://linooohon.com/blog/posts/06/210720/Django-Note/</guid>
                 <pubDate>Tue, 20 Jul 2021 18:36:14 &#43;0800</pubDate>
                 
                     <author>linooohon@gmail.com (mitsukuchiph.)</author>
@@ -7447,6 +7529,12 @@ At least I know that much.
                                     <category domain="https://linooohon.com/blog/categories/life/">life</category>
                                 
                             
+                                
+                                
+                                
+                                    <category domain="https://linooohon.com/blog/categories/music/">music</category>
+                                
+                            
                         
                     
                         
@@ -7455,6 +7543,12 @@ At least I know that much.
                                 
                                 
                                     <category domain="https://linooohon.com/blog/tags/life/">Life</category>
+                                
+                            
+                                
+                                
+                                
+                                    <category domain="https://linooohon.com/blog/tags/music/">Music</category>
                                 
                             
                         
