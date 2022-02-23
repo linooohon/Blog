@@ -9,7 +9,7 @@
     <channel>
         <title>mitsukuchiph.</title>
         <link>https://linooohon.com/blog/</link>
-        <description>MemE 是一個強大且可高度定製的 GoHugo 部落格主題，專為個人部落格設計。</description>
+        <description>mitsukuchiph - blog/部落格/ブログ</description>
         <generator>Hugo 0.83.1 https://gohugo.io/</generator>
         
             <language>zh-TW</language>
@@ -21,7 +21,7 @@
             <webMaster>linooohon@gmail.com (mitsukuchiph.)</webMaster>
         
         
-        <lastBuildDate>Thu, 24 Feb 2022 00:34:38 &#43;0800</lastBuildDate>
+        <lastBuildDate>Thu, 24 Feb 2022 00:46:28 &#43;0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://linooohon.com/blog/rss.xml" />
         
