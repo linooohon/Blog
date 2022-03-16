@@ -21,7 +21,7 @@
             <webMaster>linooohon@gmail.com (mitsukuchiph.)</webMaster>
         
         
-        <lastBuildDate>Thu, 17 Mar 2022 00:19:52 &#43;0800</lastBuildDate>
+        <lastBuildDate>Thu, 17 Mar 2022 00:25:06 &#43;0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://linooohon.com/blog/rss.xml" />
         
@@ -37,6 +37,9 @@
                 
                 
                     <description>&lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;此篇完整 source code 放在 Github Repo - &lt;a href=&#34;https://github.com/linooohon/flask-mail-setting&#34;&gt;flask-mail-setting&lt;/a&gt; 供參考！&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;過去曾經使用 &lt;a href=&#34;https://pythonhosted.org/Flask-Mail/&#34;&gt;flask-mail&lt;/a&gt; 這個模組，但它很久沒維護了，想說找其他的試試來重新設定寄信，發現有 &lt;a href=&#34;https://github.com/waynerv/flask-mailman&#34;&gt;flask-mailman&lt;/a&gt; 可以使用，嘗試改用它發信，同時也熟悉一下 &lt;a href=&#34;https://sendgrid.com/&#34;&gt;sengrid&lt;/a&gt; 的設定，接下來會大概紀錄三種設定:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -55,7 +58,6 @@
 &lt;/ol&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;此篇完整 source code 放在 Github Repo - &lt;a href=&#34;https://github.com/linooohon/flask-mail-setting&#34;&gt;flask-mail-setting&lt;/a&gt; 供參考！&lt;/p&gt;
 &lt;h4 id=&#34;一--使用-flask_mailman-module-以-gmail-為-mail-server-寄信-&#34;&gt;&lt;strong&gt;一. &amp;lt; 使用 &lt;code&gt;flask_mailman&lt;/code&gt; module 以 gmail 為 mail server 寄信 &amp;gt;&lt;/strong&gt;&lt;/h4&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Pre-request:&lt;/p&gt;
