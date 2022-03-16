@@ -3,43 +3,64 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://linooohon.com/blog/categories/2022/</loc>
-    <lastmod>2022-02-24T00:32:08+08:00</lastmod>
+    <lastmod>2022-03-16T23:52:59+08:00</lastmod>
   </url><url>
-    <loc>https://linooohon.com/blog/tags/life/</loc>
-    <lastmod>2022-02-24T00:32:08+08:00</lastmod>
+    <loc>https://linooohon.com/blog/tags/email/</loc>
+    <lastmod>2022-03-16T23:52:59+08:00</lastmod>
   </url><url>
-    <loc>https://linooohon.com/blog/categories/life/</loc>
-    <lastmod>2022-02-24T00:32:08+08:00</lastmod>
+    <loc>https://linooohon.com/blog/tags/flask/</loc>
+    <lastmod>2022-03-16T23:52:59+08:00</lastmod>
+  </url><url>
+    <loc>https://linooohon.com/blog/categories/flask/</loc>
+    <lastmod>2022-03-16T23:52:59+08:00</lastmod>
+  </url><url>
+    <loc>https://linooohon.com/blog/posts/21/220316/Flask_Email_Setting_%E4%B8%89%E7%A8%AE%E5%AF%84%E4%BF%A1%E8%A8%AD%E5%AE%9A/</loc>
+    <lastmod>2022-03-16T23:52:59+08:00</lastmod>
   </url><url>
     <loc>https://linooohon.com/blog/</loc>
-    <lastmod>2022-02-24T00:34:32+08:00</lastmod>
+    <lastmod>2022-03-16T23:52:59+08:00</lastmod>
   </url><url>
-    <loc>https://linooohon.com/blog/tags/music/</loc>
-    <lastmod>2022-02-24T00:32:08+08:00</lastmod>
+    <loc>https://linooohon.com/blog/tags/python/</loc>
+    <lastmod>2022-03-16T23:52:59+08:00</lastmod>
   </url><url>
-    <loc>https://linooohon.com/blog/categories/music/</loc>
-    <lastmod>2022-02-24T00:32:08+08:00</lastmod>
+    <loc>https://linooohon.com/blog/categories/python/</loc>
+    <lastmod>2022-03-16T23:52:59+08:00</lastmod>
   </url><url>
-    <loc>https://linooohon.com/blog/posts/20/220221/Pasteboard-Flipper/</loc>
-    <lastmod>2022-02-24T00:32:08+08:00</lastmod>
-  </url><url>
-    <loc>https://linooohon.com/blog/tags/cookie/</loc>
-    <lastmod>2022-02-21T00:02:36+08:00</lastmod>
-  </url><url>
-    <loc>https://linooohon.com/blog/tags/http/</loc>
-    <lastmod>2022-02-21T00:02:36+08:00</lastmod>
-  </url><url>
-    <loc>https://linooohon.com/blog/categories/http/</loc>
-    <lastmod>2022-02-21T00:02:36+08:00</lastmod>
-  </url><url>
-    <loc>https://linooohon.com/blog/tags/session/</loc>
-    <lastmod>2022-02-21T00:02:36+08:00</lastmod>
+    <loc>https://linooohon.com/blog/tags/sendgrid/</loc>
+    <lastmod>2022-03-16T23:52:59+08:00</lastmod>
   </url><url>
     <loc>https://linooohon.com/blog/tags/web/</loc>
-    <lastmod>2022-02-24T00:34:32+08:00</lastmod>
+    <lastmod>2022-03-16T23:52:59+08:00</lastmod>
+  </url><url>
+    <loc>https://linooohon.com/blog/tags/life/</loc>
+    <lastmod>2022-03-16T23:51:35+08:00</lastmod>
+  </url><url>
+    <loc>https://linooohon.com/blog/categories/life/</loc>
+    <lastmod>2022-03-16T23:51:35+08:00</lastmod>
+  </url><url>
+    <loc>https://linooohon.com/blog/tags/music/</loc>
+    <lastmod>2022-03-16T23:51:35+08:00</lastmod>
+  </url><url>
+    <loc>https://linooohon.com/blog/categories/music/</loc>
+    <lastmod>2022-03-16T23:51:35+08:00</lastmod>
+  </url><url>
+    <loc>https://linooohon.com/blog/posts/20/220221/Pasteboard-Flipper/</loc>
+    <lastmod>2022-03-16T23:51:35+08:00</lastmod>
+  </url><url>
+    <loc>https://linooohon.com/blog/tags/cookie/</loc>
+    <lastmod>2022-03-16T23:51:29+08:00</lastmod>
+  </url><url>
+    <loc>https://linooohon.com/blog/tags/http/</loc>
+    <lastmod>2022-03-16T23:51:29+08:00</lastmod>
+  </url><url>
+    <loc>https://linooohon.com/blog/categories/http/</loc>
+    <lastmod>2022-03-16T23:51:29+08:00</lastmod>
+  </url><url>
+    <loc>https://linooohon.com/blog/tags/session/</loc>
+    <lastmod>2022-03-16T23:51:29+08:00</lastmod>
   </url><url>
     <loc>https://linooohon.com/blog/posts/19/220218/cookie%E7%B4%80%E9%8C%84/</loc>
-    <lastmod>2022-02-21T00:02:36+08:00</lastmod>
+    <lastmod>2022-03-16T23:51:29+08:00</lastmod>
   </url><url>
     <loc>https://linooohon.com/blog/tags/cpu/</loc>
     <lastmod>2022-01-11T21:11:12+08:00</lastmod>
@@ -60,7 +81,7 @@
     <lastmod>2022-01-11T21:11:12+08:00</lastmod>
   </url><url>
     <loc>https://linooohon.com/blog/categories/2021/</loc>
-    <lastmod>2022-02-24T00:34:32+08:00</lastmod>
+    <lastmod>2022-03-16T23:51:16+08:00</lastmod>
   </url><url>
     <loc>https://linooohon.com/blog/posts/17/211224/2021%E5%B9%B4%E5%BA%A6%E5%9B%9E%E9%A1%A7/</loc>
     <lastmod>2021-12-29T23:08:26+08:00</lastmod>
@@ -69,67 +90,61 @@
     <lastmod>2021-12-22T00:58:13+08:00</lastmod>
   </url><url>
     <loc>https://linooohon.com/blog/posts/15/211212/Character_Encoding/Part2/</loc>
-    <lastmod>2021-12-14T17:57:23+08:00</lastmod>
+    <lastmod>2022-03-16T23:51:16+08:00</lastmod>
   </url><url>
     <loc>https://linooohon.com/blog/tags/acsii/</loc>
-    <lastmod>2022-02-23T23:48:49+08:00</lastmod>
+    <lastmod>2022-03-16T23:51:16+08:00</lastmod>
   </url><url>
     <loc>https://linooohon.com/blog/tags/binary/</loc>
-    <lastmod>2022-02-23T23:48:49+08:00</lastmod>
+    <lastmod>2022-03-16T23:51:16+08:00</lastmod>
   </url><url>
     <loc>https://linooohon.com/blog/tags/decoding/</loc>
-    <lastmod>2022-02-23T23:48:49+08:00</lastmod>
+    <lastmod>2022-03-16T23:51:16+08:00</lastmod>
   </url><url>
     <loc>https://linooohon.com/blog/tags/encoding/</loc>
-    <lastmod>2022-02-23T23:48:49+08:00</lastmod>
+    <lastmod>2022-03-16T23:51:16+08:00</lastmod>
   </url><url>
     <loc>https://linooohon.com/blog/categories/encoding/</loc>
-    <lastmod>2022-02-23T23:48:49+08:00</lastmod>
+    <lastmod>2022-03-16T23:51:16+08:00</lastmod>
   </url><url>
     <loc>https://linooohon.com/blog/tags/hexadecimal/</loc>
-    <lastmod>2022-02-23T23:48:49+08:00</lastmod>
+    <lastmod>2022-03-16T23:51:16+08:00</lastmod>
   </url><url>
     <loc>https://linooohon.com/blog/tags/os/</loc>
-    <lastmod>2022-02-23T23:48:49+08:00</lastmod>
-  </url><url>
-    <loc>https://linooohon.com/blog/tags/python/</loc>
-    <lastmod>2022-02-24T00:34:32+08:00</lastmod>
-  </url><url>
-    <loc>https://linooohon.com/blog/categories/python/</loc>
-    <lastmod>2022-02-24T00:34:32+08:00</lastmod>
+    <lastmod>2022-03-16T23:51:16+08:00</lastmod>
   </url><url>
     <loc>https://linooohon.com/blog/tags/unicode/</loc>
-    <lastmod>2022-02-23T23:48:49+08:00</lastmod>
+    <lastmod>2022-03-16T23:51:16+08:00</lastmod>
   </url><url>
     <loc>https://linooohon.com/blog/posts/14/211206/Character_Encoding%E5%AD%97%E5%85%83%E7%B7%A8%E7%A2%BC/Part1/</loc>
-    <lastmod>2022-02-23T23:48:49+08:00</lastmod>
+    <lastmod>2022-03-16T23:51:09+08:00</lastmod>
   </url><url>
     <loc>https://linooohon.com/blog/posts/13/211124/GitLab_CI-CD/</loc>
-    <lastmod>2021-11-28T14:19:28+08:00</lastmod>
+    <lastmod>2022-03-16T23:50:53+08:00</lastmod>
   </url><url>
     <loc>https://linooohon.com/blog/categories/cicd/</loc>
-    <lastmod>2021-11-28T14:19:28+08:00</lastmod>
+    <lastmod>2022-03-16T23:50:53+08:00</lastmod>
   </url><url>
     <loc>https://linooohon.com/blog/tags/data/</loc>
-    <lastmod>2021-11-28T14:19:28+08:00</lastmod>
+    <lastmod>2022-03-16T23:50:53+08:00</lastmod>
   </url><url>
     <loc>https://linooohon.com/blog/tags/docker/</loc>
-    <lastmod>2021-11-28T14:19:28+08:00</lastmod>
+    <lastmod>2022-03-16T23:50:53+08:00</lastmod>
   </url><url>
     <loc>https://linooohon.com/blog/tags/gitlab/</loc>
-    <lastmod>2021-11-28T14:19:28+08:00</lastmod>
+    <lastmod>2022-03-16T23:50:53+08:00</lastmod>
   </url><url>
     <loc>https://linooohon.com/blog/tags/linux/</loc>
-    <lastmod>2021-11-28T14:19:28+08:00</lastmod>
+    <lastmod>2022-03-16T23:50:53+08:00</lastmod>
   </url><url>
     <loc>https://linooohon.com/blog/posts/12/211020/Python_multiprocessing_usage/</loc>
-    <lastmod>2021-11-28T14:19:19+08:00</lastmod>
+    <lastmod>2022-03-16T23:51:00+08:00</lastmod>
   </url><url>
     <loc>https://linooohon.com/blog/tags/multiprocessing/</loc>
-    <lastmod>2021-11-28T14:19:19+08:00</lastmod>
+    <lastmod>2022-03-16T23:51:00+08:00</lastmod>
   </url><url>
     <loc>https://linooohon.com/blog/tags/subprocess/</loc>
-    <lastmod>2021-11-28T14:19:19+08:00</lastmod>
+    <lastmod>2022-03-16T23:51:00+08:00</lastmod>
   </url><url>
     <loc>https://linooohon.com/blog/tags/nuxt/</loc>
     <lastmod>2021-11-28T14:19:12+08:00</lastmod>
@@ -184,12 +199,6 @@
   </url><url>
     <loc>https://linooohon.com/blog/categories/django/</loc>
     <lastmod>2022-02-24T00:34:32+08:00</lastmod>
-  </url><url>
-    <loc>https://linooohon.com/blog/tags/flask/</loc>
-    <lastmod>2021-11-28T14:18:11+08:00</lastmod>
-  </url><url>
-    <loc>https://linooohon.com/blog/categories/flask/</loc>
-    <lastmod>2021-11-28T14:18:11+08:00</lastmod>
   </url><url>
     <loc>https://linooohon.com/blog/posts/05/210714/%E3%80%8C%E3%80%8CFlask%E3%80%8D02:%20Static%20File%20handling,%20Database%20connection/</loc>
     <lastmod>2021-11-28T14:18:11+08:00</lastmod>
