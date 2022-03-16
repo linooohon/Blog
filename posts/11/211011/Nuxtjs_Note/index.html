@@ -12,7 +12,7 @@
     
     <meta http-equiv="Cache-Control" content="no-siteapp" />
 
-    <title>關於在 Nuxt.js 開發時渲染 HTML 的小坑紀錄，不同瀏覽器的差異.. | mitsukuchiph.</title>
+    <title>[PyConTW]關於在 Nuxt.js 開發時渲染 HTML 的小坑紀錄 | mitsukuchiph.</title>
 
     <link rel="stylesheet" href="/blog/css/meme.min.b839f4681fa3611632a14c5ba9c9988c24cac3a1fac80e6d06fa3b67d4a417e5.css"/>
 
@@ -55,13 +55,13 @@
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         "datePublished": "2021-10-11T18:36:14+08:00",
-        "dateModified": "2021-11-28T14:19:12+08:00",
+        "dateModified": "2022-03-17T01:46:41+08:00",
         "url": "https://linooohon.com/blog/posts/11/211011/Nuxtjs_Note/",
-        "headline": "關於在 Nuxt.js 開發時渲染 HTML 的小坑紀錄，不同瀏覽器的差異..",
+        "headline": "[PyConTW]關於在 Nuxt.js 開發時渲染 HTML 的小坑紀錄",
         "description": "在 PyConTW2021 Dev Team 開發紀錄，關於在 Nuxt.js 開發時渲染 HTML 的小坑紀錄\n",
         "inLanguage" : "zh-TW",
         "articleSection": "posts",
-        "wordCount":  689 ,
+        "wordCount":  700 ,
         "image": ["https://linooohon.com/blog/blog/images/11_211011/11_211011_PyCon_Nuxt_01.png","https://linooohon.com/blog/blog/images/11_211011/11_211011_PyCon_Nuxt_02.png","https://linooohon.com/blog/blog/images/11_211011/11_211011_PyCon_Nuxt_03.png"],
         "author": {
             "@type": "Person",
@@ -98,7 +98,7 @@
 
 
 
-<meta property="og:title" content="關於在 Nuxt.js 開發時渲染 HTML 的小坑紀錄，不同瀏覽器的差異.." />
+<meta property="og:title" content="[PyConTW]關於在 Nuxt.js 開發時渲染 HTML 的小坑紀錄" />
 <meta property="og:description" content="在 PyConTW2021 Dev Team 開發紀錄，關於在 Nuxt.js 開發時渲染 HTML 的小坑紀錄
 " />
 <meta property="og:url" content="https://linooohon.com/blog/posts/11/211011/Nuxtjs_Note/" />
@@ -106,7 +106,7 @@
 <meta property="og:locale" content="zh-tw" /><meta property="og:image" content="https://linooohon.com/blog/blog/images/11_211011/11_211011_PyCon_Nuxt_01.png" />
 <meta property="og:type" content="article" />
     <meta property="article:published_time" content="2021-10-11T18:36:14&#43;08:00" />
-    <meta property="article:modified_time" content="2021-11-28T14:19:12&#43;08:00" />
+    <meta property="article:modified_time" content="2022-03-17T01:46:41&#43;08:00" />
     
     <meta property="article:section" content="posts" />
 
@@ -212,9 +212,9 @@
 
         <article class="content post h-entry" data-align="justify" data-type="posts" data-toc-num="true">
 
-            <h1 class="post-title p-name">關於在 Nuxt.js 開發時渲染 HTML 的小坑紀錄，不同瀏覽器的差異..</h1>
+            <h1 class="post-title p-name">[PyConTW]關於在 Nuxt.js 開發時渲染 HTML 的小坑紀錄</h1>
 
-            <div class="post-subtitle p-name">PyConTW2021 開發紀錄, iOS 與 Safari 的 whitespace 換行問題</div>
+            <div class="post-subtitle p-name"><p style='font-size: 15px;'>PyConTW2021 開發紀錄, iOS 與 Safari 的 whitespace 換行問題</div>
             
 
             
@@ -267,11 +267,11 @@
     <li><a id="contents:-next-下一篇-" href="#-next-下一篇-"><strong>&lt; Next 下一篇 &gt;</strong>:</a></li>
   </ol>
 </nav><div class="post-body e-content">
-                <h1 style="text-align:center">
+                <h4 style="text-align:center">
 今年 PyCon2021 也圓滿落幕了，小弟第一次參加，非常感謝組員的指導和幫忙，繼續加油，希望自己也能夠成長變成分享的那個人。
-</h1>
+</h4>
 <blockquote>
-<p>在 PyConTW2021 Dev Team 開發紀錄，關於在 Nuxt.js 開發時渲染 HTML 的小坑紀錄。</p>
+<p>在 PyConTW2021 Dev Team 開發紀錄，關於在 Nuxt.js 開發時渲染 HTML 的小坑紀錄，不同瀏覽器的差異...</p>
 </blockquote>
 <!-- ![在 PyConTW2021 Dev Team 開發紀錄，關於在 Nuxt.js 開發時渲染 HTML 的小坑紀錄](/blog/images/11_211011/11_211011_PyCon_Nuxt_01.png) -->
 <h2 id="-bug-"><a href="#-bug-" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:-bug-" class="headings"><strong>&lt; Bug &gt;:</strong></a></h2>
@@ -349,7 +349,7 @@
             
                 <div class="share-item twitter">
                     
-                    <a href="https://twitter.com/share?url=https://linooohon.com/blog/posts/11/211011/Nuxtjs_Note/&amp;text=%e9%97%9c%e6%96%bc%e5%9c%a8%20Nuxt.js%20%e9%96%8b%e7%99%bc%e6%99%82%e6%b8%b2%e6%9f%93%20HTML%20%e7%9a%84%e5%b0%8f%e5%9d%91%e7%b4%80%e9%8c%84%ef%bc%8c%e4%b8%8d%e5%90%8c%e7%80%8f%e8%a6%bd%e5%99%a8%e7%9a%84%e5%b7%ae%e7%95%b0..&amp;hashtags=PyCon,Nuxt,Vue,&amp;via=" title="分享到「Twitter」" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon twitter-icon"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg></a>
+                    <a href="https://twitter.com/share?url=https://linooohon.com/blog/posts/11/211011/Nuxtjs_Note/&amp;text=[PyConTW]%e9%97%9c%e6%96%bc%e5%9c%a8%20Nuxt.js%20%e9%96%8b%e7%99%bc%e6%99%82%e6%b8%b2%e6%9f%93%20HTML%20%e7%9a%84%e5%b0%8f%e5%9d%91%e7%b4%80%e9%8c%84&amp;hashtags=PyCon,Nuxt,Vue,&amp;via=" title="分享到「Twitter」" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon twitter-icon"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg></a>
                 </div>
             
 
@@ -363,7 +363,7 @@
             
                 <div class="share-item linkedin">
                     
-                    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://linooohon.com/blog/posts/11/211011/Nuxtjs_Note/&amp;title=%e9%97%9c%e6%96%bc%e5%9c%a8%20Nuxt.js%20%e9%96%8b%e7%99%bc%e6%99%82%e6%b8%b2%e6%9f%93%20HTML%20%e7%9a%84%e5%b0%8f%e5%9d%91%e7%b4%80%e9%8c%84%ef%bc%8c%e4%b8%8d%e5%90%8c%e7%80%8f%e8%a6%bd%e5%99%a8%e7%9a%84%e5%b7%ae%e7%95%b0..&amp;summary=%e5%9c%a8%20PyConTW2021%20Dev%20Team%20%e9%96%8b%e7%99%bc%e7%b4%80%e9%8c%84%ef%bc%8c%e9%97%9c%e6%96%bc%e5%9c%a8%20Nuxt.js%20%e9%96%8b%e7%99%bc%e6%99%82%e6%b8%b2%e6%9f%93%20HTML%20%e7%9a%84%e5%b0%8f%e5%9d%91%e7%b4%80%e9%8c%84%0a&amp;source=mitsukuchiph." title="分享到「LinkedIn」" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon linkedin-icon"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg></a>
+                    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://linooohon.com/blog/posts/11/211011/Nuxtjs_Note/&amp;title=[PyConTW]%e9%97%9c%e6%96%bc%e5%9c%a8%20Nuxt.js%20%e9%96%8b%e7%99%bc%e6%99%82%e6%b8%b2%e6%9f%93%20HTML%20%e7%9a%84%e5%b0%8f%e5%9d%91%e7%b4%80%e9%8c%84&amp;summary=%e5%9c%a8%20PyConTW2021%20Dev%20Team%20%e9%96%8b%e7%99%bc%e7%b4%80%e9%8c%84%ef%bc%8c%e9%97%9c%e6%96%bc%e5%9c%a8%20Nuxt.js%20%e9%96%8b%e7%99%bc%e6%99%82%e6%b8%b2%e6%9f%93%20HTML%20%e7%9a%84%e5%b0%8f%e5%9d%91%e7%b4%80%e9%8c%84%0a&amp;source=mitsukuchiph." title="分享到「LinkedIn」" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon linkedin-icon"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg></a>
                 </div>
             
 
@@ -570,7 +570,7 @@
             var disqus_config = function() {
                 this.page.url = 'https:\/\/linooohon.com\/blog\/posts\/11\/211011\/Nuxtjs_Note\/';
                 this.page.identifier = '\/blog\/posts\/11\/211011\/Nuxtjs_Note\/';
-                this.page.title = '關於在 Nuxt.js 開發時渲染 HTML 的小坑紀錄，不同瀏覽器的差異..';
+                this.page.title = '[PyConTW]關於在 Nuxt.js 開發時渲染 HTML 的小坑紀錄';
             };
             (function() {
                 var d = document, s = d.createElement('script'); s.async = true;
@@ -584,7 +584,7 @@
                 config: function() {
                     this.page.url = 'https:\/\/linooohon.com\/blog\/posts\/11\/211011\/Nuxtjs_Note\/';
                     this.page.identifier = '\/blog\/posts\/11\/211011\/Nuxtjs_Note\/';
-                    this.page.title = '關於在 Nuxt.js 開發時渲染 HTML 的小坑紀錄，不同瀏覽器的差異..';
+                    this.page.title = '[PyConTW]關於在 Nuxt.js 開發時渲染 HTML 的小坑紀錄';
                 }
             });
         }
