@@ -21,10 +21,157 @@
             <webMaster>linooohon@gmail.com (mitsukuchiph.)</webMaster>
         
         
-        <lastBuildDate>Thu, 17 Mar 2022 01:47:19 &#43;0800</lastBuildDate>
+        <lastBuildDate>Fri, 24 Jun 2022 16:41:54 &#43;0900</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://linooohon.com/blog/rss.xml" />
         
+        
+            <item>
+                <title>[PostgreSQL] 在 MacOS 上簡單快速安裝 - note</title>
+                <link>https://linooohon.com/blog/posts/22/220420/PostgreSQL_MacOS%E7%B0%A1%E5%96%AE%E5%BF%AB%E9%80%9F%E5%AE%89%E8%A3%9D/</link>
+                <guid isPermaLink="true">https://linooohon.com/blog/posts/22/220420/PostgreSQL_MacOS%E7%B0%A1%E5%96%AE%E5%BF%AB%E9%80%9F%E5%AE%89%E8%A3%9D/</guid>
+                <pubDate>Wed, 20 Apr 2022 18:36:14 &#43;0800</pubDate>
+                
+                    <author>linooohon@gmail.com (mitsukuchiph.)</author>
+                
+                
+                
+                    <description>&lt;h4 id=&#34;--使用-postgresapp-快速安裝--&#34;&gt;- 使用 Postgres.app 快速安裝 -&lt;/h4&gt;
+&lt;h5 id=&#34;1-去-postgresql---macos-packageshttpswwwpostgresqlorgdownloadmacosx&#34;&gt;1. 去 &lt;a href=&#34;https://www.postgresql.org/download/macosx/&#34;&gt;Postgresql - MacOS packages&lt;/a&gt;&lt;/h5&gt;
+&lt;p&gt;&lt;img width=&#34;50%&#34; src=&#34;https://linooohon.com/blog/blog/images/22_220420/22_220420_Postgresql2.png&#34; /&gt;&lt;/p&gt;
+&lt;h5 id=&#34;2-找到-postgresapp點進去&#34;&gt;2. 找到 Postgres.app，點進去&lt;/h5&gt;
+&lt;p&gt;&lt;img width=&#34;50%&#34; src=&#34;https://linooohon.com/blog/blog/images/22_220420/22_220420_Postgresql3.png&#34; /&gt;
+&lt;img width=&#34;50%&#34; src=&#34;https://linooohon.com/blog/blog/images/22_220420/22_220420_Postgresql4.png&#34; /&gt;&lt;/p&gt;
+&lt;h5 id=&#34;3-點選-downloads再點選-latest-release-的-download-按鈕&#34;&gt;3. 點選 Downloads，再點選 Latest Release 的 Download 按鈕&lt;/h5&gt;
+&lt;p&gt;&lt;img width=&#34;50%&#34; src=&#34;https://linooohon.com/blog/blog/images/22_220420/22_220420_Postgresql5.png&#34; /&gt;&lt;/p&gt;
+&lt;h5 id=&#34;4-download-完成後開啟並點選-initialize&#34;&gt;4. Download 完成後開啟，並點選 Initialize&lt;/h5&gt;
+&lt;p&gt;&lt;img width=&#34;20%&#34; src=&#34;https://linooohon.com/blog/blog/images/22_220420/22_220420_Postgresql_initial.png&#34; /&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;可以發現有預設幫忙建好的三個 Databases，postgres 已經啟動
+lsof 一下，也可以確認。
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img width=&#34;50%&#34; src=&#34;https://linooohon.com/blog/blog/images/22_220420/22_220420_Postgresql6.png&#34; /&gt;
+&lt;img width=&#34;80%&#34; src=&#34;https://linooohon.com/blog/blog/images/22_220420/22_220420_Postgresql7.png&#34; /&gt;&lt;/p&gt;
+&lt;h5 id=&#34;5-configure-一下-path-變數來完成-command-line-tools-的設定&#34;&gt;5. Configure 一下 $PATH 變數，來完成 command line tools 的設定&lt;/h5&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;sudo mkdir -p /etc/paths.d &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt;
+&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; /Applications/Postgres.app/Contents/Versions/latest/bin &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; sudo tee /etc/paths.d/postgresapp
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;會需要輸入密碼，輸入自己 mac 上的密碼&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;這都是官方有寫清楚的建立流程:
+&lt;img width=&#34;70%&#34; src=&#34;https://linooohon.com/blog/blog/images/22_220420/22_220420_Postgresql8.png&#34; /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h5 id=&#34;6-這時候就會自動有-default-settings&#34;&gt;6. 這時候就會自動有 Default Settings:&lt;/h5&gt;
+&lt;p&gt;&lt;img width=&#34;70%&#34; src=&#34;https://linooohon.com/blog/blog/images/22_220420/22_220420_Postgresql9.png&#34; /&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Host: localhost
+Port: 5432
+User: 自己Mac上的系統使用者名稱 (以我自己為例會是: linpinhung)
+Database: 自己Mac上的系統使用者名稱 (以我自己為例會是: linpinhung)
+Password: 無
+Connection URL: postgresql://localhost
+&lt;/code&gt;&lt;/pre&gt;&lt;h5 id=&#34;7-接著嘗試連線-database&#34;&gt;7. 接著嘗試連線 Database&lt;/h5&gt;
+&lt;ul&gt;
+&lt;li&gt;Command to enter postgresql&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;使用這個指令會用預設的連線參數連線進去 Database。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;$ psql
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h5 id=&#34;8-詳細的連線方式是&#34;&gt;8. 詳細的連線方式是:&lt;/h5&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;$ psql postgres://&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;User&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;@&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;Host&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;:&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;Port&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;/&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;Database&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;以預設的例子就會是&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;$ psql postgres://linpinhung@localhost:5432/linpinhung
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;img width=&#34;50%&#34; src=&#34;https://linooohon.com/blog/blog/images/22_220420/22_220420_Postgresql10.png&#34; /&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;如此就可以進去了&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;查看連線資訊&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;\conninfo
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img width=&#34;50%&#34; src=&#34;https://linooohon.com/blog/blog/images/22_220420/22_220420_Postgresql11.png&#34; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;結束連線&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;\q
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img width=&#34;50%&#34; src=&#34;https://linooohon.com/blog/blog/images/22_220420/22_220420_Postgresql12.png&#34; /&gt;&lt;/p&gt;
+&lt;h5 id=&#34;9-停止-postgres只需要按-stop&#34;&gt;9. 停止 postgres，只需要按 Stop&lt;/h5&gt;
+&lt;p&gt;&lt;img width=&#34;50%&#34; src=&#34;https://linooohon.com/blog/blog/images/22_220420/22_220420_Postgresql13.png&#34; /&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Done!&lt;/p&gt;
+&lt;h3 id=&#34;12-references&#34;&gt;12. References:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://postgresapp.com/&#34;&gt;Postgres.app&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;&amp;lt; 上一篇 &amp;gt;&lt;/strong&gt;
+&lt;a href=&#34;https://linooohon.com/blog/blog/posts/21/220316/Flask_Email_Setting_三種寄信設定&#34;&gt;[Flask] Sendgrid/Gmail 三種寄信設定&lt;/a&gt;&lt;/p&gt;
+</description>
+                
+                
+                
+                
+                
+                    
+                        
+                            
+                                
+                                
+                                
+                                    <category domain="https://linooohon.com/blog/categories/2022/">2022</category>
+                                
+                            
+                                
+                                
+                                
+                                    <category domain="https://linooohon.com/blog/categories/database/">database</category>
+                                
+                            
+                        
+                    
+                        
+                            
+                                
+                                
+                                
+                                    <category domain="https://linooohon.com/blog/tags/postgresql/">PostgreSQL</category>
+                                
+                            
+                                
+                                
+                                
+                                    <category domain="https://linooohon.com/blog/tags/database/">Database</category>
+                                
+                            
+                        
+                    
+                
+            </item>
         
             <item>
                 <title>[Flask] Sendgrid/Gmail - &lt;三種寄信設定&gt;</title>
