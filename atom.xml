@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-TW">
     <title type="text">mitsukuchiph.</title>
     <subtitle type="html">mitsukuchiph - blog/部落格/ブログ</subtitle>
-    <updated>2022-10-03T01:23:43&#43;09:00</updated>
+    <updated>2022-10-03T01:27:42&#43;09:00</updated>
     <id>https://linooohon.com/blog/</id>
     <link rel="alternate" type="text/html" href="https://linooohon.com/blog/" />
     <link rel="self" type="application/atom&#43;xml" href="https://linooohon.com/blog/atom.xml" />
@@ -20,7 +20,7 @@
             <title type="text">[Flask] - 最小配置部署紀錄 fly.io</title>
             <link rel="alternate" type="text/html" href="https://linooohon.com/blog/posts/24/220820/Flask_setup_deploy_on_flyio/" />
             <id>https://linooohon.com/blog/posts/24/220820/Flask_setup_deploy_on_flyio/</id>
-            <updated>2022-10-03T01:18:12&#43;09:00</updated>
+            <updated>2022-10-03T01:27:27&#43;09:00</updated>
             <published>2022-08-20T18:36:14&#43;08:00</published>
             <author>
                     <name>mitsukuchiph.</name>
@@ -469,7 +469,7 @@ flyctl deploy
                             
                             
                             
-                                <category scheme="https://linooohon.com/blog/categories/fly.io/" term="fly.io" label="fly.io" />
+                                <category scheme="https://linooohon.com/blog/categories/flyio/" term="flyio" label="flyio" />
                             
                         
                     
@@ -497,7 +497,7 @@ flyctl deploy
                             
                             
                             
-                                <category scheme="https://linooohon.com/blog/tags/fly.io/" term="Fly.io" label="Fly.io" />
+                                <category scheme="https://linooohon.com/blog/tags/flyio/" term="Flyio" label="Flyio" />
                             
                         
                             

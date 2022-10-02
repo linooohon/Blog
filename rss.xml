@@ -21,7 +21,7 @@
             <webMaster>linooohon@gmail.com (mitsukuchiph.)</webMaster>
         
         
-        <lastBuildDate>Mon, 03 Oct 2022 01:23:43 &#43;0900</lastBuildDate>
+        <lastBuildDate>Mon, 03 Oct 2022 01:27:42 &#43;0900</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://linooohon.com/blog/rss.xml" />
         
@@ -476,7 +476,7 @@ flyctl deploy
                                 
                                 
                                 
-                                    <category domain="https://linooohon.com/blog/categories/fly.io/">fly.io</category>
+                                    <category domain="https://linooohon.com/blog/categories/flyio/">flyio</category>
                                 
                             
                         
@@ -504,7 +504,7 @@ flyctl deploy
                                 
                                 
                                 
-                                    <category domain="https://linooohon.com/blog/tags/fly.io/">Fly.io</category>
+                                    <category domain="https://linooohon.com/blog/tags/flyio/">Flyio</category>
                                 
                             
                                 
