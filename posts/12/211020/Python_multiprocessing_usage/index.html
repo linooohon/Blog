@@ -3,7 +3,10 @@
     <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
     <meta charset="UTF-8" />
 
-    <meta name="generator" content="Hugo 0.83.1" /><meta name="theme-color" content="#fff" />
+    <meta name="generator" content="Hugo 0.104.3" /><meta name="theme-color" content="#fff" />
+    <meta name="color-scheme" content="light dark">
+
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
@@ -14,11 +17,11 @@
 
     <title>[Python]Multi-processing 操作方式: fork, multiprocessing, subprocess | mitsukuchiph.</title>
 
-    <link rel="stylesheet" href="/blog/css/meme.min.b839f4681fa3611632a14c5ba9c9988c24cac3a1fac80e6d06fa3b67d4a417e5.css"/>
+    <link rel="stylesheet" href="/blog/css/meme.min.7bba102516a3fb63725409e5e5b6e4145b180431be976a2314f112e872c12311.css"/>
 
     
     
-        <script src="/blog/js/meme.min.1296eae7a1970c0bbd9d8315daae36c344017e9de3e57edc689779153976ec28.js"></script>
+        <script src="/blog/js/meme.min.a8da68c33deb197b2c655f3305eedf6b36e73947969053e445d62eca7e5c7379.js"></script>
 
     
 
@@ -61,7 +64,7 @@
         "description": "Multi-processing 在 Python 上實作的方式紀錄\n",
         "inLanguage" : "zh-TW",
         "articleSection": "posts",
-        "wordCount":  2910 ,
+        "wordCount":  2904 ,
         "image": ["https://linooohon.com/blog/blog/images/12_211020/12_211020_python_multiprocessing%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F.png"],
         "author": {
             "@type": "Person",
@@ -78,11 +81,11 @@
                 "@type": "ImageObject",
                 "url": "https://linooohon.com/icons/apple-touch-icon.png"
             },
-            "url": "https://linooohon.com/"
+            "url": "https://linooohon.com/blog"
         },
         "mainEntityOfPage": {
             "@type": "WebSite",
-            "@id": "https://linooohon.com/"
+            "@id": "https://linooohon.com/blog"
         }
     }
 </script>
@@ -116,16 +119,6 @@
     
 
     
-
-    
-    
-    <style>
-         
-        iframe[sandbox="allow-forms allow-popups allow-same-origin allow-scripts"] {
-            display: none !important;
-        }
-    </style>
-
 </head>
 
     <body>
@@ -138,7 +131,7 @@
                     
     <div class="site-brand">
         
-            <a href="/blog/" class="brand">mitsukuchiph.</a>
+            <a href="/blog" class="brand">mitsukuchiph.</a>
         
     </div>
 
@@ -285,7 +278,7 @@
 </ul>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -326,56 +319,54 @@
 </span><span class="lnt">39
 </span><span class="lnt">40
 </span><span class="lnt">41
-</span><span class="lnt">42
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">time</span>
-
-<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;程序 ({os.getpid()}) 開始...&#39;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&#34;開始呼叫 os.fork()&#34;</span><span class="p">)</span>
-
-<span class="k">print</span><span class="p">(</span><span class="s2">&#34;======================&#34;</span><span class="p">)</span>
-
-<span class="n">pid</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">fork</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&#34;呼叫 os.fork() 後的結果，現在 return : {pid}&#34;</span><span class="p">)</span>
-
-<span class="k">if</span> <span class="n">pid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;pid == 0, 子程序返回: &#34;</span><span class="p">,</span> <span class="n">pid</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;子程序說話: 我是子程序 ({os.getpid()}) 然後我的父程序是 ({os.getppid()}).&#39;</span><span class="p">)</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;pid != 0, 父程序返回子程序 pid: &#34;</span><span class="p">,</span> <span class="n">pid</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;原本程序說話: 我是程序 ({os.getpid()}) 我創造了子程序 ({pid}).&#39;</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;======父程序睡五秒=======&#34;</span><span class="p">)</span>
-    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-
-<span class="k">print</span><span class="p">(</span><span class="s2">&#34;========最後一行, 現在是:&#34;</span><span class="p">,</span> <span class="n">pid</span><span class="p">,</span> <span class="s2">&#34;=============&#34;</span><span class="p">)</span>
-
-<span class="c1"># 輸出會像這樣</span>
-<span class="s2">&#34;&#34;&#34;
-</span><span class="s2">程序 (19810) 開始...
-</span><span class="s2">開始呼叫 os.fork()
-</span><span class="s2">======================
-</span><span class="s2">呼叫 os.fork() 後的結果，現在 return : 19826
-</span><span class="s2">pid != 0, 父程序返回子程序 pid:  19826
-</span><span class="s2">原本程序說話: 我是程序 (19810) 我創造了子程序 (19826).
-</span><span class="s2">======父程序睡五秒=======
-</span><span class="s2">呼叫 os.fork() 後的結果，現在 return : 0
-</span><span class="s2">pid == 0, 子程序返回:  0
-</span><span class="s2">子程序說話: 我是子程序 (19826) 然後我的父程序是 (19810).
-</span><span class="s2">========最後一行, 現在是: 0 =============
-</span><span class="s2">&#34;&#34;&#34;</span>
-
-<span class="c1"># 並在等待一下後，才會出現</span>
-<span class="s2">&#34;&#34;&#34;
-</span><span class="s2">========最後一行, 現在是: 19826 =============
-</span><span class="s2">&#34;&#34;&#34;</span>
-
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;程序 (</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()</span><span class="si">}</span><span class="s1">) 開始...&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;開始呼叫 os.fork()&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;======================&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">pid</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">fork</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;呼叫 os.fork() 後的結果，現在 return : </span><span class="si">{</span><span class="n">pid</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="n">pid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;pid == 0, 子程序返回: &#34;</span><span class="p">,</span> <span class="n">pid</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;子程序說話: 我是子程序 (</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()</span><span class="si">}</span><span class="s1">) 然後我的父程序是 (</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getppid</span><span class="p">()</span><span class="si">}</span><span class="s1">).&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;pid != 0, 父程序返回子程序 pid: &#34;</span><span class="p">,</span> <span class="n">pid</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;原本程序說話: 我是程序 (</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()</span><span class="si">}</span><span class="s1">) 我創造了子程序 (</span><span class="si">{</span><span class="n">pid</span><span class="si">}</span><span class="s1">).&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;======父程序睡五秒=======&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;========最後一行, 現在是:&#34;</span><span class="p">,</span> <span class="n">pid</span><span class="p">,</span> <span class="s2">&#34;=============&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 輸出會像這樣</span>
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">程序 (19810) 開始...
+</span></span></span><span class="line"><span class="cl"><span class="s2">開始呼叫 os.fork()
+</span></span></span><span class="line"><span class="cl"><span class="s2">======================
+</span></span></span><span class="line"><span class="cl"><span class="s2">呼叫 os.fork() 後的結果，現在 return : 19826
+</span></span></span><span class="line"><span class="cl"><span class="s2">pid != 0, 父程序返回子程序 pid:  19826
+</span></span></span><span class="line"><span class="cl"><span class="s2">原本程序說話: 我是程序 (19810) 我創造了子程序 (19826).
+</span></span></span><span class="line"><span class="cl"><span class="s2">======父程序睡五秒=======
+</span></span></span><span class="line"><span class="cl"><span class="s2">呼叫 os.fork() 後的結果，現在 return : 0
+</span></span></span><span class="line"><span class="cl"><span class="s2">pid == 0, 子程序返回:  0
+</span></span></span><span class="line"><span class="cl"><span class="s2">子程序說話: 我是子程序 (19826) 然後我的父程序是 (19810).
+</span></span></span><span class="line"><span class="cl"><span class="s2">========最後一行, 現在是: 0 =============
+</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 並在等待一下後，才會出現</span>
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">========最後一行, 現在是: 19826 =============
+</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -405,38 +396,38 @@
 </span><span class="lnt">28
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 假設我們在呼叫 os.fork() 後 time.sleep(20) 看一下 `ps -f`</span>
-<span class="c1"># 會發現實際真的有 父程序和子程序這兩個 pid</span>
-
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">time</span>
-
-<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;程序 ({os.getpid()}) 開始...&#39;</span><span class="p">)</span>
-<span class="n">pid</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">fork</span><span class="p">()</span>
-<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">pid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;pid == 0, 子程序返回: &#34;</span><span class="p">,</span> <span class="n">pid</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;子程序說話: 我是子程序 ({os.getpid()}) 然後我的父程序是 ({os.getppid()}).&#39;</span><span class="p">)</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;pid != 0, 父程序返回子程序 pid: &#34;</span><span class="p">,</span> <span class="n">pid</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;原本程序說話: 我是程序 ({os.getpid()}) 我創造了子程序 ({pid}).&#39;</span><span class="p">)</span>
-
-<span class="k">print</span><span class="p">(</span><span class="s2">&#34;========最後一行, 現在是:&#34;</span><span class="p">,</span> <span class="n">pid</span><span class="p">,</span> <span class="s2">&#34;=============&#34;</span><span class="p">)</span>
-
-<span class="c1"># 輸出會像這樣</span>
-<span class="s2">&#34;&#34;&#34;
-</span><span class="s2">程序 (83196) 開始...
-</span><span class="s2">pid == 0, 子程序返回:  0
-</span><span class="s2">子程序說話: 我是子程序 (83216) 然後我的父程序是 (83196).
-</span><span class="s2">========最後一行, 現在是: 0 =============
-</span><span class="s2">pid != 0, 父程序返回子程序 pid:  83216
-</span><span class="s2">原本程序說話: 我是程序 (83196) 我創造了子程序 (83216).
-</span><span class="s2">========最後一行, 現在是: 83216 =============
-</span><span class="s2">&#34;&#34;&#34;</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># 假設我們在呼叫 os.fork() 後 time.sleep(20) 看一下 `ps -f`</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 會發現實際真的有 父程序和子程序這兩個 pid</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;程序 (</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()</span><span class="si">}</span><span class="s1">) 開始...&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">pid</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">fork</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="n">pid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;pid == 0, 子程序返回: &#34;</span><span class="p">,</span> <span class="n">pid</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;子程序說話: 我是子程序 (</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()</span><span class="si">}</span><span class="s1">) 然後我的父程序是 (</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getppid</span><span class="p">()</span><span class="si">}</span><span class="s1">).&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;pid != 0, 父程序返回子程序 pid: &#34;</span><span class="p">,</span> <span class="n">pid</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;原本程序說話: 我是程序 (</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()</span><span class="si">}</span><span class="s1">) 我創造了子程序 (</span><span class="si">{</span><span class="n">pid</span><span class="si">}</span><span class="s1">).&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;========最後一行, 現在是:&#34;</span><span class="p">,</span> <span class="n">pid</span><span class="p">,</span> <span class="s2">&#34;=============&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 輸出會像這樣</span>
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">程序 (83196) 開始...
+</span></span></span><span class="line"><span class="cl"><span class="s2">pid == 0, 子程序返回:  0
+</span></span></span><span class="line"><span class="cl"><span class="s2">子程序說話: 我是子程序 (83216) 然後我的父程序是 (83196).
+</span></span></span><span class="line"><span class="cl"><span class="s2">========最後一行, 現在是: 0 =============
+</span></span></span><span class="line"><span class="cl"><span class="s2">pid != 0, 父程序返回子程序 pid:  83216
+</span></span></span><span class="line"><span class="cl"><span class="s2">原本程序說話: 我是程序 (83196) 我創造了子程序 (83216).
+</span></span></span><span class="line"><span class="cl"><span class="s2">========最後一行, 現在是: 83216 =============
+</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><p><code>ps -f</code> :</p>
-<pre><code>  UID PID   PPID    C  STIME  TTY        TIME 
+<pre tabindex="0"><code>  UID PID   PPID    C  STIME  TTY        TIME 
   501 83196 11135   0  3:55PM ttys017    0:00.04 
   501 83216 83196   0  3:55PM ttys017    0:00.00 
 </code></pre><h3 id="2-multiprocessing-module-實例化-process-啟動一個子程序"><a href="#2-multiprocessing-module-實例化-process-啟動一個子程序" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:2-multiprocessing-module-實例化-process-啟動一個子程序" class="headings">2. <code>multiprocessing</code> module, 實例化 Process(), 啟動一個子程序</a></h3>
@@ -445,7 +436,7 @@
 </ul>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -480,40 +471,40 @@
 </span><span class="lnt">33
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="s2">&#34;&#34;&#34;啟動一個子程序(進程)(process)並等待其結束然後再 print 出 &#34;子程序結束&#34;
-</span><span class="s2">&#34;&#34;&#34;</span>
-
-<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Process</span>
-<span class="kn">import</span> <span class="nn">os</span>
-
-
-<span class="c1"># 子程序要做的事</span>
-<span class="k">def</span> <span class="nf">child_procss</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;跑子程序&#34;</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="s2">&#34;pid 是:&#34;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">())</span>
-    <span class="k">print</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;主程序&#34;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">())</span>
-    <span class="n">p</span> <span class="o">=</span> <span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">child_procss</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;print123&#39;</span><span class="p">,))</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;子程序將要開始&#34;</span><span class="p">)</span>
-    <span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-    <span class="n">p</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>  <span class="c1"># 加 join 是因為如此的話 可以等待子程序(進程)結束後再繼續往下運行</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;子程序結束&#34;</span><span class="p">)</span>
-
-    
-<span class="s2">&#34;&#34;&#34;
-</span><span class="s2">主程序 67494
-</span><span class="s2">子程序將要開始
-</span><span class="s2">跑子程序 print123 pid 是: 67511
-</span><span class="s2">1
-</span><span class="s2">2
-</span><span class="s2">3
-</span><span class="s2">子程序結束
-</span><span class="s2">&#34;&#34;&#34;</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;啟動一個子程序(進程)(process)並等待其結束然後再 print 出 &#34;子程序結束&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Process</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 子程序要做的事</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">child_procss</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;跑子程序&#34;</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="s2">&#34;pid 是:&#34;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;主程序&#34;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">    <span class="n">p</span> <span class="o">=</span> <span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">child_procss</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;print123&#39;</span><span class="p">,))</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;子程序將要開始&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">p</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>  <span class="c1"># 加 join 是因為如此的話 可以等待子程序(進程)結束後再繼續往下運行</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;子程序結束&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">主程序 67494
+</span></span></span><span class="line"><span class="cl"><span class="s2">子程序將要開始
+</span></span></span><span class="line"><span class="cl"><span class="s2">跑子程序 print123 pid 是: 67511
+</span></span></span><span class="line"><span class="cl"><span class="s2">1
+</span></span></span><span class="line"><span class="cl"><span class="s2">2
+</span></span></span><span class="line"><span class="cl"><span class="s2">3
+</span></span></span><span class="line"><span class="cl"><span class="s2">子程序結束
+</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><h3 id="3-multiprocessing-module-實例化-pool-使用-apply_async-啟動大量子程序"><a href="#3-multiprocessing-module-實例化-pool-使用-apply_async-啟動大量子程序" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:3-multiprocessing-module-實例化-pool-使用-apply_async-啟動大量子程序" class="headings">3. <code>multiprocessing</code> module, 實例化 Pool(), 使用 apply_async(), 啟動大量子程序</a></h3>
 <ul>
@@ -521,7 +512,7 @@
 </ul>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -544,38 +535,38 @@
 </span><span class="lnt">21
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="s2">&#34;&#34;&#34;啟動大量程序(進程)(process), 使用 Pool
-</span><span class="s2">&#34;&#34;&#34;</span>
-<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Pool</span>
-<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">time</span><span class="o">,</span> <span class="nn">random</span>
-
-<span class="k">def</span> <span class="nf">long_time_task</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
-    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;跑任務 </span><span class="si">%s</span><span class="s1"> (</span><span class="si">%s</span><span class="s1">)...&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()))</span>
-    <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span>
-    <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;任務 </span><span class="si">%s</span><span class="s1"> 跑了 </span><span class="si">%0.2f</span><span class="s1"> 秒&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">)))</span>
-
-<span class="k">if</span> <span class="vm">__name__</span><span class="o">==</span><span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;主程序開始 </span><span class="si">%s</span><span class="s1">.&#39;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">())</span>
-    <span class="n">p</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">(</span><span class="mi">35</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">35</span><span class="p">):</span>
-        <span class="n">p</span><span class="o">.</span><span class="n">apply_async</span><span class="p">(</span><span class="n">long_time_task</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">i</span><span class="p">,))</span>
-    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;apply_async() 非同步, 正在等待所有子程序從運行直到完畢...&#39;</span><span class="p">)</span>
-    <span class="n">p</span><span class="o">.</span><span class="n">close</span><span class="p">()</span> <span class="c1"># join 前要加 close</span>
-    <span class="n">p</span><span class="o">.</span><span class="n">join</span><span class="p">()</span> <span class="c1"># 加 join 是因為如此的話，可以等待全部子程序(進程)結束後再繼續往下運行</span>
-    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;所有子程序結束。&#39;</span><span class="p">)</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;啟動大量程序(進程)(process), 使用 Pool
+</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Pool</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">time</span><span class="o">,</span> <span class="nn">random</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">long_time_task</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;跑任務 </span><span class="si">%s</span><span class="s1"> (</span><span class="si">%s</span><span class="s1">)...&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;任務 </span><span class="si">%s</span><span class="s1"> 跑了 </span><span class="si">%0.2f</span><span class="s1"> 秒&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span><span class="o">==</span><span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;主程序開始 </span><span class="si">%s</span><span class="s1">.&#39;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">    <span class="n">p</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">(</span><span class="mi">35</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">35</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">p</span><span class="o">.</span><span class="n">apply_async</span><span class="p">(</span><span class="n">long_time_task</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">i</span><span class="p">,))</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;apply_async() 非同步, 正在等待所有子程序從運行直到完畢...&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">p</span><span class="o">.</span><span class="n">close</span><span class="p">()</span> <span class="c1"># join 前要加 close</span>
+</span></span><span class="line"><span class="cl">    <span class="n">p</span><span class="o">.</span><span class="n">join</span><span class="p">()</span> <span class="c1"># 加 join 是因為如此的話，可以等待全部子程序(進程)結束後再繼續往下運行</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;所有子程序結束。&#39;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><h4 id="--close"><a href="#--close" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:--close" class="headings">- close()</a></h4>
 <p>close() 必須加，不加的話會 raise error</p>
-<pre><code>raise ValueError(&quot;Pool is still running&quot;)
+<pre tabindex="0"><code>raise ValueError(&#34;Pool is still running&#34;)
 ValueError: Pool is still running
 </code></pre><p>加了的話意思就是避免其他 Task 再進來這個 Pool, 同時確保所有 Job 做完後，子程序都會關閉。</p>
 <h4 id="--join"><a href="#--join" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:--join" class="headings">- join()</a></h4>
 <p>join() 必須加，為了確保主程序關閉之前，子程序都要跑完，所以加這個。<br/> 不加的話，一旦主程序結束，子程序也就沒了。所以通常前面一會放 close() 或是你想直接終止的時候就會放 terminate()，總之 join() 就是確保等待子程序關閉。</p>
 <h4 id="--關於-pool"><a href="#--關於-pool" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:--關於-pool" class="headings">- 關於 Pool()</a></h4>
-<pre><code>p = Pool(8)
+<pre tabindex="0"><code>p = Pool(8)
 </code></pre><p>可以發現我設定 <code>p = Pool(8)</code> 表示設定我這個 Pool 可以同時跑 8 個 process
 ，如果我不設定 by default 就是當下 CPU 守備範圍內的核心，通常看 CPU 核心就能推估。或著用 python 標準函式庫裡的 module 可以看目前電腦核心數量:</p>
 <ul>
@@ -583,7 +574,7 @@ ValueError: Pool is still running
 </ul>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -592,14 +583,14 @@ ValueError: Pool is still running
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">multiprocessing</span>
-<span class="n">cpu_amount</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="n">cpu_amount</span><span class="p">)</span>
-
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="n">cpu_amount</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="n">cpu_amount</span><span class="p">)</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">multiprocessing</span>
+</span></span><span class="line"><span class="cl"><span class="n">cpu_amount</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">cpu_amount</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
+</span></span><span class="line"><span class="cl"><span class="n">cpu_amount</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">cpu_amount</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><h4 id="--multiprocessing-module-pool-裡的其他種使用方式"><a href="#--multiprocessing-module-pool-裡的其他種使用方式" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:--multiprocessing-module-pool-裡的其他種使用方式" class="headings">- <code>multiprocessing</code> module, Pool 裡的其他種使用方式:</a></h4>
 <ul>
@@ -607,52 +598,52 @@ ValueError: Pool is still running
 </ul>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">p</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">()</span>
-<span class="n">p</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">arg</span><span class="p">)</span> <span class="c1"># 會確保子程序都結束，才會跑下面一行，也就是阻塞在這</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&#34;阻塞&#34;</span><span class="p">)</span> <span class="c1"># 這行會在子程序都結束後才會印出來</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">p</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">p</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">arg</span><span class="p">)</span> <span class="c1"># 會確保子程序都結束，才會跑下面一行，也就是阻塞在這</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;阻塞&#34;</span><span class="p">)</span> <span class="c1"># 這行會在子程序都結束後才會印出來</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 假設有 return，可直接拿到 因為 map 是 return `list`</span>
-<span class="n">p</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">()</span>
-<span class="n">results</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">arg</span><span class="p">)</span> 
-<span class="k">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span> 
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># 假設有 return，可直接拿到 因為 map 是 return `list`</span>
+</span></span><span class="line"><span class="cl"><span class="n">p</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">results</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">arg</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span> 
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><ul>
 <li>map_async() : 實現非同步</li>
 </ul>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">p</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">()</span>
-<span class="n">p</span><span class="o">.</span><span class="n">map_async</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">arg</span><span class="p">)</span> <span class="c1"># 不會停在這，也就是說下一行不會等子程序結束</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&#34;不阻塞&#34;</span><span class="p">)</span> <span class="c1">#直接印出來</span>
-<span class="n">pool</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-<span class="n">pool</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">p</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">p</span><span class="o">.</span><span class="n">map_async</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">arg</span><span class="p">)</span> <span class="c1"># 不會停在這，也就是說下一行不會等子程序結束</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;不阻塞&#34;</span><span class="p">)</span> <span class="c1">#直接印出來</span>
+</span></span><span class="line"><span class="cl"><span class="n">pool</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">pool</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -660,50 +651,50 @@ ValueError: Pool is still running
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 假設有 return，要呼叫 get(), 因為 map_async 是 return `multiprocessing.pool.MapResult`</span>
-<span class="n">p</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">()</span>
-<span class="n">results</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">map_async</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">arg</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">get</span><span class="p">())</span> 
-<span class="n">pool</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-<span class="n">pool</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># 假設有 return，要呼叫 get(), 因為 map_async 是 return `multiprocessing.pool.MapResult`</span>
+</span></span><span class="line"><span class="cl"><span class="n">p</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">results</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">map_async</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">arg</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">get</span><span class="p">())</span> 
+</span></span><span class="line"><span class="cl"><span class="n">pool</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">pool</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><ul>
 <li>starmap()</li>
 </ul>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">p</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">()</span>
-<span class="n">p</span><span class="o">.</span><span class="n">starmap</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">arg</span><span class="p">)</span> <span class="c1"># 這裡的 arg 必須是 iterable, 如果是 list，則裡面的 element 也必須是 iterable, 而 map() 的話 list 裡面不用是 iterable</span>
-<span class="n">pool</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-<span class="n">pool</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">p</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">p</span><span class="o">.</span><span class="n">starmap</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">arg</span><span class="p">)</span> <span class="c1"># 這裡的 arg 必須是 iterable, 如果是 list，則裡面的 element 也必須是 iterable, 而 map() 的話 list 裡面不用是 iterable</span>
+</span></span><span class="line"><span class="cl"><span class="n">pool</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">pool</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><ul>
 <li>chunksize : 每個子程序可以處理的任務數量</li>
 </ul>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">p</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">()</span>
-<span class="n">p</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">arg</span><span class="p">,</span> <span class="n">chunksize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">p</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">p</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">arg</span><span class="p">,</span> <span class="n">chunksize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><ul>
 <li>callback</li>
 </ul>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -711,36 +702,34 @@ ValueError: Pool is still running
 </span><span class="lnt">6
 </span><span class="lnt">7
 </span><span class="lnt">8
-</span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">print_func</span><span class="p">(</span><span class="n">pool_outputs</span><span class="p">):</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;callback&#34;</span><span class="p">,</span> <span class="n">pool_outputs</span><span class="p">)</span>
-
-<span class="n">p</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">()</span>
-<span class="n">pool_outputs</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">map_async</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">arg</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">print_func</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">pool_outputs</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
-<span class="n">pool</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-<span class="n">pool</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
-
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">print_func</span><span class="p">(</span><span class="n">pool_outputs</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;callback&#34;</span><span class="p">,</span> <span class="n">pool_outputs</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">p</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">pool_outputs</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">map_async</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">arg</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">print_func</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">pool_outputs</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl"><span class="n">pool</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">pool</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><ul>
 <li>maxtasksperchild : 設定每個子程序完成多少任務後，就會再重啟新的子程序</li>
 </ul>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">p</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">maxtasksperchild</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">p</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">maxtasksperchild</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><h3 id="4-subprocess-module-subprocesscall"><a href="#4-subprocess-module-subprocesscall" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:4-subprocess-module-subprocesscall" class="headings">4. <code>subprocess</code> module, subprocess.call()</a></h3>
 <p>ex1:</p>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -749,19 +738,19 @@ ValueError: Pool is still running
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">subprocess</span>
-
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;$ curl https://www.google.com&#39;</span><span class="p">)</span>
-<span class="n">r</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">([</span><span class="s1">&#39;curl&#39;</span><span class="p">,</span> <span class="s1">&#39;https://www.google.com&#39;</span><span class="p">])</span>
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Exit code:&#39;</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
-
-<span class="c1"># 效果和 `curl https://www.google.com` 一樣</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">subprocess</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;$ curl https://www.google.com&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">r</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">([</span><span class="s1">&#39;curl&#39;</span><span class="p">,</span> <span class="s1">&#39;https://www.google.com&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Exit code:&#39;</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 效果和 `curl https://www.google.com` 一樣</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><p>ex2:</p>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -770,20 +759,20 @@ ValueError: Pool is still running
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">subprocess</span>
-
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;$ nslookup www.python.org&#39;</span><span class="p">)</span>
-<span class="n">r</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">([</span><span class="s1">&#39;nslookup&#39;</span><span class="p">,</span> <span class="s1">&#39;www.python.org&#39;</span><span class="p">])</span>
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Exit code:&#39;</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
-
-<span class="c1"># 效果和 `nslookup www.python.org` 一樣</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">subprocess</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;$ nslookup www.python.org&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">r</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">([</span><span class="s1">&#39;nslookup&#39;</span><span class="p">,</span> <span class="s1">&#39;www.python.org&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Exit code:&#39;</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 效果和 `nslookup www.python.org` 一樣</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><h3 id="5-subprocess-module-subprocesspopen-communicate-輸入輸出"><a href="#5-subprocess-module-subprocesspopen-communicate-輸入輸出" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:5-subprocess-module-subprocesspopen-communicate-輸入輸出" class="headings">5. <code>subprocess</code> module, subprocess.Popen(), communicate(), 輸入輸出</a></h3>
 <p>ex1:</p>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -793,20 +782,20 @@ ValueError: Pool is still running
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">subprocess</span>
-
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;$ date -R&#39;</span><span class="p">)</span>
-<span class="n">p</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="s1">&#39;-R&#39;</span><span class="p">],</span> <span class="n">stdin</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span>
-<span class="n">output</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Exit code:&#39;</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">returncode</span><span class="p">)</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">subprocess</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;$ date -R&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">p</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="s1">&#39;-R&#39;</span><span class="p">],</span> <span class="n">stdin</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">output</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Exit code:&#39;</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">returncode</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><p>ex2:</p>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -843,48 +832,48 @@ ValueError: Pool is still running
 </span><span class="lnt">35
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">subprocess</span>
-
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;$ nslookup&#39;</span><span class="p">)</span>
-<span class="n">p</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s1">&#39;nslookup&#39;</span><span class="p">],</span> <span class="n">stdin</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span>
-<span class="n">output</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">communicate</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;set q=mx</span><span class="se">\t</span><span class="s1">witter.com</span><span class="se">\n</span><span class="s1">exit</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Exit code:&#39;</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">returncode</span><span class="p">)</span>
-
-
-<span class="s2">&#34;&#34;&#34;
-</span><span class="s2">$ nslookup
-</span><span class="s2">
-</span><span class="s2">&gt; set q=mx
-</span><span class="s2">  twitter.com
-</span><span class="s2">  exit
-</span><span class="s2">&#34;&#34;&#34;</span>
-
-<span class="c1"># 輸出</span>
-<span class="s2">&#34;&#34;&#34;
-</span><span class="s2">$ nslookup
-</span><span class="s2">Server:         192.168.1.1
-</span><span class="s2">Address:        192.168.1.1#53
-</span><span class="s2">
-</span><span class="s2">Non-authoritative answer:
-</span><span class="s2">twitter.com     mail exchanger = 20 alt2.aspmx.l.google.com.
-</span><span class="s2">twitter.com     mail exchanger = 30 aspmx2.googlemail.com.
-</span><span class="s2">twitter.com     mail exchanger = 10 aspmx.l.google.com.
-</span><span class="s2">twitter.com     mail exchanger = 30 aspmx3.googlemail.com.
-</span><span class="s2">twitter.com     mail exchanger = 20 alt1.aspmx.l.google.com.
-</span><span class="s2">
-</span><span class="s2">Authoritative answers can be found from:
-</span><span class="s2">
-</span><span class="s2">
-</span><span class="s2">Exit code: 0
-</span><span class="s2">&#34;&#34;&#34;</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">subprocess</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;$ nslookup&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">p</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s1">&#39;nslookup&#39;</span><span class="p">],</span> <span class="n">stdin</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">output</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">communicate</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;set q=mx</span><span class="se">\t</span><span class="s1">witter.com</span><span class="se">\n</span><span class="s1">exit</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Exit code:&#39;</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">returncode</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">$ nslookup
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">&gt; set q=mx
+</span></span></span><span class="line"><span class="cl"><span class="s2">  twitter.com
+</span></span></span><span class="line"><span class="cl"><span class="s2">  exit
+</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 輸出</span>
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">$ nslookup
+</span></span></span><span class="line"><span class="cl"><span class="s2">Server:         192.168.1.1
+</span></span></span><span class="line"><span class="cl"><span class="s2">Address:        192.168.1.1#53
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">Non-authoritative answer:
+</span></span></span><span class="line"><span class="cl"><span class="s2">twitter.com     mail exchanger = 20 alt2.aspmx.l.google.com.
+</span></span></span><span class="line"><span class="cl"><span class="s2">twitter.com     mail exchanger = 30 aspmx2.googlemail.com.
+</span></span></span><span class="line"><span class="cl"><span class="s2">twitter.com     mail exchanger = 10 aspmx.l.google.com.
+</span></span></span><span class="line"><span class="cl"><span class="s2">twitter.com     mail exchanger = 30 aspmx3.googlemail.com.
+</span></span></span><span class="line"><span class="cl"><span class="s2">twitter.com     mail exchanger = 20 alt1.aspmx.l.google.com.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">Authoritative answers can be found from:
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">Exit code: 0
+</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><h3 id="6-subprocess-module-subprocessrun-stdout-輸出到檔案"><a href="#6-subprocess-module-subprocessrun-stdout-輸出到檔案" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:6-subprocess-module-subprocessrun-stdout-輸出到檔案" class="headings">6. <code>subprocess</code> module, subprocess.run(), stdout 輸出到檔案</a></h3>
 <p>subprocess.run() 是建立在 subprocess.Popen() 之上</p>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -892,18 +881,18 @@ ValueError: Pool is still running
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">subprocess</span>
-
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;output.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-    <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="s1">&#39;-R&#39;</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">f</span><span class="p">)</span>
-
-<span class="c1"># 如此 output.txt 就會產生</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">subprocess</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;output.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="s1">&#39;-R&#39;</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">f</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 如此 output.txt 就會產生</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><h3 id="7-subprocess-module-subprocessrun-stdout-輸出回-subprocesspipe-繼續用"><a href="#7-subprocess-module-subprocessrun-stdout-輸出回-subprocesspipe-繼續用" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:7-subprocess-module-subprocessrun-stdout-輸出回-subprocesspipe-繼續用" class="headings">7. <code>subprocess</code> module, subprocess.run(), stdout 輸出回 subprocess.PIPE 繼續用</a></h3>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -913,38 +902,38 @@ ValueError: Pool is still running
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">subprocess</span>
-
-<span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="s1">&#39;-R&#39;</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&#34;------&#34;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&#34;------&#34;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">subprocess</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="s1">&#39;-R&#39;</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;------&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;------&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><h3 id="8-subprocess-module-subprocesscheck_output"><a href="#8-subprocess-module-subprocesscheck_output" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:8-subprocess-module-subprocesscheck_output" class="headings">8. <code>subprocess</code> module, subprocess.check_output()</a></h3>
 <p>subprocess.check_output() 更簡化了 subprocess.run()</p>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">subprocess</span>
-
-<span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">([</span><span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="s1">&#39;-R&#39;</span><span class="p">])</span>
-<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">))</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">subprocess</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">([</span><span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="s1">&#39;-R&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">))</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><h3 id="9-multiprocessing-module-process-搭配-queue-達成不同子程序間的資料流交換"><a href="#9-multiprocessing-module-process-搭配-queue-達成不同子程序間的資料流交換" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:9-multiprocessing-module-process-搭配-queue-達成不同子程序間的資料流交換" class="headings">9. <code>multiprocessing</code> module, Process() 搭配 Queue() 達成不同子程序間的資料流交換</a></h3>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -990,51 +979,51 @@ ValueError: Pool is still running
 </span><span class="lnt">44
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Process</span><span class="p">,</span> <span class="n">Queue</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">time</span>
-
-<span class="c1"># 資料寫進 Queue</span>
-<span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="n">q</span><span class="p">):</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">(),</span> <span class="s2">&#34;子程序寫入&#34;</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">]:</span>
-        <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;放 {value} 到 queue...&#39;</span><span class="p">)</span>
-        <span class="n">q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-
-<span class="c1"># 從 Queue 拿資料</span>
-<span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="n">q</span><span class="p">):</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">(),</span> <span class="s2">&#34;子程序讀取&#34;</span><span class="p">)</span>
-    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
-        <span class="n">value</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
-        <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;拿到 {value} 來自 queue.&#39;</span><span class="p">)</span>
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="c1"># 主程序創造 Queue, 傳給兩個子程序</span>
-    <span class="n">q</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">()</span>
-    <span class="n">pw</span> <span class="o">=</span> <span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">write</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">q</span><span class="p">,))</span>
-    <span class="n">pr</span> <span class="o">=</span> <span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">read</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">q</span><span class="p">,))</span>
-    <span class="c1"># 啟動子程序pw，寫入:</span>
-    <span class="n">pw</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-    <span class="c1"># 啟動子程序pr，讀取:</span>
-    <span class="n">pr</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-    <span class="c1"># 等待 pw 結束:</span>
-    <span class="n">pw</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
-    <span class="c1"># pr 程序是 無窮loop，所以等待 pw 結束後，就把它終止:</span>
-    <span class="n">pr</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span>
-
-<span class="c1"># 輸出    </span>
-<span class="s2">&#34;&#34;&#34;
-</span><span class="s2">92372 子程序寫入
-</span><span class="s2">放 A 到 queue...
-</span><span class="s2">92373 子程序讀取
-</span><span class="s2">拿到 A 來自 queue.
-</span><span class="s2">放 B 到 queue...
-</span><span class="s2">拿到 B 來自 queue.
-</span><span class="s2">放 C 到 queue...
-</span><span class="s2">拿到 C 來自 queue.
-</span><span class="s2">&#34;&#34;&#34;</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Process</span><span class="p">,</span> <span class="n">Queue</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 資料寫進 Queue</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="n">q</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">(),</span> <span class="s2">&#34;子程序寫入&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;放 </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s1"> 到 queue...&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 從 Queue 拿資料</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="n">q</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">(),</span> <span class="s2">&#34;子程序讀取&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">value</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;拿到 </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s1"> 來自 queue.&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 主程序創造 Queue, 傳給兩個子程序</span>
+</span></span><span class="line"><span class="cl">    <span class="n">q</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pw</span> <span class="o">=</span> <span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">write</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">q</span><span class="p">,))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pr</span> <span class="o">=</span> <span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">read</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">q</span><span class="p">,))</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 啟動子程序pw，寫入:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pw</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 啟動子程序pr，讀取:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pr</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 等待 pw 結束:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pw</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># pr 程序是 無窮loop，所以等待 pw 結束後，就把它終止:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pr</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 輸出    </span>
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">92372 子程序寫入
+</span></span></span><span class="line"><span class="cl"><span class="s2">放 A 到 queue...
+</span></span></span><span class="line"><span class="cl"><span class="s2">92373 子程序讀取
+</span></span></span><span class="line"><span class="cl"><span class="s2">拿到 A 來自 queue.
+</span></span></span><span class="line"><span class="cl"><span class="s2">放 B 到 queue...
+</span></span></span><span class="line"><span class="cl"><span class="s2">拿到 B 來自 queue.
+</span></span></span><span class="line"><span class="cl"><span class="s2">放 C 到 queue...
+</span></span></span><span class="line"><span class="cl"><span class="s2">拿到 C 來自 queue.
+</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><p>以上，結束。
 有參考網路一些例子，在這裡針對基本使用統整紀錄一下。</p>
@@ -1064,6 +1053,7 @@ ValueError: Pool is still running
         
 
         
+
 
         
 
@@ -1112,9 +1102,9 @@ ValueError: Pool is still running
                     <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
 
 <script>
-    var typeNumber = 0;
-    var errorCorrectionLevel = 'L';
-    var qr = qrcode(typeNumber, errorCorrectionLevel);
+    const typeNumber = 0;
+    const errorCorrectionLevel = 'L';
+    const qr = qrcode(typeNumber, errorCorrectionLevel);
     qr.addData('https:\/\/linooohon.com\/blog\/posts\/12\/211020\/Python_multiprocessing_usage\/');
     qr.make();
     document.getElementById('qrcode-img').innerHTML = qr.createImgTag();
@@ -1265,7 +1255,7 @@ ValueError: Pool is still running
             
     <footer id="footer" class="footer">
         <div class="footer-inner">
-            <div class="site-info">©&nbsp;&nbsp;mitsukuchiph.</div>
+            <div class="site-info">©&nbsp;2022&nbsp;mitsukuchiph.</div><div class="site-copyright"></div><div class="custom-footer">Everyone you meet is fighting a battle you know nothing about. Be kind. Always.</div>
 
             
     
@@ -1278,9 +1268,7 @@ ValueError: Pool is still running
                 </li></ul>
     
 
-<div class="site-copyright"></div><div class="custom-footer">Everyone you meet is fighting a battle you know nothing about. Be kind. Always.</div>
 
-            
 
             
         </div>
@@ -1302,14 +1290,17 @@ ValueError: Pool is still running
         
             <script>
     function loadComments() {
+        if (!document.getElementById('disqus_thread')) {
+            return;
+        }
         if (typeof DISQUS === 'undefined') {
-            var disqus_config = function() {
+            const disqus_config = function() {
                 this.page.url = 'https:\/\/linooohon.com\/blog\/posts\/12\/211020\/Python_multiprocessing_usage\/';
                 this.page.identifier = '\/blog\/posts\/12\/211020\/Python_multiprocessing_usage\/';
                 this.page.title = '[Python]Multi-processing 操作方式: fork, multiprocessing, subprocess';
             };
             (function() {
-                var d = document, s = d.createElement('script'); s.async = true;
+                const d = document, s = d.createElement('script'); s.async = true;
                 s.src = 'https://mitsukuchiph.disqus.com/embed.js';
                 s.setAttribute('data-timestamp', +new Date());
                 (d.head || d.body).appendChild(s);
@@ -1342,7 +1333,10 @@ ValueError: Pool is still running
     <script src="https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js"></script>
 
 <script>
-    mediumZoom(document.querySelectorAll('div.post-body img'), {
+    let imgNodes = document.querySelectorAll('div.post-body img');
+    imgNodes = Array.from(imgNodes).filter(node => node.parentNode.tagName !== "A");
+
+    mediumZoom(imgNodes, {
         background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
     })
 </script>
@@ -1351,7 +1345,6 @@ ValueError: Pool is still running
 
 
     <script src="https://cdn.jsdelivr.net/npm/instant.page@5.1.0/instantpage.min.js" type="module" defer></script>
-
 
 
 

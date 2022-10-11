@@ -3,7 +3,10 @@
     <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
     <meta charset="UTF-8" />
 
-    <meta name="generator" content="Hugo 0.83.1" /><meta name="theme-color" content="#fff" />
+    <meta name="generator" content="Hugo 0.104.3" /><meta name="theme-color" content="#fff" />
+    <meta name="color-scheme" content="light dark">
+
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
@@ -14,11 +17,11 @@
 
     <title>[Python]關於 Python 的幾種安裝與路徑(Python Install &amp; PATH) | mitsukuchiph.</title>
 
-    <link rel="stylesheet" href="/blog/css/meme.min.b839f4681fa3611632a14c5ba9c9988c24cac3a1fac80e6d06fa3b67d4a417e5.css"/>
+    <link rel="stylesheet" href="/blog/css/meme.min.7bba102516a3fb63725409e5e5b6e4145b180431be976a2314f112e872c12311.css"/>
 
     
     
-        <script src="/blog/js/meme.min.1296eae7a1970c0bbd9d8315daae36c344017e9de3e57edc689779153976ec28.js"></script>
+        <script src="/blog/js/meme.min.a8da68c33deb197b2c655f3305eedf6b36e73947969053e445d62eca7e5c7379.js"></script>
 
     
 
@@ -61,7 +64,7 @@
         "description": "關於 Python 的幾種安裝與路徑(Python Install \u0026 PATH)\n",
         "inLanguage" : "zh-TW",
         "articleSection": "posts",
-        "wordCount":  1553 ,
+        "wordCount":  1530 ,
         "image": ["https://linooohon.com/blog/blog/images/10_210915/10_210915_pythoninstallandpath.png","https://i.imgur.com/ZZRI4Ju.png","https://i.imgur.com/9DLDTFE.png","https://i.imgur.com/opuGaJs.png"],
         "author": {
             "@type": "Person",
@@ -78,11 +81,11 @@
                 "@type": "ImageObject",
                 "url": "https://linooohon.com/icons/apple-touch-icon.png"
             },
-            "url": "https://linooohon.com/"
+            "url": "https://linooohon.com/blog"
         },
         "mainEntityOfPage": {
             "@type": "WebSite",
-            "@id": "https://linooohon.com/"
+            "@id": "https://linooohon.com/blog"
         }
     }
 </script>
@@ -116,16 +119,6 @@
     
 
     
-
-    
-    
-    <style>
-         
-        iframe[sandbox="allow-forms allow-popups allow-same-origin allow-scripts"] {
-            display: none !important;
-        }
-    </style>
-
 </head>
 
     <body>
@@ -138,7 +131,7 @@
                     
     <div class="site-brand">
         
-            <a href="/blog/" class="brand">mitsukuchiph.</a>
+            <a href="/blog" class="brand">mitsukuchiph.</a>
         
     </div>
 
@@ -303,7 +296,7 @@
 <blockquote>
 <p>在幫助公司建立 data monorepo 的過程，決定把 Python 的一些相關安裝和路徑筆記起來。</p>
 </blockquote>
-<p><img src="/blog/images/10_210915/10_210915_pythoninstallandpath.png" alt="關於 Python 的幾種安裝與路徑(Python Install & PATH)"></p>
+<p><img src="/blog/images/10_210915/10_210915_pythoninstallandpath.png" alt="關於 Python 的幾種安裝與路徑(Python Install &amp; PATH)"></p>
 <h2 id="-一-python-on-macos-docs-"><a href="#-一-python-on-macos-docs-" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:-一-python-on-macos-docs-" class="headings"><strong>&lt; 一. Python on MacOS Docs &gt;</strong>:</a></h2>
 <p>Using Python on a Mac <a href="https://docs.python.org/3/using/mac.html" target="_blank" rel="noopener">Python Docs</a></p>
 <h2 id="-二-安裝及路徑-"><a href="#-二-安裝及路徑-" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:-二-安裝及路徑-" class="headings"><strong>&lt; 二. 安裝及路徑 &gt;</strong>:</a></h2>
@@ -423,13 +416,13 @@
 <p>ex: 試著安裝最近 release 的 python3.10:</p>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">brew install python@3.10
-<span class="c1"># Homebrew 會安裝需要的所有 dependencies</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">brew install python@3.10
+</span></span><span class="line"><span class="cl"><span class="c1"># Homebrew 會安裝需要的所有 dependencies</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><p>Homebrew 會裝在 <code>/usr/local/Cellar</code> 底下，經過查看發現多了很多東西🥲:</p>
 <ul>
@@ -447,51 +440,49 @@
 <h5 id="一開始先-init-source-codehttpsgithubcompyenvpyenvblobmasterlibexecpyenv-init"><a href="#一開始先-init-source-codehttpsgithubcompyenvpyenvblobmasterlibexecpyenv-init" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:一開始先-init-source-codehttpsgithubcompyenvpyenvblobmasterlibexecpyenv-init" class="headings">一開始先 init <a href="https://github.com/pyenv/pyenv/blob/master/libexec/pyenv-init" target="_blank" rel="noopener">source code</a>:</a></h5>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
-</span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">## 放到 ~/.zshrc 或是 ~/.bash_profile</span>
-<span class="nb">export</span> <span class="nv">PYENV_ROOT</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/.pyenv&#34;</span>
-<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$PYENV_ROOT</span><span class="s2">/bin:</span><span class="nv">$PATH</span><span class="s2">&#34;</span>
-<span class="nb">eval</span> <span class="s2">&#34;</span><span class="k">$(</span>pyenv init -<span class="k">)</span><span class="s2">&#34;</span>
-
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">## 放到 ~/.zshrc 或是 ~/.bash_profile</span>
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">PYENV_ROOT</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/.pyenv&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$PYENV_ROOT</span><span class="s2">/bin:</span><span class="nv">$PATH</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">eval</span> <span class="s2">&#34;</span><span class="k">$(</span>pyenv init -<span class="k">)</span><span class="s2">&#34;</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><ul>
 <li>這裡會修改 PATH 環境變數，加入 ${PYENV_ROOT}/shims/，使得之後指令會先選擇 shims 裡的指令執行，其他詳細的再研讀原始碼。</li>
 </ul>
 <h5 id="重新啟動-shell"><a href="#重新啟動-shell" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:重新啟動-shell" class="headings">重新啟動 shell:</a></h5>
-<pre><code>exec &quot;$SHELL&quot;
-</code></pre><pre><code>pyenv install -v &lt;想要的版本&gt;
+<pre tabindex="0"><code>exec &#34;$SHELL&#34;
+</code></pre><pre tabindex="0"><code>pyenv install -v &lt;想要的版本&gt;
 </code></pre><p>至於使用 Pyenv 安裝 Python 的話，會是在:</p>
-<pre><code>~/.pyenv/ 
+<pre tabindex="0"><code>~/.pyenv/ 
 </code></pre><p>底下生出來。</p>
 <h5 id="pyenv-切換-python-版本方式"><a href="#pyenv-切換-python-版本方式" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:pyenv-切換-python-版本方式" class="headings">pyenv 切換 python 版本方式:</a></h5>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">pyenv global &lt;版本&gt; <span class="c1">##全域</span>
-pyenv <span class="nb">local</span> &lt;版本&gt; <span class="c1">##此資料夾</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">pyenv global &lt;版本&gt; <span class="c1">##全域</span>
+</span></span><span class="line"><span class="cl">pyenv <span class="nb">local</span> &lt;版本&gt; <span class="c1">##此資料夾</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><h5 id="查看-pyenv-切換有無成功"><a href="#查看-pyenv-切換有無成功" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:查看-pyenv-切換有無成功" class="headings">查看 pyenv 切換有無成功:</a></h5>
-<pre><code>pyenv versions
+<pre tabindex="0"><code>pyenv versions
 python --version
 </code></pre><h5 id="查看-python-路徑"><a href="#查看-python-路徑" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:查看-python-路徑" class="headings">查看 python 路徑:</a></h5>
-<pre><code>pyenv which python
+<pre tabindex="0"><code>pyenv which python
 </code></pre><p>如果單純使用 <code>which python</code> 是看不出來的。會得到 ~/.pyenv/shims，那 shims 裡面的內容其實就是一個接收的人，負責轉換。</p>
 <p><code>shims</code> folder 主要就是負責接收輸入 pyenv command 時的參數，所以在一開始 init 的時候就有 config 了。</p>
 <p><code>pyenv exec</code>: <code>shims</code> 會把該帶的參數丟給 <code>pyenv exec</code> 執行。<a href="https://github.com/pyenv/pyenv/blob/master/libexec/pyenv-exec" target="_blank" rel="noopener">source code</a></p>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -503,17 +494,17 @@ python --version
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">export</span> PYENV_VERSION
-<span class="nv">PYENV_COMMAND_PATH</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>pyenv-which <span class="s2">&#34;</span><span class="nv">$PYENV_COMMAND</span><span class="s2">&#34;</span><span class="k">)</span><span class="s2">&#34;</span>
-<span class="nv">PYENV_BIN_PATH</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">PYENV_COMMAND_PATH</span><span class="p">%/*</span><span class="si">}</span><span class="s2">&#34;</span>
-
-<span class="nv">OLDIFS</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$IFS</span><span class="s2">&#34;</span>
-<span class="nv">IFS</span><span class="o">=</span><span class="s1">$&#39;\n&#39;</span> <span class="nv">scripts</span><span class="o">=(</span><span class="sb">`</span>pyenv-hooks <span class="nb">exec</span><span class="sb">`</span><span class="o">)</span>
-<span class="nv">IFS</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$OLDIFS</span><span class="s2">&#34;</span>
-<span class="k">for</span> script in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">scripts</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">do</span>
-  <span class="nb">source</span> <span class="s2">&#34;</span><span class="nv">$script</span><span class="s2">&#34;</span>
-<span class="k">done</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">export</span> PYENV_VERSION
+</span></span><span class="line"><span class="cl"><span class="nv">PYENV_COMMAND_PATH</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>pyenv-which <span class="s2">&#34;</span><span class="nv">$PYENV_COMMAND</span><span class="s2">&#34;</span><span class="k">)</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">PYENV_BIN_PATH</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">PYENV_COMMAND_PATH</span><span class="p">%/*</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">OLDIFS</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$IFS</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">IFS</span><span class="o">=</span><span class="s1">$&#39;\n&#39;</span> <span class="nv">scripts</span><span class="o">=(</span><span class="sb">`</span>pyenv-hooks <span class="nb">exec</span><span class="sb">`</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="nv">IFS</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$OLDIFS</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> script in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">scripts</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">source</span> <span class="s2">&#34;</span><span class="nv">$script</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><h4 id="4-conda"><a href="#4-conda" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:4-conda" class="headings">4. Conda</a></h4>
 <p>可以透過 Anaconda 或是 Miniconda
@@ -521,15 +512,15 @@ python --version
 <h5 id="第一種-default-path-安裝"><a href="#第一種-default-path-安裝" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:第一種-default-path-安裝" class="headings">第一種. Default PATH 安裝:</a></h5>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">conda create --name &lt;環境名&gt; <span class="nv">python</span><span class="o">=</span>3.7
-<span class="c1"># e.g.</span>
-conda create --name python3.7 <span class="nv">python</span><span class="o">=</span>3.7
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">conda create --name &lt;環境名&gt; <span class="nv">python</span><span class="o">=</span>3.7
+</span></span><span class="line"><span class="cl"><span class="c1"># e.g.</span>
+</span></span><span class="line"><span class="cl">conda create --name python3.7 <span class="nv">python</span><span class="o">=</span>3.7
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><ul>
 <li>如此 Python 就會被安裝在<code>~/opt/miniconda3/envs/</code> 底下:
@@ -541,18 +532,18 @@ conda create --name python3.7 <span class="nv">python</span><span class="o">=</s
 <h5 id="第二種-在自己目前所在的-folder-裡安裝-python"><a href="#第二種-在自己目前所在的-folder-裡安裝-python" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:第二種-在自己目前所在的-folder-裡安裝-python" class="headings">第二種. 在自己目前所在的 folder 裡安裝 Python:</a></h5>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">conda create --prefix &lt;env名字&gt; <span class="nv">python</span><span class="o">=</span>&lt;想要裝的python版本&gt;
-<span class="c1"># e.g.</span>
-conda create --prefix conda_env <span class="nv">python</span><span class="o">=</span>3.8
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">conda create --prefix &lt;env名字&gt; <span class="nv">python</span><span class="o">=</span>&lt;想要裝的python版本&gt;
+</span></span><span class="line"><span class="cl"><span class="c1"># e.g.</span>
+</span></span><span class="line"><span class="cl">conda create --prefix conda_env <span class="nv">python</span><span class="o">=</span>3.8
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><p>這時就會在當前目錄生出包含 python3.8 的環境:</p>
-<pre><code>`root/`
+<pre tabindex="0"><code>`root/`
     |___`conda_env/`
             |___`bin/`
             |___`conda-meta/`
@@ -561,45 +552,45 @@ conda create --prefix conda_env <span class="nv">python</span><span class="o">=<
             |___`share/`
             |___`ssl/`
 </code></pre><h6 id="進入環境"><a href="#進入環境" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:進入環境" class="headings">進入環境:</a></h6>
-<pre><code>conda activate ./conda_env
+<pre tabindex="0"><code>conda activate ./conda_env
 </code></pre><div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">python -V
-<span class="c1"># 會發現版本已經切換成剛剛的需求 python=3.8</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python -V
+</span></span><span class="line"><span class="cl"><span class="c1"># 會發現版本已經切換成剛剛的需求 python=3.8</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">which python
-<span class="c1"># 會發現 python 的路徑已經是當前目錄 `conda_env/bin/python`</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">which python
+</span></span><span class="line"><span class="cl"><span class="c1"># 會發現 python 的路徑已經是當前目錄 `conda_env/bin/python`</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><h6 id="把目前環境打包成-yml-檔"><a href="#把目前環境打包成-yml-檔" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:把目前環境打包成-yml-檔" class="headings">把目前環境打包成 yml 檔:</a></h6>
-<pre><code>conda env export --prefix ./conda_env &gt; environment.yml
+<pre tabindex="0"><code>conda env export --prefix ./conda_env &gt; environment.yml
 </code></pre><h6 id="依照當前-yml-檔把環境建立在當前相同路徑下"><a href="#依照當前-yml-檔把環境建立在當前相同路徑下" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:依照當前-yml-檔把環境建立在當前相同路徑下" class="headings">依照當前 yml 檔，把環境建立在當前相同路徑下:</a></h6>
-<pre><code>conda env create --prefix ./conda_env --file environment.yml
+<pre tabindex="0"><code>conda env create --prefix ./conda_env --file environment.yml
 </code></pre><h6 id="依照當前-yml-檔把環境建立在-conda-的-default-path"><a href="#依照當前-yml-檔把環境建立在-conda-的-default-path" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:依照當前-yml-檔把環境建立在-conda-的-default-path" class="headings">依照當前 yml 檔，把環境建立在 Conda 的 Default Path:</a></h6>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">conda env create --file environment.yml
-<span class="c1"># OR: conda env create --file &lt;yaml檔名&gt; --name &lt;想建成的環境資料夾名&gt;</span>
-<span class="c1"># e.g</span>
-conda env create --file environment.yml --name env_from_yml
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">conda env create --file environment.yml
+</span></span><span class="line"><span class="cl"><span class="c1"># OR: conda env create --file &lt;yaml檔名&gt; --name &lt;想建成的環境資料夾名&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># e.g</span>
+</span></span><span class="line"><span class="cl">conda env create --file environment.yml --name env_from_yml
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><p>但是記得 yml 的 name 要修改一下，這會是之後裝在 <code>opt/miniconda3/envs</code> 底下的 folder 名字。</p>
 <p><img src="https://i.imgur.com/opuGaJs.png" alt=""></p>
@@ -635,6 +626,7 @@ conda env create --file environment.yml --name env_from_yml
         
 
         
+
 
         
 
@@ -683,9 +675,9 @@ conda env create --file environment.yml --name env_from_yml
                     <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
 
 <script>
-    var typeNumber = 0;
-    var errorCorrectionLevel = 'L';
-    var qr = qrcode(typeNumber, errorCorrectionLevel);
+    const typeNumber = 0;
+    const errorCorrectionLevel = 'L';
+    const qr = qrcode(typeNumber, errorCorrectionLevel);
     qr.addData('https:\/\/linooohon.com\/blog\/posts\/10\/210915\/%E9%97%9C%E6%96%BCPython%E7%9A%84%E5%B9%BE%E7%A8%AE%E5%AE%89%E8%A3%9D%E8%88%87%E8%B7%AF%E5%BE%91%28Python%20Install%20\u0026%20PATH%29\/');
     qr.make();
     document.getElementById('qrcode-img').innerHTML = qr.createImgTag();
@@ -828,7 +820,7 @@ conda env create --file environment.yml --name env_from_yml
             
     <footer id="footer" class="footer">
         <div class="footer-inner">
-            <div class="site-info">©&nbsp;&nbsp;mitsukuchiph.</div>
+            <div class="site-info">©&nbsp;2022&nbsp;mitsukuchiph.</div><div class="site-copyright"></div><div class="custom-footer">Everyone you meet is fighting a battle you know nothing about. Be kind. Always.</div>
 
             
     
@@ -841,9 +833,7 @@ conda env create --file environment.yml --name env_from_yml
                 </li></ul>
     
 
-<div class="site-copyright"></div><div class="custom-footer">Everyone you meet is fighting a battle you know nothing about. Be kind. Always.</div>
 
-            
 
             
         </div>
@@ -865,14 +855,17 @@ conda env create --file environment.yml --name env_from_yml
         
             <script>
     function loadComments() {
+        if (!document.getElementById('disqus_thread')) {
+            return;
+        }
         if (typeof DISQUS === 'undefined') {
-            var disqus_config = function() {
+            const disqus_config = function() {
                 this.page.url = 'https:\/\/linooohon.com\/blog\/posts\/10\/210915\/%E9%97%9C%E6%96%BCPython%E7%9A%84%E5%B9%BE%E7%A8%AE%E5%AE%89%E8%A3%9D%E8%88%87%E8%B7%AF%E5%BE%91%28Python%20Install%20\u0026%20PATH%29\/';
                 this.page.identifier = '\/blog\/posts\/10\/210915\/%E9%97%9C%E6%96%BCPython%E7%9A%84%E5%B9%BE%E7%A8%AE%E5%AE%89%E8%A3%9D%E8%88%87%E8%B7%AF%E5%BE%91%28Python%20Install%20\u0026%20PATH%29\/';
                 this.page.title = '[Python]關於 Python 的幾種安裝與路徑(Python Install \u0026 PATH)';
             };
             (function() {
-                var d = document, s = d.createElement('script'); s.async = true;
+                const d = document, s = d.createElement('script'); s.async = true;
                 s.src = 'https://mitsukuchiph.disqus.com/embed.js';
                 s.setAttribute('data-timestamp', +new Date());
                 (d.head || d.body).appendChild(s);
@@ -905,7 +898,10 @@ conda env create --file environment.yml --name env_from_yml
     <script src="https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js"></script>
 
 <script>
-    mediumZoom(document.querySelectorAll('div.post-body img'), {
+    let imgNodes = document.querySelectorAll('div.post-body img');
+    imgNodes = Array.from(imgNodes).filter(node => node.parentNode.tagName !== "A");
+
+    mediumZoom(imgNodes, {
         background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
     })
 </script>
@@ -914,7 +910,6 @@ conda env create --file environment.yml --name env_from_yml
 
 
     <script src="https://cdn.jsdelivr.net/npm/instant.page@5.1.0/instantpage.min.js" type="module" defer></script>
-
 
 
 

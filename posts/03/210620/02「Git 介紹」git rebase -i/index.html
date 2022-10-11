@@ -3,7 +3,10 @@
     <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
     <meta charset="UTF-8" />
 
-    <meta name="generator" content="Hugo 0.83.1" /><meta name="theme-color" content="#fff" />
+    <meta name="generator" content="Hugo 0.104.3" /><meta name="theme-color" content="#fff" />
+    <meta name="color-scheme" content="light dark">
+
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
@@ -14,11 +17,11 @@
 
     <title>02「Git 介紹」git rebase -i | mitsukuchiph.</title>
 
-    <link rel="stylesheet" href="/blog/css/meme.min.b839f4681fa3611632a14c5ba9c9988c24cac3a1fac80e6d06fa3b67d4a417e5.css"/>
+    <link rel="stylesheet" href="/blog/css/meme.min.7bba102516a3fb63725409e5e5b6e4145b180431be976a2314f112e872c12311.css"/>
 
     
     
-        <script src="/blog/js/meme.min.1296eae7a1970c0bbd9d8315daae36c344017e9de3e57edc689779153976ec28.js"></script>
+        <script src="/blog/js/meme.min.a8da68c33deb197b2c655f3305eedf6b36e73947969053e445d62eca7e5c7379.js"></script>
 
     
 
@@ -78,11 +81,11 @@
                 "@type": "ImageObject",
                 "url": "https://linooohon.com/icons/apple-touch-icon.png"
             },
-            "url": "https://linooohon.com/"
+            "url": "https://linooohon.com/blog"
         },
         "mainEntityOfPage": {
             "@type": "WebSite",
-            "@id": "https://linooohon.com/"
+            "@id": "https://linooohon.com/blog"
         }
     }
 </script>
@@ -116,16 +119,6 @@
     
 
     
-
-    
-    
-    <style>
-         
-        iframe[sandbox="allow-forms allow-popups allow-same-origin allow-scripts"] {
-            display: none !important;
-        }
-    </style>
-
 </head>
 
     <body>
@@ -138,7 +131,7 @@
                     
     <div class="site-brand">
         
-            <a href="/blog/" class="brand">mitsukuchiph.</a>
+            <a href="/blog" class="brand">mitsukuchiph.</a>
         
     </div>
 
@@ -298,7 +291,7 @@
 <ul>
 <li>假設現在自己分支多了 3 個 commit 準備要合回去主分支，在合回去之前，想對自己的 commit 先做些整理，這時候 <code>git rebase -i</code> 就派上用場了。</li>
 </ul>
-<pre><code class="language-shell=bash" data-lang="shell=bash"># 目前的三個 commit, commit ID 先用 aaaaaaa, bbbbbbb, ccccccc 代替, a 是第一個 commit, b 是第二個, c 是第三個
+<pre tabindex="0"><code class="language-shell=bash" data-lang="shell=bash"># 目前的三個 commit, commit ID 先用 aaaaaaa, bbbbbbb, ccccccc 代替, a 是第一個 commit, b 是第二個, c 是第三個
 ccccccc commit-msg
 bbbbbbb commit-msg
 aaaaaaa commit-msg
@@ -320,7 +313,7 @@ aaaaaaa commit-msg
 <ul>
 <li>一進來互動模式時，最新的 commit 是在最下面！</li>
 </ul>
-<pre><code class="language-shell=bash" data-lang="shell=bash"># 像是這樣
+<pre tabindex="0"><code class="language-shell=bash" data-lang="shell=bash"># 像是這樣
 # 上面最舊
 pick aaaaaaa commit-msg #1
 pick bbbbbbb commit-msg #2
@@ -335,7 +328,7 @@ pick ccccccc commit-msg #3
 <ul>
 <li>作用: 合併多個 commit</li>
 </ul>
-<pre><code>pick aaaaaaa commit-msg #1
+<pre tabindex="0"><code>pick aaaaaaa commit-msg #1
 squash bbbbbbb commit-msg #2
 pick ccccccc commit-msg #3
 </code></pre><blockquote>
@@ -346,7 +339,7 @@ pick ccccccc commit-msg #3
 <ul>
 <li>作用: 修改 commit message</li>
 </ul>
-<pre><code>pick aaaaaaa commit-msg #1
+<pre tabindex="0"><code>pick aaaaaaa commit-msg #1
 reword bbbbbbb commit-msg #2
 reword ccccccc commit-msg #3
 </code></pre><blockquote>
@@ -356,7 +349,7 @@ reword ccccccc commit-msg #3
 <ul>
 <li>作用: 丟掉這個 commit</li>
 </ul>
-<pre><code>pick aaaaaaa commit-msg #1
+<pre tabindex="0"><code>pick aaaaaaa commit-msg #1
 drop bbbbbbb commit-msg #2
 pick ccccccc commit-msg #3
 </code></pre><blockquote>
@@ -368,7 +361,7 @@ pick ccccccc commit-msg #3
 <li>作用: 我要這個 commit 但到這裡的時候停一下，我要修改一下。
 修改完後指令接著做:</li>
 </ul>
-<pre><code>git add xxxx
+<pre tabindex="0"><code>git add xxxx
 git commit --amend --no-edit
 # --no-edit 是不修改 commit 訊息
 </code></pre><h3 id="fixup---也是合併"><a href="#fixup---也是合併" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:fixup---也是合併" class="headings"><code>fixup</code> - 也是合併</a></h3>
@@ -379,19 +372,19 @@ git commit --amend --no-edit
 <ul>
 <li>就直接換就好哈哈哈哈</li>
 </ul>
-<pre><code>pick aaaaaaa commit-msg #1
+<pre tabindex="0"><code>pick aaaaaaa commit-msg #1
 pick ccccccc commit-msg #3
 pick bbbbbbb commit-msg #2
 </code></pre><h2 id="6-一些會遇到的基本流程"><a href="#6-一些會遇到的基本流程" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:6-一些會遇到的基本流程" class="headings">6. 一些會遇到的基本流程：</a></h2>
 <h3 id="修改-commit-message"><a href="#修改-commit-message" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:修改-commit-message" class="headings">修改 commit message。</a></h3>
 <h3 id="遇到衝突"><a href="#遇到衝突" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:遇到衝突" class="headings">遇到衝突:</a></h3>
-<pre><code>解決衝突 
+<pre tabindex="0"><code>解決衝突 
 git add xxxxxxxx
 git rebase --continue
 </code></pre><h3 id="放棄這次-rebase回到之前的狀態"><a href="#放棄這次-rebase回到之前的狀態" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:放棄這次-rebase回到之前的狀態" class="headings">放棄這次 rebase，回到之前的狀態。</a></h3>
-<pre><code>git rebase --abort
+<pre tabindex="0"><code>git rebase --abort
 </code></pre><h3 id="小心使用-慎用如果有衝突這個會丟掉整個-commit很容易出事"><a href="#小心使用-慎用如果有衝突這個會丟掉整個-commit很容易出事" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:小心使用-慎用如果有衝突這個會丟掉整個-commit很容易出事" class="headings">小心使用, 慎用。如果有衝突，這個會丟掉整個 commit，很容易出事。</a></h3>
-<pre><code>git rebase --skip
+<pre tabindex="0"><code>git rebase --skip
 </code></pre><hr>
 <h2 id="the-end"><a href="#the-end" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:the-end" class="headings">The End:</a></h2>
 <h3 id="review"><a href="#review" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:review" class="headings">Review:</a></h3>
@@ -422,6 +415,7 @@ git rebase --continue
         
 
         
+
 
         
 
@@ -470,9 +464,9 @@ git rebase --continue
                     <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
 
 <script>
-    var typeNumber = 0;
-    var errorCorrectionLevel = 'L';
-    var qr = qrcode(typeNumber, errorCorrectionLevel);
+    const typeNumber = 0;
+    const errorCorrectionLevel = 'L';
+    const qr = qrcode(typeNumber, errorCorrectionLevel);
     qr.addData('https:\/\/linooohon.com\/blog\/posts\/03\/210620\/02%E3%80%8CGit%20%E4%BB%8B%E7%B4%B9%E3%80%8Dgit%20rebase%20-i\/');
     qr.make();
     document.getElementById('qrcode-img').innerHTML = qr.createImgTag();
@@ -599,7 +593,7 @@ git rebase --continue
             
     <footer id="footer" class="footer">
         <div class="footer-inner">
-            <div class="site-info">©&nbsp;&nbsp;mitsukuchiph.</div>
+            <div class="site-info">©&nbsp;2022&nbsp;mitsukuchiph.</div><div class="site-copyright"></div><div class="custom-footer">Everyone you meet is fighting a battle you know nothing about. Be kind. Always.</div>
 
             
     
@@ -612,9 +606,7 @@ git rebase --continue
                 </li></ul>
     
 
-<div class="site-copyright"></div><div class="custom-footer">Everyone you meet is fighting a battle you know nothing about. Be kind. Always.</div>
 
-            
 
             
         </div>
@@ -636,14 +628,17 @@ git rebase --continue
         
             <script>
     function loadComments() {
+        if (!document.getElementById('disqus_thread')) {
+            return;
+        }
         if (typeof DISQUS === 'undefined') {
-            var disqus_config = function() {
+            const disqus_config = function() {
                 this.page.url = 'https:\/\/linooohon.com\/blog\/posts\/03\/210620\/02%E3%80%8CGit%20%E4%BB%8B%E7%B4%B9%E3%80%8Dgit%20rebase%20-i\/';
                 this.page.identifier = '\/blog\/posts\/03\/210620\/02%E3%80%8CGit%20%E4%BB%8B%E7%B4%B9%E3%80%8Dgit%20rebase%20-i\/';
                 this.page.title = '02「Git 介紹」git rebase -i';
             };
             (function() {
-                var d = document, s = d.createElement('script'); s.async = true;
+                const d = document, s = d.createElement('script'); s.async = true;
                 s.src = 'https://mitsukuchiph.disqus.com/embed.js';
                 s.setAttribute('data-timestamp', +new Date());
                 (d.head || d.body).appendChild(s);
@@ -676,7 +671,10 @@ git rebase --continue
     <script src="https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js"></script>
 
 <script>
-    mediumZoom(document.querySelectorAll('div.post-body img'), {
+    let imgNodes = document.querySelectorAll('div.post-body img');
+    imgNodes = Array.from(imgNodes).filter(node => node.parentNode.tagName !== "A");
+
+    mediumZoom(imgNodes, {
         background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
     })
 </script>
@@ -685,7 +683,6 @@ git rebase --continue
 
 
     <script src="https://cdn.jsdelivr.net/npm/instant.page@5.1.0/instantpage.min.js" type="module" defer></script>
-
 
 
 

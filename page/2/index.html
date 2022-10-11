@@ -3,7 +3,10 @@
     <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
     <meta charset="UTF-8" />
 
-    <meta name="generator" content="Hugo 0.83.1" /><meta name="theme-color" content="#fff" />
+    <meta name="generator" content="Hugo 0.104.3" /><meta name="theme-color" content="#fff" />
+    <meta name="color-scheme" content="light dark">
+
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
@@ -14,11 +17,11 @@
 
     <title>mitsukuchiph.</title>
 
-    <link rel="stylesheet" href="/blog/css/meme.min.b839f4681fa3611632a14c5ba9c9988c24cac3a1fac80e6d06fa3b67d4a417e5.css"/>
+    <link rel="stylesheet" href="/blog/css/meme.min.7bba102516a3fb63725409e5e5b6e4145b180431be976a2314f112e872c12311.css"/>
 
     
     
-        <script src="/blog/js/meme.min.1296eae7a1970c0bbd9d8315daae36c344017e9de3e57edc689779153976ec28.js"></script>
+        <script src="/blog/js/meme.min.a8da68c33deb197b2c655f3305eedf6b36e73947969053e445d62eca7e5c7379.js"></script>
 
     
 
@@ -56,8 +59,8 @@
         "@context": "https://schema.org",
         "@type": "WebSite",
         "datePublished": "2021-07-20T20:17:43+00:00",
-        "dateModified": "2022-10-03T01:27:27+09:00",
-        "url": "https://linooohon.com/",
+        "dateModified": "2022-10-12T04:04:43+09:00",
+        "url": "https://linooohon.com/blog",
         "description": "mitsukuchiph - blog/部落格/ブログ",
         "image": "https://linooohon.com/icons/apple-touch-icon.png",
         "author": {
@@ -94,16 +97,6 @@
     
 
     
-
-    
-    
-    <style>
-         
-        iframe[sandbox="allow-forms allow-popups allow-same-origin allow-scripts"] {
-            display: none !important;
-        }
-    </style>
-
 </head>
 
     <body>
@@ -116,7 +109,7 @@
                     
     <div class="site-brand">
         
-            <a href="/blog/" class="brand">mitsukuchiph.</a>
+            <a href="/blog" class="brand">mitsukuchiph.</a>
         
     </div>
 
@@ -192,6 +185,46 @@
         <main class="main single" id="main">
     <div class="main-inner">
         
+        
+            <article class="content post home h-entry">
+                <h2 class="post-title p-name">
+                    <a href="/blog/posts/15/211212/Character_Encoding/Part2/" class="summary-title-link u-url">[Character set &amp; Encoding]Part2. Python 在編碼上的操作與例子</a>
+                </h2>
+                
+                    
+
+<div class="post-meta">
+    
+        
+        <time datetime="2021-12-12T18:36:14&#43;08:00" class="post-meta-item published dt-published"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon post-meta-icon"><path d="M148 288h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12zm108-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 96v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm192 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96-260v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h48c26.5 0 48 21.5 48 48zm-48 346V160H48v298c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z"/></svg>&nbsp;2021.12.12</time>
+    
+    
+    
+    
+        
+        
+        
+            
+                <span class="post-meta-item category"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M464 128H272l-54.63-54.63c-6-6-14.14-9.37-22.63-9.37H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V176c0-26.51-21.49-48-48-48zm0 272H48V112h140.12l54.63 54.63c6 6 14.14 9.37 22.63 9.37H464v224z"/></svg>&nbsp;<a href="/blog/categories/2021/" class="category-link p-category">2021</a>/<a href="/blog/categories/encoding/" class="category-link p-category">encoding</a>/<a href="/blog/categories/python/" class="category-link p-category">python</a></span>
+            
+        
+    
+    
+    
+    
+    
+</div>
+
+                
+                <summary class="summary p-summary">
+                    <p align="center">上一篇紀錄了編碼與 Unicode 的脈絡與區別，這裡紀錄一下在 Python 上的操作轉換</p> <img src="/blog/images/15_211212/15_211212_python字符編碼操作例子.png" width="70%"/>
+                </summary>
+                
+                    <div class="read-more-container">
+                        <a href="/blog/posts/15/211212/Character_Encoding/Part2/" class="read-more-link">閱讀更多 »</a>
+                    </div>
+                
+            </article>
         
             <article class="content post home h-entry">
                 <h2 class="post-title p-name">
@@ -553,46 +586,6 @@
                 
             </article>
         
-            <article class="content post home h-entry">
-                <h2 class="post-title p-name">
-                    <a href="/blog/posts/05/210714/%E3%80%8C%E3%80%8CFlask%E3%80%8D02:%20Static%20File%20handling,%20Database%20connection/" class="summary-title-link u-url">「Flask」02: Static File handling, Database connection</a>
-                </h2>
-                
-                    
-
-<div class="post-meta">
-    
-        
-        <time datetime="2021-07-14T18:36:14&#43;08:00" class="post-meta-item published dt-published"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon post-meta-icon"><path d="M148 288h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12zm108-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 96v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm192 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96-260v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h48c26.5 0 48 21.5 48 48zm-48 346V160H48v298c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z"/></svg>&nbsp;2021.7.14</time>
-    
-    
-    
-    
-        
-        
-        
-            
-                <span class="post-meta-item category"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M464 128H272l-54.63-54.63c-6-6-14.14-9.37-22.63-9.37H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V176c0-26.51-21.49-48-48-48zm0 272H48V112h140.12l54.63 54.63c6 6 14.14 9.37 22.63 9.37H464v224z"/></svg>&nbsp;<a href="/blog/categories/2021/" class="category-link p-category">2021</a>/<a href="/blog/categories/python/" class="category-link p-category">python</a>/<a href="/blog/categories/flask/" class="category-link p-category">flask</a></span>
-            
-        
-    
-    
-    
-    
-    
-</div>
-
-                
-                <summary class="summary p-summary">
-                    <p align="center">上次紀錄了 Flask 基本處理，這次紀錄 Static File 和 DB 連線(EN)</p> <img src="/blog/images/04_05_210710/04_05_210710_flask_intro.png" width="30%"/>
-                </summary>
-                
-                    <div class="read-more-container">
-                        <a href="/blog/posts/05/210714/%E3%80%8C%E3%80%8CFlask%E3%80%8D02:%20Static%20File%20handling,%20Database%20connection/" class="read-more-link">閱讀更多 »</a>
-                    </div>
-                
-            </article>
-        
         
             <ul class="pagination">
                 
@@ -623,7 +616,7 @@
             
     <footer id="footer" class="footer">
         <div class="footer-inner">
-            <div class="site-info">©&nbsp;&nbsp;mitsukuchiph.</div>
+            <div class="site-info">©&nbsp;2022&nbsp;mitsukuchiph.</div><div class="site-copyright"></div><div class="custom-footer">Everyone you meet is fighting a battle you know nothing about. Be kind. Always.</div>
 
             
     
@@ -636,9 +629,7 @@
                 </li></ul>
     
 
-<div class="site-copyright"></div><div class="custom-footer">Everyone you meet is fighting a battle you know nothing about. Be kind. Always.</div>
 
-            
 
             
         </div>
@@ -662,7 +653,10 @@
     <script src="https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js"></script>
 
 <script>
-    mediumZoom(document.querySelectorAll('div.post-body img'), {
+    let imgNodes = document.querySelectorAll('div.post-body img');
+    imgNodes = Array.from(imgNodes).filter(node => node.parentNode.tagName !== "A");
+
+    mediumZoom(imgNodes, {
         background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
     })
 </script>
@@ -671,7 +665,6 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/instant.page@5.1.0/instantpage.min.js" type="module" defer></script>
-
 
 
 

@@ -3,7 +3,10 @@
     <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
     <meta charset="UTF-8" />
 
-    <meta name="generator" content="Hugo 0.83.1" /><meta name="theme-color" content="#fff" />
+    <meta name="generator" content="Hugo 0.104.3" /><meta name="theme-color" content="#fff" />
+    <meta name="color-scheme" content="light dark">
+
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
@@ -14,11 +17,11 @@
 
     <title>關於 Session 與 Cookie - [ Cookie篇 ] 紀錄 | mitsukuchiph.</title>
 
-    <link rel="stylesheet" href="/blog/css/meme.min.b839f4681fa3611632a14c5ba9c9988c24cac3a1fac80e6d06fa3b67d4a417e5.css"/>
+    <link rel="stylesheet" href="/blog/css/meme.min.7bba102516a3fb63725409e5e5b6e4145b180431be976a2314f112e872c12311.css"/>
 
     
     
-        <script src="/blog/js/meme.min.1296eae7a1970c0bbd9d8315daae36c344017e9de3e57edc689779153976ec28.js"></script>
+        <script src="/blog/js/meme.min.a8da68c33deb197b2c655f3305eedf6b36e73947969053e445d62eca7e5c7379.js"></script>
 
     
 
@@ -78,11 +81,11 @@
                 "@type": "ImageObject",
                 "url": "https://linooohon.com/icons/apple-touch-icon.png"
             },
-            "url": "https://linooohon.com/"
+            "url": "https://linooohon.com/blog"
         },
         "mainEntityOfPage": {
             "@type": "WebSite",
-            "@id": "https://linooohon.com/"
+            "@id": "https://linooohon.com/blog"
         }
     }
 </script>
@@ -115,16 +118,6 @@
     
 
     
-
-    
-    
-    <style>
-         
-        iframe[sandbox="allow-forms allow-popups allow-same-origin allow-scripts"] {
-            display: none !important;
-        }
-    </style>
-
 </head>
 
     <body>
@@ -137,7 +130,7 @@
                     
     <div class="site-brand">
         
-            <a href="/blog/" class="brand">mitsukuchiph.</a>
+            <a href="/blog" class="brand">mitsukuchiph.</a>
         
     </div>
 
@@ -276,13 +269,13 @@
 </ol>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 像這樣</span>
-Set-Cookie: &lt;cookie-name&gt;<span class="o">=</span>&lt;cookie-value&gt;
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 像這樣</span>
+</span></span><span class="line"><span class="cl">Set-Cookie: &lt;cookie-name&gt;<span class="o">=</span>&lt;cookie-value&gt;
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><ol start="3">
 <li>User Agent 收到後，把 Cookie 以 <code>key-value</code> 的形式存在自己手裡。</li>
@@ -386,16 +379,16 @@ Set-Cookie: &lt;cookie-name&gt;<span class="o">=</span>&lt;cookie-value&gt;
 <li>Strict: same-site 才可以送 Cookie。</li>
 <li>Lax(default值):same-site 才可以送，但在某些時刻可以，如下:</li>
 </ul>
-<pre><code>&lt;a href=&quot;...&quot;&gt;&lt;/a&gt;
-&lt;link rel=&quot;prerender&quot; href=&quot;...&quot;/&gt;
-&lt;form method=&quot;GET&quot; action=&quot;...&quot;&gt; 但是 POST 方法 的 form，或是只要是 POST, PUT, DELETE 這些方法，就不會帶上 cookie
+<pre tabindex="0"><code>&lt;a href=&#34;...&#34;&gt;&lt;/a&gt;
+&lt;link rel=&#34;prerender&#34; href=&#34;...&#34;/&gt;
+&lt;form method=&#34;GET&#34; action=&#34;...&#34;&gt; 但是 POST 方法 的 form，或是只要是 POST, PUT, DELETE 這些方法，就不會帶上 cookie
 </code></pre><ul>
 <li>None: same-site, cross-site 都送，且要加上 Secure 屬性像這樣: <code>SameSite=None; Secure;</code></li>
 </ul>
 </li>
 <li>要把 Site 和 Origin 分清:
 <ul>
-<li>Origin: Scheme(ex: https)、Host(ex: <a href="http://www.site.com" target="_blank" rel="noopener">www.site.com</a>)、Port(ex: 80)，真正的 Same-Origin 是 3 個都一樣才是, 其餘都是 Cross-Origin。(但這裡要注意，Cookie 在確認是不是同個 origin 時，是只看 host 以及 Path 的設定、還有 Secure 的設定來確認 Cookie 能不能夠存在)</li>
+<li>Origin: Scheme(ex: https)、Host(ex: <a href="https://www.site.com" target="_blank" rel="noopener">www.site.com</a>)、Port(ex: 80)，真正的 Same-Origin 是 3 個都一樣才是, 其餘都是 Cross-Origin。(但這裡要注意，Cookie 在確認是不是同個 origin 時，是只看 host 以及 Path 的設定、還有 Secure 的設定來確認 Cookie 能不能夠存在)</li>
 <li>Site: Same-Site 的判定關係到 Effetive top-level domains（eTLDs)，eTLDs 被定義在 <a href="https://publicsuffix.org/list/public_suffix_list.dat" target="_blank" rel="noopener">Public Suffix List</a> 中，而 Site 是由 eTLD 加上一個前綴組成。假設 <code>site.com</code> 不在 Public Suffix List 中，但是 <code>.com</code> 存在，意思是說，那 <code>site.com</code> 是一個 site 沒錯，同時 <code>a.site.com</code> 和 <code>b.site.com</code> 屬於同一個 site，但像 <code>github.io</code> 在 Public Suffix List 中，那 <code>a.github.io</code> 和 <code>b.github.io</code> 就不是同一個 site。</li>
 </ul>
 </li>
@@ -405,7 +398,7 @@ Set-Cookie: &lt;cookie-name&gt;<span class="o">=</span>&lt;cookie-value&gt;
 <blockquote>
 <p>何謂 <a href="https://publicsuffix.org/list/public_suffix_list.dat" target="_blank" rel="noopener">Public Suffix List</a>: <a href="https://www.google.com/search?q=etld&amp;sxsrf=APq-WBuOiBOKYzQ0uLl0-0Isq8Q2NqNuuA%3A1644993762897&amp;ei=4pwMYuWCNt6Mr7wPtL-g4A0&amp;ved=0ahUKEwjl-5Onz4P2AhVexosBHbQfCNwQ4dUDCA4&amp;uact=5&amp;oq=etld&amp;gs_lcp=Cgdnd3Mtd2l6EAMyBQgAEIAEMgcIABCxAxAKMgQIABAKMgQIABAKMgoILhDHARCvARAKMgQIABAKMgQIABAKMgQIABAKMgQIABAKMgoILhDHARDRAxAKOgcIABBHELADOgcIIxDqAhAnOgQIIxAnOgYIABAKEEM6CAgAEIAEELEDOgsIABCABBCxAxCDAToOCC4QgAQQsQMQxwEQ0QM6EQguEIAEELEDEIMBEMcBENEDOhAILhCxAxCDARDHARDRAxBDOgQIABBDOgQILhBDOggILhCABBDUAjoHCAAQgAQQCkoECEEYAEoECEYYAFC4BFiVD2CSEGgCcAF4AIABc4gB0AKSAQMzLjGYAQCgAQGwAQrIAQrAAQE&amp;sclient=gws-wiz" target="_blank" rel="noopener">參考</a></p>
 </blockquote>
-<pre><code>先知道 TLD 再理解 eTLD, eTLD 都放在 Public Suffix List 裡 
+<pre tabindex="0"><code>先知道 TLD 再理解 eTLD, eTLD 都放在 Public Suffix List 裡 
 比如說 `.com` 在 Public Suffix List 裡面。
 那為什麼 `.com` 在裡面，因為 `.com` 太多人用了，我必須限制 `site.com` 不會干涉到世界其他 `.com` 結尾的網站，有點這樣的感覺。
 那 `site.com` 就是一個 site，`site2.com` 就是另一個 Site。
@@ -416,7 +409,7 @@ Set-Cookie: &lt;cookie-name&gt;<span class="o">=</span>&lt;cookie-value&gt;
 
 所以把他們歸納起來，如此就可以知道 Domain 與 Domain 之間 Same-Site 和 Cross-Site 關係。
 </code></pre><h2 id="-persistent--session-transient-"><a href="#-persistent--session-transient-" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:-persistent--session-transient-" class="headings"><strong>&lt; Persistent &amp; Session (Transient) &gt;</strong>:</a></h2>
-<pre><code>沒有設置 Expires 就是 Session Cookie 存在 Memory，隨著 User Agent 關閉而消失。
+<pre tabindex="0"><code>沒有設置 Expires 就是 Session Cookie 存在 Memory，隨著 User Agent 關閉而消失。
 其餘的是 Persistent Cookie，存在 User Agent，也就是 User 的 Disk 裡。
 </code></pre><h2 id="-references-"><a href="#-references-" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:-references-" class="headings"><strong>&lt; References &gt;</strong>:</a></h2>
 <ul>
@@ -468,6 +461,7 @@ Set-Cookie: &lt;cookie-name&gt;<span class="o">=</span>&lt;cookie-value&gt;
 
         
 
+
         
 
 
@@ -515,9 +509,9 @@ Set-Cookie: &lt;cookie-name&gt;<span class="o">=</span>&lt;cookie-value&gt;
                     <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
 
 <script>
-    var typeNumber = 0;
-    var errorCorrectionLevel = 'L';
-    var qr = qrcode(typeNumber, errorCorrectionLevel);
+    const typeNumber = 0;
+    const errorCorrectionLevel = 'L';
+    const qr = qrcode(typeNumber, errorCorrectionLevel);
     qr.addData('https:\/\/linooohon.com\/blog\/posts\/19\/220218\/cookie%E7%B4%80%E9%8C%84\/');
     qr.make();
     document.getElementById('qrcode-img').innerHTML = qr.createImgTag();
@@ -553,11 +547,11 @@ Set-Cookie: &lt;cookie-name&gt;<span class="o">=</span>&lt;cookie-value&gt;
                     </li>
                 
                     <li class="related-item">
-                        <a href="/blog/posts/23/220731/%E7%9F%AD%E6%9A%AB%E5%91%8A%E5%88%A5_%E8%BF%91%E6%B3%81/" class="related-link">短暫告別, 近況</a>
+                        <a href="/blog/posts/25/220825/postgres_app_on_flyio/" class="related-link">[Postgres] - 建立一個 Postgres app 在 fly.io</a>
                     </li>
                 
                     <li class="related-item">
-                        <a href="/blog/posts/22/220420/PostgreSQL_MacOS%E7%B0%A1%E5%96%AE%E5%BF%AB%E9%80%9F%E5%AE%89%E8%A3%9D/" class="related-link">[PostgreSQL] 在 MacOS 上簡單快速安裝 - note</a>
+                        <a href="/blog/posts/23/220731/%E7%9F%AD%E6%9A%AB%E5%91%8A%E5%88%A5_%E8%BF%91%E6%B3%81/" class="related-link">短暫告別, 近況</a>
                     </li>
                 
             </ul>
@@ -668,7 +662,7 @@ Set-Cookie: &lt;cookie-name&gt;<span class="o">=</span>&lt;cookie-value&gt;
             
     <footer id="footer" class="footer">
         <div class="footer-inner">
-            <div class="site-info">©&nbsp;&nbsp;mitsukuchiph.</div>
+            <div class="site-info">©&nbsp;2022&nbsp;mitsukuchiph.</div><div class="site-copyright"></div><div class="custom-footer">Everyone you meet is fighting a battle you know nothing about. Be kind. Always.</div>
 
             
     
@@ -681,9 +675,7 @@ Set-Cookie: &lt;cookie-name&gt;<span class="o">=</span>&lt;cookie-value&gt;
                 </li></ul>
     
 
-<div class="site-copyright"></div><div class="custom-footer">Everyone you meet is fighting a battle you know nothing about. Be kind. Always.</div>
 
-            
 
             
         </div>
@@ -705,14 +697,17 @@ Set-Cookie: &lt;cookie-name&gt;<span class="o">=</span>&lt;cookie-value&gt;
         
             <script>
     function loadComments() {
+        if (!document.getElementById('disqus_thread')) {
+            return;
+        }
         if (typeof DISQUS === 'undefined') {
-            var disqus_config = function() {
+            const disqus_config = function() {
                 this.page.url = 'https:\/\/linooohon.com\/blog\/posts\/19\/220218\/cookie%E7%B4%80%E9%8C%84\/';
                 this.page.identifier = '\/blog\/posts\/19\/220218\/cookie%E7%B4%80%E9%8C%84\/';
                 this.page.title = '關於 Session 與 Cookie - [ Cookie篇 ] 紀錄';
             };
             (function() {
-                var d = document, s = d.createElement('script'); s.async = true;
+                const d = document, s = d.createElement('script'); s.async = true;
                 s.src = 'https://mitsukuchiph.disqus.com/embed.js';
                 s.setAttribute('data-timestamp', +new Date());
                 (d.head || d.body).appendChild(s);
@@ -745,7 +740,10 @@ Set-Cookie: &lt;cookie-name&gt;<span class="o">=</span>&lt;cookie-value&gt;
     <script src="https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js"></script>
 
 <script>
-    mediumZoom(document.querySelectorAll('div.post-body img'), {
+    let imgNodes = document.querySelectorAll('div.post-body img');
+    imgNodes = Array.from(imgNodes).filter(node => node.parentNode.tagName !== "A");
+
+    mediumZoom(imgNodes, {
         background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
     })
 </script>
@@ -754,7 +752,6 @@ Set-Cookie: &lt;cookie-name&gt;<span class="o">=</span>&lt;cookie-value&gt;
 
 
     <script src="https://cdn.jsdelivr.net/npm/instant.page@5.1.0/instantpage.min.js" type="module" defer></script>
-
 
 
 

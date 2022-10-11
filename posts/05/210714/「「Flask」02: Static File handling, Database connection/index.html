@@ -3,7 +3,10 @@
     <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
     <meta charset="UTF-8" />
 
-    <meta name="generator" content="Hugo 0.83.1" /><meta name="theme-color" content="#fff" />
+    <meta name="generator" content="Hugo 0.104.3" /><meta name="theme-color" content="#fff" />
+    <meta name="color-scheme" content="light dark">
+
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
@@ -14,11 +17,11 @@
 
     <title>「Flask」02: Static File handling, Database connection | mitsukuchiph.</title>
 
-    <link rel="stylesheet" href="/blog/css/meme.min.b839f4681fa3611632a14c5ba9c9988c24cac3a1fac80e6d06fa3b67d4a417e5.css"/>
+    <link rel="stylesheet" href="/blog/css/meme.min.7bba102516a3fb63725409e5e5b6e4145b180431be976a2314f112e872c12311.css"/>
 
     
     
-        <script src="/blog/js/meme.min.1296eae7a1970c0bbd9d8315daae36c344017e9de3e57edc689779153976ec28.js"></script>
+        <script src="/blog/js/meme.min.a8da68c33deb197b2c655f3305eedf6b36e73947969053e445d62eca7e5c7379.js"></script>
 
     
 
@@ -61,7 +64,7 @@
         "description": "上次紀錄了 Flask 基本處理，這次紀錄 Static File 和 DB 連線(EN)\n",
         "inLanguage" : "zh-TW",
         "articleSection": "posts",
-        "wordCount":  751 ,
+        "wordCount":  750 ,
         "image": ["https://linooohon.com/blog/blog/images/04_05_210710/04_05_210710_flask_intro.png"],
         "author": {
             "@type": "Person",
@@ -78,11 +81,11 @@
                 "@type": "ImageObject",
                 "url": "https://linooohon.com/icons/apple-touch-icon.png"
             },
-            "url": "https://linooohon.com/"
+            "url": "https://linooohon.com/blog"
         },
         "mainEntityOfPage": {
             "@type": "WebSite",
-            "@id": "https://linooohon.com/"
+            "@id": "https://linooohon.com/blog"
         }
     }
 </script>
@@ -116,16 +119,6 @@
     
 
     
-
-    
-    
-    <style>
-         
-        iframe[sandbox="allow-forms allow-popups allow-same-origin allow-scripts"] {
-            display: none !important;
-        }
-    </style>
-
 </head>
 
     <body>
@@ -138,7 +131,7 @@
                     
     <div class="site-brand">
         
-            <a href="/blog/" class="brand">mitsukuchiph.</a>
+            <a href="/blog" class="brand">mitsukuchiph.</a>
         
     </div>
 
@@ -294,23 +287,23 @@
 <p>Path: /static/images/01.jpg</p>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">## HTML:</span>
-&lt;img <span class="nv">src</span><span class="o">=</span><span class="s2">&#34;/static/images/01.jpg&#34;</span>&gt;
-<span class="c1">## Browser:</span>
-&lt;img <span class="nv">src</span><span class="o">=</span><span class="s2">&#34;/static/images/01.jpg&#34;</span>&gt;
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">## HTML:</span>
+</span></span><span class="line"><span class="cl">&lt;img <span class="nv">src</span><span class="o">=</span><span class="s2">&#34;/static/images/01.jpg&#34;</span>&gt;
+</span></span><span class="line"><span class="cl"><span class="c1">## Browser:</span>
+</span></span><span class="line"><span class="cl">&lt;img <span class="nv">src</span><span class="o">=</span><span class="s2">&#34;/static/images/01.jpg&#34;</span>&gt;
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><h3 id="change-the-path"><a href="#change-the-path" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:change-the-path" class="headings">Change the path:</a></h3>
 <p>Path: /views/assets/01.jpg</p>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -325,25 +318,25 @@
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">app</span> <span class="o">=</span> Flask<span class="o">(</span>__name__, <span class="nv">static_folder</span><span class="o">=</span><span class="s2">&#34;views/assets/&#34;</span><span class="o">)</span>
-<span class="nv">app</span> <span class="o">=</span> Flask<span class="o">(</span>__name__, <span class="nv">static_folder</span><span class="o">=</span><span class="s2">&#34;images/&#34;</span><span class="o">)</span>
-
-<span class="c1">## or</span>
-<span class="nv">app</span> <span class="o">=</span> Flask<span class="o">(</span>__name__, <span class="nv">static_folder</span><span class="o">=</span><span class="s2">&#34;./views/assets/&#34;</span><span class="o">)</span>
-<span class="nv">app</span> <span class="o">=</span> Flask<span class="o">(</span>__name__, <span class="nv">static_folder</span><span class="o">=</span><span class="s2">&#34;./images/&#34;</span><span class="o">)</span>
-
-<span class="c1">## HTML:</span>
-&lt;img <span class="nv">src</span><span class="o">=</span><span class="s2">&#34;{{ url_for(&#39;static&#39;, filename=&#39;01.jpg&#39;) }}&#34;</span>&gt;
-<span class="c1"># &lt;img src=&#34;01.jpg&#34;&gt;</span>
-<span class="c1">## Browser:</span>
-&lt;img <span class="nv">src</span><span class="o">=</span><span class="s2">&#34;/assets/01.jpg&#34;</span>&gt;
-&lt;img <span class="nv">src</span><span class="o">=</span><span class="s2">&#34;/images/01.jpg&#34;</span>&gt;
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">app</span> <span class="o">=</span> Flask<span class="o">(</span>__name__, <span class="nv">static_folder</span><span class="o">=</span><span class="s2">&#34;views/assets/&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="nv">app</span> <span class="o">=</span> Flask<span class="o">(</span>__name__, <span class="nv">static_folder</span><span class="o">=</span><span class="s2">&#34;images/&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## or</span>
+</span></span><span class="line"><span class="cl"><span class="nv">app</span> <span class="o">=</span> Flask<span class="o">(</span>__name__, <span class="nv">static_folder</span><span class="o">=</span><span class="s2">&#34;./views/assets/&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="nv">app</span> <span class="o">=</span> Flask<span class="o">(</span>__name__, <span class="nv">static_folder</span><span class="o">=</span><span class="s2">&#34;./images/&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## HTML:</span>
+</span></span><span class="line"><span class="cl">&lt;img <span class="nv">src</span><span class="o">=</span><span class="s2">&#34;{{ url_for(&#39;static&#39;, filename=&#39;01.jpg&#39;) }}&#34;</span>&gt;
+</span></span><span class="line"><span class="cl"><span class="c1"># &lt;img src=&#34;01.jpg&#34;&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">## Browser:</span>
+</span></span><span class="line"><span class="cl">&lt;img <span class="nv">src</span><span class="o">=</span><span class="s2">&#34;/assets/01.jpg&#34;</span>&gt;
+</span></span><span class="line"><span class="cl">&lt;img <span class="nv">src</span><span class="o">=</span><span class="s2">&#34;/images/01.jpg&#34;</span>&gt;
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><h3 id="change-the-path-that-show-in-browser"><a href="#change-the-path-that-show-in-browser" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:change-the-path-that-show-in-browser" class="headings">Change the path that show in browser:</a></h3>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -351,13 +344,13 @@
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">app</span> <span class="o">=</span> Flask<span class="o">(</span>__name__, <span class="nv">static_url_path</span><span class="o">=</span><span class="s2">&#34;/Hello&#34;</span>, <span class="nv">static_folder</span><span class="o">=</span><span class="s2">&#34;views/assets/&#34;</span><span class="o">)</span>
-<span class="c1">## HTML:</span>
-&lt;img <span class="nv">src</span><span class="o">=</span><span class="s2">&#34;{{ url_for(&#39;static&#39;, filename=&#39;01.jpg&#39;) }}&#34;</span>&gt;
-<span class="c1"># &lt;img src=&#34;/Hello/01.jpg&#34;&gt;</span>
-<span class="c1">## Browser:</span>
-&lt;img <span class="nv">src</span><span class="o">=</span><span class="s2">&#34;/Hello/01.jpg&#34;</span>&gt;
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">app</span> <span class="o">=</span> Flask<span class="o">(</span>__name__, <span class="nv">static_url_path</span><span class="o">=</span><span class="s2">&#34;/Hello&#34;</span>, <span class="nv">static_folder</span><span class="o">=</span><span class="s2">&#34;views/assets/&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1">## HTML:</span>
+</span></span><span class="line"><span class="cl">&lt;img <span class="nv">src</span><span class="o">=</span><span class="s2">&#34;{{ url_for(&#39;static&#39;, filename=&#39;01.jpg&#39;) }}&#34;</span>&gt;
+</span></span><span class="line"><span class="cl"><span class="c1"># &lt;img src=&#34;/Hello/01.jpg&#34;&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">## Browser:</span>
+</span></span><span class="line"><span class="cl">&lt;img <span class="nv">src</span><span class="o">=</span><span class="s2">&#34;/Hello/01.jpg&#34;</span>&gt;
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><blockquote>
 <p>But actually image is still under the path <code>views/assets/</code></p>
@@ -374,14 +367,14 @@
 <blockquote>
 <p>SQLAlchemy: <a href="https://docs.sqlalchemy.org/en/14/glossary.html#term-2.0-style" target="_blank" rel="noopener">Docs</a></p>
 </blockquote>
-<pre><code>pip install flask-sqlalchemy
-</code></pre><pre><code>from flask_sqlalchemy import SQLAlchemy
+<pre tabindex="0"><code>pip install flask-sqlalchemy
+</code></pre><pre tabindex="0"><code>from flask_sqlalchemy import SQLAlchemy
 </code></pre><h3 id="setting-uri"><a href="#setting-uri" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:setting-uri" class="headings">Setting URI:</a></h3>
-<pre><code>app.config['SQLALCHEMY_DATABASE_URI'] = [DB_TYPE]+[DB_CONNECTOR]://[USERNAME]:[PASSWORD]@[HOST]:[PORT]/[DB_NAME]
+<pre tabindex="0"><code>app.config[&#39;SQLALCHEMY_DATABASE_URI&#39;] = [DB_TYPE]+[DB_CONNECTOR]://[USERNAME]:[PASSWORD]@[HOST]:[PORT]/[DB_NAME]
 </code></pre><h3 id="sqlite-eg"><a href="#sqlite-eg" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:sqlite-eg" class="headings">SQLite e.g.:</a></h3>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -394,48 +387,48 @@
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">app.config<span class="o">[</span><span class="s1">&#39;SQLALCHEMY_DATABASE_URI&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&#34;sqlite:////db/testing.db&#34;</span>   <span class="o">(</span><span class="s2">&#34;sqlite:///&#34;</span> + absolute path + name.db<span class="o">)</span>
-<span class="c1">## folder: /db/</span>
-<span class="c1">## db name: testing.db</span>
-<span class="c1">## &#39;sqlite:////absolute/path/to/foo.db&#39;</span>
-
-
-<span class="c1">## -----------</span>
-import os
-<span class="nv">basedir</span> <span class="o">=</span> os.path.abspath<span class="o">(</span>os.path.dirname<span class="o">(</span>__file__<span class="o">))</span>
-def create_sqlite_uri<span class="o">(</span>db_name<span class="o">)</span>:
-    <span class="k">return</span> <span class="s2">&#34;sqlite:///&#34;</span> + os.path.join<span class="o">(</span>basedir, db_name<span class="o">)</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">app.config<span class="o">[</span><span class="s1">&#39;SQLALCHEMY_DATABASE_URI&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&#34;sqlite:////db/testing.db&#34;</span>   <span class="o">(</span><span class="s2">&#34;sqlite:///&#34;</span> + absolute path + name.db<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1">## folder: /db/</span>
+</span></span><span class="line"><span class="cl"><span class="c1">## db name: testing.db</span>
+</span></span><span class="line"><span class="cl"><span class="c1">## &#39;sqlite:////absolute/path/to/foo.db&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## -----------</span>
+</span></span><span class="line"><span class="cl">import os
+</span></span><span class="line"><span class="cl"><span class="nv">basedir</span> <span class="o">=</span> os.path.abspath<span class="o">(</span>os.path.dirname<span class="o">(</span>__file__<span class="o">))</span>
+</span></span><span class="line"><span class="cl">def create_sqlite_uri<span class="o">(</span>db_name<span class="o">)</span>:
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="s2">&#34;sqlite:///&#34;</span> + os.path.join<span class="o">(</span>basedir, db_name<span class="o">)</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><h3 id="mysql-eg"><a href="#mysql-eg" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:mysql-eg" class="headings">MySQL e.g.:</a></h3>
 <ul>
 <li>Need pymysql</li>
 </ul>
-<pre><code>pip install pymysql
+<pre tabindex="0"><code>pip install pymysql
 </code></pre><div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">app.config<span class="o">[</span><span class="s1">&#39;SQLALCHEMY_DATABASE_URI&#39;</span><span class="o">]</span> <span class="o">=</span> 
-mysql+pymysql://<span class="o">[</span>user_name<span class="o">]</span>:<span class="o">[</span>user_password<span class="o">]</span>@<span class="o">[</span>HOST<span class="o">]</span>:3306/<span class="o">[</span>db_name<span class="o">]</span>
-<span class="c1">## e.g.</span>
-
-mysql+pymysql://root:password@localhost:3306/myapp
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">app.config<span class="o">[</span><span class="s1">&#39;SQLALCHEMY_DATABASE_URI&#39;</span><span class="o">]</span> <span class="o">=</span> 
+</span></span><span class="line"><span class="cl">mysql+pymysql://<span class="o">[</span>user_name<span class="o">]</span>:<span class="o">[</span>user_password<span class="o">]</span>@<span class="o">[</span>HOST<span class="o">]</span>:3306/<span class="o">[</span>db_name<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="c1">## e.g.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">mysql+pymysql://root:password@localhost:3306/myapp
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><h3 id="postgresql-eg"><a href="#postgresql-eg" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:postgresql-eg" class="headings">PostgreSQL e.g.:</a></h3>
 <ul>
 <li>Need psycopg2-binary</li>
 </ul>
-<pre><code>pip install psycopg2-binary
+<pre tabindex="0"><code>pip install psycopg2-binary
 </code></pre><div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -443,27 +436,25 @@ mysql+pymysql://root:password@localhost:3306/myapp
 </span><span class="lnt">6
 </span><span class="lnt">7
 </span><span class="lnt">8
-</span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">app.config<span class="o">[</span><span class="s1">&#39;SQLALCHEMY_DATABASE_URI&#39;</span><span class="o">]</span> <span class="o">=</span> 
-postgresql://<span class="o">[</span>user_name<span class="o">]</span>:<span class="o">[</span>user_password<span class="o">]</span>@<span class="o">[</span>HOST<span class="o">]</span>:5432/<span class="o">[</span>db_name<span class="o">]</span>
-<span class="c1">## e.g.</span>
-<span class="c1">## no password</span>
-postgresql://linpinhung:linpinhung@localhost:5432/app_pro
-
-<span class="c1">## HOST should be different depend on where your db is, for example, I set it in Docker, then my HOST will depend on what I configure.</span>
-postgresql://name:name@db:5432/app_docker
-
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">app.config<span class="o">[</span><span class="s1">&#39;SQLALCHEMY_DATABASE_URI&#39;</span><span class="o">]</span> <span class="o">=</span> 
+</span></span><span class="line"><span class="cl">postgresql://<span class="o">[</span>user_name<span class="o">]</span>:<span class="o">[</span>user_password<span class="o">]</span>@<span class="o">[</span>HOST<span class="o">]</span>:5432/<span class="o">[</span>db_name<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="c1">## e.g.</span>
+</span></span><span class="line"><span class="cl"><span class="c1">## no password</span>
+</span></span><span class="line"><span class="cl">postgresql://linpinhung:linpinhung@localhost:5432/app_pro
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## HOST should be different depend on where your db is, for example, I set it in Docker, then my HOST will depend on what I configure.</span>
+</span></span><span class="line"><span class="cl">postgresql://name:name@db:5432/app_docker
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><h3 id="config"><a href="#config" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:config" class="headings">Config:</a></h3>
-<pre><code>app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
-    'pool_pre_ping': True,
-    'pool_recycle': 300,
-    'pool_timeout': 900,
-    'pool_size': 10,
-    'max_overflow': 5,
+<pre tabindex="0"><code>app.config[&#39;SQLALCHEMY_ENGINE_OPTIONS&#39;] = {
+    &#39;pool_pre_ping&#39;: True,
+    &#39;pool_recycle&#39;: 300,
+    &#39;pool_timeout&#39;: 900,
+    &#39;pool_size&#39;: 10,
+    &#39;max_overflow&#39;: 5,
     .....: ...,
     ....
     ....
@@ -481,7 +472,7 @@ postgresql://name:name@db:5432/app_docker
 </ul>
 </li>
 </ul>
-<pre><code>from flask_sqlalchemy import get_debug_queries
+<pre tabindex="0"><code>from flask_sqlalchemy import get_debug_queries
 
 def after_request(response):
     for query in get_debug_queries():
@@ -514,7 +505,7 @@ def after_request(response):
 </blockquote>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -553,62 +544,62 @@ def after_request(response):
 </span><span class="lnt">37
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">flask_login</span> <span class="kn">import</span> <span class="n">UserMixin</span>
-<span class="kn">from</span> <span class="nn">sqlalchemy.sql</span> <span class="kn">import</span> <span class="n">func</span>
-
-<span class="kn">from</span> <span class="nn">app</span> <span class="kn">import</span> <span class="n">db</span>
-
-
-<span class="k">class</span> <span class="nc">Playlist</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
-    <span class="nb">id</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="n">artist</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="mi">500</span><span class="p">))</span>
-    <span class="n">artist_spotify_uri</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="mi">500</span><span class="p">))</span>
-    <span class="n">artist_spotify_image_url</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="mi">500</span><span class="p">))</span>
-    <span class="n">song</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="mi">500</span><span class="p">))</span>
-    <span class="n">artist_genres</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">JSON</span><span class="p">)</span>
-    <span class="n">date</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">DateTime</span><span class="p">(</span><span class="n">timezone</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span> <span class="n">default</span><span class="o">=</span><span class="n">func</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>  <span class="c1"># 拿到當下時間</span>
-    <span class="n">user_id</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Integer</span><span class="p">,</span> <span class="n">db</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s1">&#39;user.id&#39;</span><span class="p">))</span>  <span class="c1"># 拿使用者 id 當 fk</span>
-    <span class="c1"># user_id = db.Column(db.Integer, db.ForeignKey(&#39;user.id&#39;), nullable=False)  # 拿使用者 id 當 fk</span>
-    <span class="n">test_migrate_col</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span>
-        <span class="n">db</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="mi">120</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>  <span class="c1"># 預設就是 nullable=True 可以不寫</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">artist</span><span class="p">,</span> <span class="n">song</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">artist</span> <span class="o">=</span> <span class="n">artist</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">song</span> <span class="o">=</span> <span class="n">song</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">user_id</span> <span class="o">=</span> <span class="n">user_id</span>
-        
-        
-<span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Model</span><span class="p">,</span> <span class="n">UserMixin</span><span class="p">):</span>
-    <span class="nb">id</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="n">email</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="mi">150</span><span class="p">),</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="n">password</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="mi">150</span><span class="p">))</span>
-    <span class="n">first_name</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="mi">150</span><span class="p">))</span>
-    <span class="n">playlists</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">relationship</span><span class="p">(</span><span class="s1">&#39;Playlist&#39;</span><span class="p">)</span>
-    <span class="c1"># playlists = db.relationship(&#39;Playlist&#39;, backref=&#39;user&#39;)</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">first_name</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="n">email</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="n">password</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">first_name</span> <span class="o">=</span> <span class="n">first_name</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">flask_login</span> <span class="kn">import</span> <span class="n">UserMixin</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">sqlalchemy.sql</span> <span class="kn">import</span> <span class="n">func</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">app</span> <span class="kn">import</span> <span class="n">db</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Playlist</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">id</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">artist</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="mi">500</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">artist_spotify_uri</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="mi">500</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">artist_spotify_image_url</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="mi">500</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">song</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="mi">500</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">artist_genres</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">JSON</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">date</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">DateTime</span><span class="p">(</span><span class="n">timezone</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">default</span><span class="o">=</span><span class="n">func</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>  <span class="c1"># 拿到當下時間</span>
+</span></span><span class="line"><span class="cl">    <span class="n">user_id</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Integer</span><span class="p">,</span> <span class="n">db</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s1">&#39;user.id&#39;</span><span class="p">))</span>  <span class="c1"># 拿使用者 id 當 fk</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># user_id = db.Column(db.Integer, db.ForeignKey(&#39;user.id&#39;), nullable=False)  # 拿使用者 id 當 fk</span>
+</span></span><span class="line"><span class="cl">    <span class="n">test_migrate_col</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">db</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="mi">120</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># 預設就是 nullable=True 可以不寫</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">artist</span><span class="p">,</span> <span class="n">song</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">artist</span> <span class="o">=</span> <span class="n">artist</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">song</span> <span class="o">=</span> <span class="n">song</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">user_id</span> <span class="o">=</span> <span class="n">user_id</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Model</span><span class="p">,</span> <span class="n">UserMixin</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">id</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">email</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="mi">150</span><span class="p">),</span> <span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">password</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="mi">150</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">first_name</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="mi">150</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">playlists</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">relationship</span><span class="p">(</span><span class="s1">&#39;Playlist&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># playlists = db.relationship(&#39;Playlist&#39;, backref=&#39;user&#39;)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">first_name</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="n">email</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="n">password</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">first_name</span> <span class="o">=</span> <span class="n">first_name</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><h3 id="data-manipulationcrud"><a href="#data-manipulationcrud" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:data-manipulationcrud" class="headings">Data Manipulation(CRUD):</a></h3>
 <ul>
 <li>Get:</li>
 </ul>
-<pre><code>self.model.query.get(id)
+<pre tabindex="0"><code>self.model.query.get(id)
 Playlist.query.get(id)
 </code></pre><ul>
 <li>Get All:</li>
 </ul>
-<pre><code>self.model.query.all()
+<pre tabindex="0"><code>self.model.query.all()
 Playlist.query.all()
 </code></pre><ul>
 <li>Get with filter:</li>
 </ul>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -619,21 +610,21 @@ Playlist.query.all()
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">## method 1</span>
-self.model.query.filter_by<span class="o">(</span>**filter_dic<span class="o">)</span>.all<span class="o">()</span>
-
-<span class="c1">## method 2</span>
-<span class="nv">my_filters</span> <span class="o">=</span> <span class="o">{</span><span class="s1">&#39;artist&#39;</span>:<span class="s1">&#39;xxxxx&#39;</span>, <span class="s1">&#39;song&#39;</span>:<span class="s1">&#39;xxxxx&#39;</span><span class="o">}</span>
-<span class="nv">query</span> <span class="o">=</span> session.query<span class="o">(</span>self.model<span class="o">)</span>
-<span class="k">for</span> attr,value in my_filters.iteritems<span class="o">()</span>:
-    <span class="nv">query</span> <span class="o">=</span> query.filter<span class="o">(</span> getattr<span class="o">(</span>self.model,attr<span class="o">)==</span>value <span class="o">)</span>
-<span class="nv">results</span> <span class="o">=</span> query.all<span class="o">()</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">## method 1</span>
+</span></span><span class="line"><span class="cl">self.model.query.filter_by<span class="o">(</span>**filter_dic<span class="o">)</span>.all<span class="o">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## method 2</span>
+</span></span><span class="line"><span class="cl"><span class="nv">my_filters</span> <span class="o">=</span> <span class="o">{</span><span class="s1">&#39;artist&#39;</span>:<span class="s1">&#39;xxxxx&#39;</span>, <span class="s1">&#39;song&#39;</span>:<span class="s1">&#39;xxxxx&#39;</span><span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="nv">query</span> <span class="o">=</span> session.query<span class="o">(</span>self.model<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> attr,value in my_filters.iteritems<span class="o">()</span>:
+</span></span><span class="line"><span class="cl">    <span class="nv">query</span> <span class="o">=</span> query.filter<span class="o">(</span> getattr<span class="o">(</span>self.model,attr<span class="o">)==</span>value <span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="nv">results</span> <span class="o">=</span> query.all<span class="o">()</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><ul>
 <li>Delete:</li>
 </ul>
-<pre><code>row = self.get_data(id)
+<pre tabindex="0"><code>row = self.get_data(id)
 db.session.delete(row)
 db.session.commit()
 </code></pre><ul>
@@ -641,7 +632,7 @@ db.session.commit()
 </ul>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -656,20 +647,20 @@ db.session.commit()
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">new_top10_data</span> <span class="o">=</span> Dashboard<span class="o">(</span>
-            <span class="nv">dashboard_artist</span><span class="o">=</span>i.artist, <span class="nv">dashboard_song</span><span class="o">=</span>i.song, <span class="nv">artist_spotify_uri</span><span class="o">=</span>i.spotify_uri, <span class="nv">artist_spotify_image_url</span><span class="o">=</span>i.spotify_image_url, <span class="nv">song_youtube_url</span><span class="o">=</span>i.youtube_url, <span class="nv">artist_genres</span><span class="o">=</span>i.genres<span class="o">)</span>
-db.session.add<span class="o">(</span>new_top10_data<span class="o">)</span>
-db.session.commit<span class="o">()</span>
-
-<span class="c1">## -----------------</span>
-<span class="c1">## Usage:</span>
-   <span class="c1">##  Dic: **Dic</span>
-   <span class="c1">##  List: *List</span>
-def insert_data<span class="o">(</span>self, insert_dic<span class="o">)</span>:
-    <span class="nv">new_data</span> <span class="o">=</span> self.model<span class="o">(</span>**insert_dic<span class="o">)</span>
-    db.session.add<span class="o">(</span>new_data<span class="o">)</span>
-    db.session.commit<span class="o">()</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">new_top10_data</span> <span class="o">=</span> Dashboard<span class="o">(</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">dashboard_artist</span><span class="o">=</span>i.artist, <span class="nv">dashboard_song</span><span class="o">=</span>i.song, <span class="nv">artist_spotify_uri</span><span class="o">=</span>i.spotify_uri, <span class="nv">artist_spotify_image_url</span><span class="o">=</span>i.spotify_image_url, <span class="nv">song_youtube_url</span><span class="o">=</span>i.youtube_url, <span class="nv">artist_genres</span><span class="o">=</span>i.genres<span class="o">)</span>
+</span></span><span class="line"><span class="cl">db.session.add<span class="o">(</span>new_top10_data<span class="o">)</span>
+</span></span><span class="line"><span class="cl">db.session.commit<span class="o">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## -----------------</span>
+</span></span><span class="line"><span class="cl"><span class="c1">## Usage:</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">##  Dic: **Dic</span>
+</span></span><span class="line"><span class="cl">   <span class="c1">##  List: *List</span>
+</span></span><span class="line"><span class="cl">def insert_data<span class="o">(</span>self, insert_dic<span class="o">)</span>:
+</span></span><span class="line"><span class="cl">    <span class="nv">new_data</span> <span class="o">=</span> self.model<span class="o">(</span>**insert_dic<span class="o">)</span>
+</span></span><span class="line"><span class="cl">    db.session.add<span class="o">(</span>new_data<span class="o">)</span>
+</span></span><span class="line"><span class="cl">    db.session.commit<span class="o">()</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><h2 id="-the-end-"><a href="#-the-end-" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:-the-end-" class="headings"><strong>&lt; The End &gt;</strong>:</a></h2>
 <h3 id="review"><a href="#review" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:review" class="headings">Review:</a></h3>
@@ -697,6 +688,7 @@ def insert_data<span class="o">(</span>self, insert_dic<span class="o">)</span>:
         
 
         
+
 
         
 
@@ -745,9 +737,9 @@ def insert_data<span class="o">(</span>self, insert_dic<span class="o">)</span>:
                     <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
 
 <script>
-    var typeNumber = 0;
-    var errorCorrectionLevel = 'L';
-    var qr = qrcode(typeNumber, errorCorrectionLevel);
+    const typeNumber = 0;
+    const errorCorrectionLevel = 'L';
+    const qr = qrcode(typeNumber, errorCorrectionLevel);
     qr.addData('https:\/\/linooohon.com\/blog\/posts\/05\/210714\/%E3%80%8C%E3%80%8CFlask%E3%80%8D02:%20Static%20File%20handling,%20Database%20connection\/');
     qr.make();
     document.getElementById('qrcode-img').innerHTML = qr.createImgTag();
@@ -890,7 +882,7 @@ def insert_data<span class="o">(</span>self, insert_dic<span class="o">)</span>:
             
     <footer id="footer" class="footer">
         <div class="footer-inner">
-            <div class="site-info">©&nbsp;&nbsp;mitsukuchiph.</div>
+            <div class="site-info">©&nbsp;2022&nbsp;mitsukuchiph.</div><div class="site-copyright"></div><div class="custom-footer">Everyone you meet is fighting a battle you know nothing about. Be kind. Always.</div>
 
             
     
@@ -903,9 +895,7 @@ def insert_data<span class="o">(</span>self, insert_dic<span class="o">)</span>:
                 </li></ul>
     
 
-<div class="site-copyright"></div><div class="custom-footer">Everyone you meet is fighting a battle you know nothing about. Be kind. Always.</div>
 
-            
 
             
         </div>
@@ -927,14 +917,17 @@ def insert_data<span class="o">(</span>self, insert_dic<span class="o">)</span>:
         
             <script>
     function loadComments() {
+        if (!document.getElementById('disqus_thread')) {
+            return;
+        }
         if (typeof DISQUS === 'undefined') {
-            var disqus_config = function() {
+            const disqus_config = function() {
                 this.page.url = 'https:\/\/linooohon.com\/blog\/posts\/05\/210714\/%E3%80%8C%E3%80%8CFlask%E3%80%8D02:%20Static%20File%20handling,%20Database%20connection\/';
                 this.page.identifier = '\/blog\/posts\/05\/210714\/%E3%80%8C%E3%80%8CFlask%E3%80%8D02:%20Static%20File%20handling,%20Database%20connection\/';
                 this.page.title = '「Flask」02: Static File handling, Database connection';
             };
             (function() {
-                var d = document, s = d.createElement('script'); s.async = true;
+                const d = document, s = d.createElement('script'); s.async = true;
                 s.src = 'https://mitsukuchiph.disqus.com/embed.js';
                 s.setAttribute('data-timestamp', +new Date());
                 (d.head || d.body).appendChild(s);
@@ -967,7 +960,10 @@ def insert_data<span class="o">(</span>self, insert_dic<span class="o">)</span>:
     <script src="https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js"></script>
 
 <script>
-    mediumZoom(document.querySelectorAll('div.post-body img'), {
+    let imgNodes = document.querySelectorAll('div.post-body img');
+    imgNodes = Array.from(imgNodes).filter(node => node.parentNode.tagName !== "A");
+
+    mediumZoom(imgNodes, {
         background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
     })
 </script>
@@ -976,7 +972,6 @@ def insert_data<span class="o">(</span>self, insert_dic<span class="o">)</span>:
 
 
     <script src="https://cdn.jsdelivr.net/npm/instant.page@5.1.0/instantpage.min.js" type="module" defer></script>
-
 
 
 

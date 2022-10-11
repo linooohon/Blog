@@ -3,7 +3,10 @@
     <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
     <meta charset="UTF-8" />
 
-    <meta name="generator" content="Hugo 0.83.1" /><meta name="theme-color" content="#fff" />
+    <meta name="generator" content="Hugo 0.104.3" /><meta name="theme-color" content="#fff" />
+    <meta name="color-scheme" content="light dark">
+
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
@@ -14,11 +17,11 @@
 
     <title>[Python]觀念(1) - Iteration, Iterable, Iterator | mitsukuchiph.</title>
 
-    <link rel="stylesheet" href="/blog/css/meme.min.b839f4681fa3611632a14c5ba9c9988c24cac3a1fac80e6d06fa3b67d4a417e5.css"/>
+    <link rel="stylesheet" href="/blog/css/meme.min.7bba102516a3fb63725409e5e5b6e4145b180431be976a2314f112e872c12311.css"/>
 
     
     
-        <script src="/blog/js/meme.min.1296eae7a1970c0bbd9d8315daae36c344017e9de3e57edc689779153976ec28.js"></script>
+        <script src="/blog/js/meme.min.a8da68c33deb197b2c655f3305eedf6b36e73947969053e445d62eca7e5c7379.js"></script>
 
     
 
@@ -61,7 +64,7 @@
         "description": "Python Iteration 如何運行，for loop 本質 - Iteration, Iterable, Iterator\n",
         "inLanguage" : "zh-TW",
         "articleSection": "posts",
-        "wordCount":  3188 ,
+        "wordCount":  3186 ,
         "image": ["https://linooohon.com/blog/blog/images/07_210727/07_210727_python_iteration.png"],
         "author": {
             "@type": "Person",
@@ -78,11 +81,11 @@
                 "@type": "ImageObject",
                 "url": "https://linooohon.com/icons/apple-touch-icon.png"
             },
-            "url": "https://linooohon.com/"
+            "url": "https://linooohon.com/blog"
         },
         "mainEntityOfPage": {
             "@type": "WebSite",
-            "@id": "https://linooohon.com/"
+            "@id": "https://linooohon.com/blog"
         }
     }
 </script>
@@ -116,16 +119,6 @@
     
 
     
-
-    
-    
-    <style>
-         
-        iframe[sandbox="allow-forms allow-popups allow-same-origin allow-scripts"] {
-            display: none !important;
-        }
-    </style>
-
 </head>
 
     <body>
@@ -138,7 +131,7 @@
                     
     <div class="site-brand">
         
-            <a href="/blog/" class="brand">mitsukuchiph.</a>
+            <a href="/blog" class="brand">mitsukuchiph.</a>
         
     </div>
 
@@ -334,20 +327,20 @@ Python 觀念紀錄 - Iteration, Iterable, Iterator
 <li>當今天迭代的 Iterable 是 文件，那每次得到的就是每一行的字符串。</li>
 <li>當今天迭代的 Iterable 是 Dictionary, 那每次得到的就是該次的 Key。</li>
 </ol>
-<pre><code>dic, list, tuple, range, string, set, numpy array, dataframe, bytes 都是 Iterable
+<pre tabindex="0"><code>dic, list, tuple, range, string, set, numpy array, dataframe, bytes 都是 Iterable
 </code></pre><h5 id="那-__iter__-和-__getitem__-是什麼"><a href="#那-__iter__-和-__getitem__-是什麼" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:那-__iter__-和-__getitem__-是什麼" class="headings">那 <code>__iter__()</code> 和 <code>__getitem__()</code> 是什麼？</a></h5>
 <p>它們是 Python Magic Methods
 <code>__iter__()</code>: <a href="https://docs.python.org/3/reference/datamodel.html#object.__iter__" target="_blank" rel="noopener">Docs</a>
 <code>__getitem__()</code>: <a href="https://docs.python.org/3/reference/datamodel.html#object.__getitem__" target="_blank" rel="noopener">Docs</a></p>
 <p>當 <code>__iter__()</code> 被呼叫時，會 return 一個 Iterator(新的 Iterator)
 當 <code>__getitem__()</code> 在 class 裡被定義, 使用object[index]形式, 就會呼叫該方法:</p>
-<pre><code class="language-python=" data-lang="python=">class Hi():
+<pre tabindex="0"><code class="language-python=" data-lang="python=">class Hi():
     def __init__(self, name):
         self.name = name
     def __getitem__(self, key):
-        return &quot;__getitem__ is called&quot;
+        return &#34;__getitem__ is called&#34;
 
-hi = Hi(&quot;Phil&quot;)
+hi = Hi(&#34;Phil&#34;)
 print(hi[2])  
 
 # 輸出:
@@ -365,13 +358,13 @@ print(hi[2])
 <li>Iterable 其實可以 for loop 是因為 Python 私底下幫忙轉換為 Iterator 然後做處理。</li>
 <li>Iterator 才可以調用 <code>next()</code>, Iterable 不行。</li>
 </ol>
-<pre><code>而, dic, list, tuple, range, string, set, numpy array, dataframe, bytes 都不是 Iterator
+<pre tabindex="0"><code>而, dic, list, tuple, range, string, set, numpy array, dataframe, bytes 都不是 Iterator
 </code></pre><blockquote>
 <p>從下面程式碼可以發現他們裡面都沒有 <code>__next__()</code>，所以不會是 Iterator</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -439,79 +432,77 @@ print(hi[2])
 </span><span class="lnt">66
 </span><span class="lnt">67
 </span><span class="lnt">68
-</span><span class="lnt">69
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-py" data-lang="py"><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
-
-<span class="c1"># dic</span>
-<span class="n">dic_</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;phil&#39;</span><span class="p">,</span> <span class="s1">&#39;phone&#39;</span><span class="p">:</span> <span class="s1">&#39;0933333333&#39;</span><span class="p">}</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&#34;===============dic===============&#34;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">dic_</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">dic_</span><span class="p">,</span> <span class="s1">&#39;__getitem__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">dic_</span><span class="p">,</span> <span class="s1">&#39;__next__&#39;</span><span class="p">))</span> <span class="c1"># False</span>
-
-
-<span class="c1"># list</span>
-<span class="n">list_</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;value&#39;</span><span class="p">},</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">}]</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&#34;===============list===============&#34;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">list_</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">list_</span><span class="p">,</span> <span class="s1">&#39;__getitem__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">list_</span><span class="p">,</span> <span class="s1">&#39;__next__&#39;</span><span class="p">))</span> <span class="c1"># False</span>
-
-
-<span class="c1"># tuple</span>
-<span class="n">tuple_</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;value&#39;</span><span class="p">},</span> <span class="mi">2</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&#34;===============tuple===============&#34;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">tuple_</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">tuple_</span><span class="p">,</span> <span class="s1">&#39;__getitem__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">tuple_</span><span class="p">,</span> <span class="s1">&#39;__next__&#39;</span><span class="p">))</span> <span class="c1"># False</span>
-
-<span class="c1"># range</span>
-<span class="n">range_</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&#34;===============range===============&#34;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">range_</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">range_</span><span class="p">,</span> <span class="s1">&#39;__getitem__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">range_</span><span class="p">,</span> <span class="s1">&#39;__next__&#39;</span><span class="p">))</span> <span class="c1"># False</span>
-
-<span class="c1"># string</span>
-<span class="n">string_</span> <span class="o">=</span> <span class="s1">&#39;a&#39;</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&#34;===============string===============&#34;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">string_</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">string_</span><span class="p">,</span> <span class="s1">&#39;__getitem__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">string_</span><span class="p">,</span> <span class="s1">&#39;__next__&#39;</span><span class="p">))</span> <span class="c1"># False</span>
-
-<span class="c1"># set</span>
-<span class="n">set_</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)}</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&#34;===============set===============&#34;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">set_</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">set_</span><span class="p">,</span> <span class="s1">&#39;__getitem__&#39;</span><span class="p">))</span> <span class="c1"># False</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">set_</span><span class="p">,</span> <span class="s1">&#39;__next__&#39;</span><span class="p">))</span> <span class="c1"># False</span>
-
-<span class="c1"># numpy array</span>
-<span class="n">np_array_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&#34;===============np_array===============&#34;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">np_array_</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">np_array_</span><span class="p">,</span> <span class="s1">&#39;__getitem__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">np_array_</span><span class="p">,</span> <span class="s1">&#39;__next__&#39;</span><span class="p">))</span> <span class="c1"># False</span>
-
-<span class="c1"># dataframe</span>
-<span class="n">df_</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&#34;1.csv&#34;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&#34;===============dataframe===============&#34;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">df_</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">df_</span><span class="p">,</span> <span class="s1">&#39;__getitem__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">df_</span><span class="p">,</span> <span class="s1">&#39;__next__&#39;</span><span class="p">))</span> <span class="c1"># False</span>
-
-
-<span class="c1"># bytes</span>
-<span class="n">bytes_1</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&#34;===============bytes===============&#34;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">bytes_1</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">bytes_1</span><span class="p">,</span> <span class="s1">&#39;__getitem__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">bytes_1</span><span class="p">,</span> <span class="s1">&#39;__next__&#39;</span><span class="p">))</span> <span class="c1"># False</span>
-
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># dic</span>
+</span></span><span class="line"><span class="cl"><span class="n">dic_</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;phil&#39;</span><span class="p">,</span> <span class="s1">&#39;phone&#39;</span><span class="p">:</span> <span class="s1">&#39;0933333333&#39;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;===============dic===============&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">dic_</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">dic_</span><span class="p">,</span> <span class="s1">&#39;__getitem__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">dic_</span><span class="p">,</span> <span class="s1">&#39;__next__&#39;</span><span class="p">))</span> <span class="c1"># False</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># list</span>
+</span></span><span class="line"><span class="cl"><span class="n">list_</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;value&#39;</span><span class="p">},</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">}]</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;===============list===============&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">list_</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">list_</span><span class="p">,</span> <span class="s1">&#39;__getitem__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">list_</span><span class="p">,</span> <span class="s1">&#39;__next__&#39;</span><span class="p">))</span> <span class="c1"># False</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># tuple</span>
+</span></span><span class="line"><span class="cl"><span class="n">tuple_</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;value&#39;</span><span class="p">},</span> <span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;===============tuple===============&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">tuple_</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">tuple_</span><span class="p">,</span> <span class="s1">&#39;__getitem__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">tuple_</span><span class="p">,</span> <span class="s1">&#39;__next__&#39;</span><span class="p">))</span> <span class="c1"># False</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># range</span>
+</span></span><span class="line"><span class="cl"><span class="n">range_</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;===============range===============&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">range_</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">range_</span><span class="p">,</span> <span class="s1">&#39;__getitem__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">range_</span><span class="p">,</span> <span class="s1">&#39;__next__&#39;</span><span class="p">))</span> <span class="c1"># False</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># string</span>
+</span></span><span class="line"><span class="cl"><span class="n">string_</span> <span class="o">=</span> <span class="s1">&#39;a&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;===============string===============&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">string_</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">string_</span><span class="p">,</span> <span class="s1">&#39;__getitem__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">string_</span><span class="p">,</span> <span class="s1">&#39;__next__&#39;</span><span class="p">))</span> <span class="c1"># False</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># set</span>
+</span></span><span class="line"><span class="cl"><span class="n">set_</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)}</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;===============set===============&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">set_</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">set_</span><span class="p">,</span> <span class="s1">&#39;__getitem__&#39;</span><span class="p">))</span> <span class="c1"># False</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">set_</span><span class="p">,</span> <span class="s1">&#39;__next__&#39;</span><span class="p">))</span> <span class="c1"># False</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># numpy array</span>
+</span></span><span class="line"><span class="cl"><span class="n">np_array_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;===============np_array===============&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">np_array_</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">np_array_</span><span class="p">,</span> <span class="s1">&#39;__getitem__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">np_array_</span><span class="p">,</span> <span class="s1">&#39;__next__&#39;</span><span class="p">))</span> <span class="c1"># False</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># dataframe</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&#34;1.csv&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;===============dataframe===============&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">df_</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">df_</span><span class="p">,</span> <span class="s1">&#39;__getitem__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">df_</span><span class="p">,</span> <span class="s1">&#39;__next__&#39;</span><span class="p">))</span> <span class="c1"># False</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># bytes</span>
+</span></span><span class="line"><span class="cl"><span class="n">bytes_1</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;===============bytes===============&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">bytes_1</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">bytes_1</span><span class="p">,</span> <span class="s1">&#39;__getitem__&#39;</span><span class="p">))</span> <span class="c1"># True</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">bytes_1</span><span class="p">,</span> <span class="s1">&#39;__next__&#39;</span><span class="p">))</span> <span class="c1"># False</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><h5 id="那如何成為-iterator--iter-next"><a href="#那如何成為-iterator--iter-next" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:那如何成為-iterator--iter-next" class="headings">那如何成為 Iterator:  <code>iter()</code>, <code>next()</code></a></h5>
 <blockquote>
@@ -533,11 +524,11 @@ print(hi[2])
 <blockquote>
 <p>ex: 範例</p>
 </blockquote>
-<pre><code class="language-python=" data-lang="python=">ss_ = &quot;abc&quot;
+<pre tabindex="0"><code class="language-python=" data-lang="python=">ss_ = &#34;abc&#34;
 iter_ss_ = iter(ss_)
-print(hasattr(iter_ss_, '__iter__')) # True
-print(hasattr(iter_ss_, '__getitem__')) # False
-print(hasattr(iter_ss_, '__next__')) # True
+print(hasattr(iter_ss_, &#39;__iter__&#39;)) # True
+print(hasattr(iter_ss_, &#39;__getitem__&#39;)) # False
+print(hasattr(iter_ss_, &#39;__next__&#39;)) # True
 
 print(next(iter_ss_))
 print(next(iter_ss_))
@@ -545,29 +536,28 @@ print(next(iter_ss_))
 
 
 # 輸出:
-&quot;&quot;&quot;
+&#34;&#34;&#34;
 True
 False
 True
 a
 b
 c
-&quot;&quot;&quot;
-
+&#34;&#34;&#34;
 </code></pre><blockquote>
 <p>底下這裡就會報錯因為不是 Iterator</p>
 </blockquote>
-<pre><code class="language-python=" data-lang="python=">ss_ = &quot;abc&quot;
+<pre tabindex="0"><code class="language-python=" data-lang="python=">ss_ = &#34;abc&#34;
 next(ss_)
 
 # 輸出
-&quot;&quot;&quot;
+&#34;&#34;&#34;
 True
 False
 True
 Traceback (most recent call last):
-TypeError: 'str' object is not an iterator
-&quot;&quot;&quot;
+TypeError: &#39;str&#39; object is not an iterator
+&#34;&#34;&#34;
 </code></pre><h3 id="-關於-iter-__iter__-next-__next__--"><a href="#-關於-iter-__iter__-next-__next__--" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:-關於-iter-__iter__-next-__next__--" class="headings"><strong>&lt; 關於 <code>iter()</code>, <code>__iter__()</code>, <code>next()</code>, <code>__next__()</code> &gt;</strong> :</a></h3>
 <p>最一開始我也搞的滿模糊的，但要理解可以先拆分：</p>
 <h4 id="built-in-function-iter-next"><a href="#built-in-function-iter-next" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:built-in-function-iter-next" class="headings">Built-in Function: <code>iter()</code> <code>next()</code></a></h4>
@@ -576,11 +566,11 @@ TypeError: 'str' object is not an iterator
 <h4 id="magic-methods-__iter__-__next__"><a href="#magic-methods-__iter__-__next__" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:magic-methods-__iter__-__next__" class="headings">Magic Methods: <code>__iter__()</code> <code>__next__()</code></a></h4>
 <p><code>__iter__()</code>, <code>__next__()</code>: Python Magic Methods(Dunders)</p>
 <p>所謂 Magic Methods, 就是由 class 裡所提供的一些 methods, Python 將這些 methods 特徵弄成前後各兩個底線，而這些 methods 之所以很 magic(自認為<em class="emphasis-point">)，是因為</em>其實我們做的很多事情，都是他們幫我們代勞的。</p>
-<pre><code>代勞是什麼意思呢？
+<pre tabindex="0"><code>代勞是什麼意思呢？
 </code></pre><p>看一下這個例子:</p>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -588,17 +578,17 @@ TypeError: 'str' object is not an iterator
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-py" data-lang="py"><span class="n">number</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="k">print</span><span class="p">(</span><span class="n">number</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>   <span class="c1">#3</span>
-<span class="k">print</span><span class="p">(</span><span class="n">number</span><span class="o">.</span><span class="fm">__add__</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span> <span class="c1">#3</span>
-
-<span class="c1"># 會發現都是 print 出 3</span>
-<span class="c1"># 當我們用 Int 這個 type 做加法, `+` 和 使用 `__add__()` 是一樣的結果。</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">number</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">number</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>   <span class="c1">#3</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">number</span><span class="o">.</span><span class="fm">__add__</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span> <span class="c1">#3</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 會發現都是 print 出 3</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 當我們用 Int 這個 type 做加法, `+` 和 使用 `__add__()` 是一樣的結果。</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -606,18 +596,18 @@ TypeError: 'str' object is not an iterator
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-py" data-lang="py"><span class="err">如果我們用</span> <span class="sb">`help()`</span> <span class="err">看一下</span> <span class="n">Int</span> <span class="k">class</span>
-<span class="err">會發現它所定義的東西就是 `+` 要做的事</span>
-<span class="s2">&#34;&#34;&#34;
-</span><span class="s2">__add__(self, value, /)
-</span><span class="s2">    Return self+value.
-</span><span class="s2">&#34;&#34;&#34;</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">如果我們用</span> <span class="err">`</span><span class="n">help</span><span class="p">()</span><span class="err">`</span> <span class="n">看一下</span> <span class="n">Int</span> <span class="k">class</span>
+</span></span><span class="line"><span class="cl"><span class="nc">會發現它所定義的東西就是</span> <span class="err">`</span><span class="o">+</span><span class="err">`</span> <span class="n">要做的事</span>
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">__add__(self, value, /)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Return self+value.
+</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><h4 id="那意思是我們可以自己客製化-object-修改這個-object-的--的功能"><a href="#那意思是我們可以自己客製化-object-修改這個-object-的--的功能" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:那意思是我們可以自己客製化-object-修改這個-object-的--的功能" class="headings">那意思是我們可以自己客製化 object 修改這個 object 的 <code>+</code> 的功能</a></h4>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -635,32 +625,32 @@ TypeError: 'str' object is not an iterator
 </span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-py" data-lang="py"><span class="k">class</span> <span class="nc">CustomPlus</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">num</span> <span class="o">=</span> <span class="n">num</span>
-    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&#34;__add__ is called &#34;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">num</span> <span class="o">-</span> <span class="n">value</span>
-
-<span class="n">cp</span> <span class="o">=</span> <span class="n">CustomPlus</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="fm">__add__</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
-<span class="c1"># __add__ is called </span>
-<span class="c1"># -1</span>
-
-<span class="k">print</span><span class="p">(</span><span class="n">cp</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
-<span class="c1"># __add__ is called </span>
-<span class="c1"># -1</span>
-<span class="c1"># 可以發現 cp + 2 也是走 class 裡的 __add__() 所以結果就也會變成 -1</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">CustomPlus</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">num</span> <span class="o">=</span> <span class="n">num</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;__add__ is called &#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">num</span> <span class="o">-</span> <span class="n">value</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">cp</span> <span class="o">=</span> <span class="n">CustomPlus</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="fm">__add__</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># __add__ is called </span>
+</span></span><span class="line"><span class="cl"><span class="c1"># -1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">cp</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># __add__ is called </span>
+</span></span><span class="line"><span class="cl"><span class="c1"># -1</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 可以發現 cp + 2 也是走 class 裡的 __add__() 所以結果就也會變成 -1</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><h4 id="所以結論是"><a href="#所以結論是" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:所以結論是" class="headings">所以，結論是:</a></h4>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-py" data-lang="py"><span class="err">使用</span> <span class="sb">`+`</span> <span class="err">的背後，其實</span> <span class="n">python</span> <span class="err">是去找</span> <span class="sb">`Int`</span> <span class="k">class</span> <span class="err">所定義的 `</span><span class="nc">__add__</span><span class="p">()</span><span class="err">`</span> <span class="err">然後叫它做事</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">使用</span> <span class="err">`</span><span class="o">+</span><span class="err">`</span> <span class="n">的背後</span><span class="err">，</span><span class="n">其實</span> <span class="n">python</span> <span class="n">是去找</span> <span class="err">`</span><span class="n">Int</span><span class="err">`</span> <span class="k">class</span> <span class="nc">所定義的</span> <span class="err">`</span><span class="fm">__add__</span><span class="p">()</span><span class="err">`</span> <span class="n">然後叫它做事</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><h4 id="在-python-中有數不清像--這樣由-__add__-代勞的事情"><a href="#在-python-中有數不清像--這樣由-__add__-代勞的事情" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:在-python-中有數不清像--這樣由-__add__-代勞的事情" class="headings">在 Python 中有數不清像 <code>+</code> 這樣由 <code>__add__()</code> 代勞的事情，</a></h4>
 <p>詳細可以看 <a href="https://docs.python.org/3/reference/datamodel.html#special-method-names" target="_blank" rel="noopener">Docs 3. Data model 這頁</a></p>
@@ -669,7 +659,7 @@ TypeError: 'str' object is not an iterator
 <h4 id="一個小結論"><a href="#一個小結論" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:一個小結論" class="headings">一個小結論:</a></h4>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -678,19 +668,19 @@ TypeError: 'str' object is not an iterator
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-py" data-lang="py"><span class="n">call</span> <span class="sb">`iter()`</span> <span class="sb">`next()`</span> <span class="err">可以說是等價於</span> <span class="n">call</span> <span class="sb">`__iter__()`</span><span class="p">,</span> <span class="sb">`__next__()`</span>
-<span class="err">但</span><span class="p">,</span>
-<span class="n">call</span> <span class="sb">`__iter__()`</span><span class="p">,</span> <span class="sb">`__next__()`</span> <span class="err">不等於</span> <span class="n">call</span> <span class="sb">`iter()`</span> <span class="sb">`next()`</span>
-<span class="err">因為就像上面說的</span> <span class="n">magic</span> <span class="n">methods</span> <span class="err">可以客製化</span>
-<span class="err">但</span> <span class="n">Built</span><span class="o">-</span><span class="n">In</span> <span class="n">Function</span> <span class="err">就是照著劇本走，</span>
-<span class="err">所以當你把</span> <span class="sb">`__iter__()`</span><span class="p">,</span> <span class="sb">`__next__()`</span> <span class="err">改成不照著</span> <span class="sb">`iter()`</span> <span class="sb">`next()`</span> <span class="err">劇本規定的時後，再來使用</span> <span class="sb">`iter()`</span> <span class="sb">`next()`</span> <span class="err">就肯定會報錯</span>
-<span class="err">看一下底下</span> <span class="sb">`iter()`</span> <span class="err">的例子</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">call</span> <span class="err">`</span><span class="nb">iter</span><span class="p">()</span><span class="err">`</span> <span class="err">`</span><span class="nb">next</span><span class="p">()</span><span class="err">`</span> <span class="n">可以說是等價於</span> <span class="n">call</span> <span class="err">`</span><span class="fm">__iter__</span><span class="p">()</span><span class="err">`</span><span class="p">,</span> <span class="err">`</span><span class="fm">__next__</span><span class="p">()</span><span class="err">`</span>
+</span></span><span class="line"><span class="cl"><span class="n">但</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="n">call</span> <span class="err">`</span><span class="fm">__iter__</span><span class="p">()</span><span class="err">`</span><span class="p">,</span> <span class="err">`</span><span class="fm">__next__</span><span class="p">()</span><span class="err">`</span> <span class="n">不等於</span> <span class="n">call</span> <span class="err">`</span><span class="nb">iter</span><span class="p">()</span><span class="err">`</span> <span class="err">`</span><span class="nb">next</span><span class="p">()</span><span class="err">`</span>
+</span></span><span class="line"><span class="cl"><span class="n">因為就像上面說的</span> <span class="n">magic</span> <span class="n">methods</span> <span class="n">可以客製化</span>
+</span></span><span class="line"><span class="cl"><span class="n">但</span> <span class="n">Built</span><span class="o">-</span><span class="n">In</span> <span class="n">Function</span> <span class="n">就是照著劇本走</span><span class="err">，</span>
+</span></span><span class="line"><span class="cl"><span class="n">所以當你把</span> <span class="err">`</span><span class="fm">__iter__</span><span class="p">()</span><span class="err">`</span><span class="p">,</span> <span class="err">`</span><span class="fm">__next__</span><span class="p">()</span><span class="err">`</span> <span class="n">改成不照著</span> <span class="err">`</span><span class="nb">iter</span><span class="p">()</span><span class="err">`</span> <span class="err">`</span><span class="nb">next</span><span class="p">()</span><span class="err">`</span> <span class="n">劇本規定的時後</span><span class="err">，</span><span class="n">再來使用</span> <span class="err">`</span><span class="nb">iter</span><span class="p">()</span><span class="err">`</span> <span class="err">`</span><span class="nb">next</span><span class="p">()</span><span class="err">`</span> <span class="n">就肯定會報錯</span>
+</span></span><span class="line"><span class="cl"><span class="n">看一下底下</span> <span class="err">`</span><span class="nb">iter</span><span class="p">()</span><span class="err">`</span> <span class="n">的例子</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><h4 id="用-iter-再舉個例子"><a href="#用-iter-再舉個例子" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:用-iter-再舉個例子" class="headings">用 <code>iter()</code> 再舉個例子:</a></h4>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -703,26 +693,26 @@ TypeError: 'str' object is not an iterator
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-py" data-lang="py"><span class="n">s</span> <span class="o">=</span> <span class="s2">&#34;abc&#34;</span>
-<span class="n">iter_s</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
-<span class="n">__iter__s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="fm">__iter__</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">iter_s</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">__iter__s</span><span class="p">))</span>
-
-<span class="c1"># 輸出</span>
-<span class="s2">&#34;&#34;&#34;
-</span><span class="s2">&lt;class &#39;str_iterator&#39;&gt;
-</span><span class="s2">&lt;class &#39;str_iterator&#39;&gt;
-</span><span class="s2">&#34;&#34;&#34;</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">s</span> <span class="o">=</span> <span class="s2">&#34;abc&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">iter_s</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">__iter__s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="fm">__iter__</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">iter_s</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">__iter__s</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 輸出</span>
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">&lt;class &#39;str_iterator&#39;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">&lt;class &#39;str_iterator&#39;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
-</div><pre><code>這裡沒問題，兩個就是做一樣的事，但如果底下我們自定義呢?
+</div><pre tabindex="0"><code>這裡沒問題，兩個就是做一樣的事，但如果底下我們自定義呢?
 </code></pre><blockquote>
 <p>這裡自訂義 class Foo:</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -733,23 +723,23 @@ TypeError: 'str' object is not an iterator
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-py" data-lang="py"><span class="k">class</span> <span class="nc">Foo</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&#34;Foo&#34;</span>
-
-<span class="n">foo</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="n">foo</span><span class="o">.</span><span class="fm">__iter__</span><span class="p">())</span>
-
-<span class="c1"># 輸出不會報錯</span>
-<span class="c1"># Foo </span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Foo</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;Foo&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">foo</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">foo</span><span class="o">.</span><span class="fm">__iter__</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 輸出不會報錯</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Foo </span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><blockquote>
 <p>如果改成 <code>iter()</code> 這時底下這裡就會出錯，因為 <code>iter()</code> 的劇本就是堅持要拿到 <code>Iterator</code>, 你給他 <code>str</code> 就肯定噴錯</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -762,24 +752,22 @@ TypeError: 'str' object is not an iterator
 </span><span class="lnt">11
 </span><span class="lnt">12
 </span><span class="lnt">13
-</span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-py" data-lang="py"><span class="k">class</span> <span class="nc">Foo</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&#34;Foo&#34;</span>
-
-<span class="n">foo</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">foo</span><span class="p">))</span>
-
-<span class="c1"># 輸出會報錯</span>
-<span class="s2">&#34;&#34;&#34;
-</span><span class="s2">Traceback (most recent call last):
-</span><span class="s2">print(iter(foo))
-</span><span class="s2">TypeError: iter() returned non-iterator of type &#39;str&#39;
-</span><span class="s2">&#34;&#34;&#34;</span>
-
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Foo</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;Foo&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">foo</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">foo</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 輸出會報錯</span>
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">Traceback (most recent call last):
+</span></span></span><span class="line"><span class="cl"><span class="s2">print(iter(foo))
+</span></span></span><span class="line"><span class="cl"><span class="s2">TypeError: iter() returned non-iterator of type &#39;str&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><blockquote>
 <p>小結論:</p>
@@ -793,7 +781,7 @@ TypeError: 'str' object is not an iterator
 </ol>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -807,19 +795,19 @@ TypeError: 'str' object is not an iterator
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-py" data-lang="py"><span class="n">iterator_</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">([[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">2</span><span class="p">,</span> <span class="p">{}])</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">iterator_</span><span class="p">)))</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">iterator_</span><span class="p">)))</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">iterator_</span><span class="p">)))</span>
-
-<span class="s2">&#34;&#34;&#34;
-</span><span class="s2">&lt;class &#39;list&#39;&gt;
-</span><span class="s2">&lt;class &#39;int&#39;&gt;
-</span><span class="s2">&lt;class &#39;dict&#39;&gt;
-</span><span class="s2">&#34;&#34;&#34;</span>
-
-<span class="c1"># 當然也是可以客製化 class 裡的 `__next__()`</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">iterator_</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">([[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">2</span><span class="p">,</span> <span class="p">{}])</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">iterator_</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">iterator_</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">iterator_</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">&lt;class &#39;list&#39;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">&lt;class &#39;int&#39;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">&lt;class &#39;dict&#39;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 當然也是可以客製化 class 裡的 `__next__()`</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><h4 id="關於前面提到-for-loop-的概念"><a href="#關於前面提到-for-loop-的概念" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:關於前面提到-for-loop-的概念" class="headings">關於前面提到 for loop 的概念:</a></h4>
 <ul>
@@ -828,18 +816,18 @@ TypeError: 'str' object is not an iterator
 <p>ex:</p>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-py" data-lang="py"><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]:</span>
-    <span class="k">pass</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">pass</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><p>實際上相當於是:</p>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -848,18 +836,18 @@ TypeError: 'str' object is not an iterator
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-py" data-lang="py"><span class="c1"># 先得到 Iterator</span>
-<span class="n">iterator_</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
-<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iterator_</span><span class="p">)</span> <span class="c1">#獲得下一個值</span>
-    <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span> <span class="c1"># 遇到 StopIteration 就退出 loop</span>
-        <span class="k">break</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="c1"># 先得到 Iterator</span>
+</span></span><span class="line"><span class="cl"><span class="n">iterator_</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iterator_</span><span class="p">)</span> <span class="c1">#獲得下一個值</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span> <span class="c1"># 遇到 StopIteration 就退出 loop</span>
+</span></span><span class="line"><span class="cl">        <span class="k">break</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -895,41 +883,41 @@ TypeError: 'str' object is not an iterator
 </span><span class="lnt">34
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-py" data-lang="py"><span class="n">iterator_</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
-<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&#34;front======&#34;</span><span class="p">)</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iterator_</span><span class="p">)</span> <span class="c1">#獲得下一個值</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&#34;back======&#34;</span><span class="p">)</span>
-        <span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span> <span class="c1"># 遇到 StopIteration 就退出 loop</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&#34;到底了======&#34;</span><span class="p">)</span>
-        <span class="k">break</span>
-        
-        
-<span class="c1"># 如果仔細這樣 print</span>
-<span class="s2">&#34;&#34;&#34;
-</span><span class="s2">front======
-</span><span class="s2">back======
-</span><span class="s2">1
-</span><span class="s2">front======
-</span><span class="s2">back======
-</span><span class="s2">2
-</span><span class="s2">front======
-</span><span class="s2">back======
-</span><span class="s2">3
-</span><span class="s2">front======
-</span><span class="s2">back======
-</span><span class="s2">4
-</span><span class="s2">front======
-</span><span class="s2">back======
-</span><span class="s2">5
-</span><span class="s2">front======
-</span><span class="s2">到底了======
-</span><span class="s2">&#34;&#34;&#34;</span>
-
-<span class="c1"># 會發現 第 6 次 call next(), 就出現 exception</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">iterator_</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;front======&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iterator_</span><span class="p">)</span> <span class="c1">#獲得下一個值</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;back======&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span> <span class="c1"># 遇到 StopIteration 就退出 loop</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;到底了======&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">break</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl"><span class="c1"># 如果仔細這樣 print</span>
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">front======
+</span></span></span><span class="line"><span class="cl"><span class="s2">back======
+</span></span></span><span class="line"><span class="cl"><span class="s2">1
+</span></span></span><span class="line"><span class="cl"><span class="s2">front======
+</span></span></span><span class="line"><span class="cl"><span class="s2">back======
+</span></span></span><span class="line"><span class="cl"><span class="s2">2
+</span></span></span><span class="line"><span class="cl"><span class="s2">front======
+</span></span></span><span class="line"><span class="cl"><span class="s2">back======
+</span></span></span><span class="line"><span class="cl"><span class="s2">3
+</span></span></span><span class="line"><span class="cl"><span class="s2">front======
+</span></span></span><span class="line"><span class="cl"><span class="s2">back======
+</span></span></span><span class="line"><span class="cl"><span class="s2">4
+</span></span></span><span class="line"><span class="cl"><span class="s2">front======
+</span></span></span><span class="line"><span class="cl"><span class="s2">back======
+</span></span></span><span class="line"><span class="cl"><span class="s2">5
+</span></span></span><span class="line"><span class="cl"><span class="s2">front======
+</span></span></span><span class="line"><span class="cl"><span class="s2">到底了======
+</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 會發現 第 6 次 call next(), 就出現 exception</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><p>所以 for 語句是如何 loop 的:</p>
 <ul>
@@ -1008,6 +996,7 @@ TypeError: 'str' object is not an iterator
 
         
 
+
         
 
 
@@ -1055,9 +1044,9 @@ TypeError: 'str' object is not an iterator
                     <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
 
 <script>
-    var typeNumber = 0;
-    var errorCorrectionLevel = 'L';
-    var qr = qrcode(typeNumber, errorCorrectionLevel);
+    const typeNumber = 0;
+    const errorCorrectionLevel = 'L';
+    const qr = qrcode(typeNumber, errorCorrectionLevel);
     qr.addData('https:\/\/linooohon.com\/blog\/posts\/07\/210727\/Python%20%E8%A7%80%E5%BF%B5%281%29%20-%20Iteration,%20Iterable,%20Iterator\/');
     qr.make();
     document.getElementById('qrcode-img').innerHTML = qr.createImgTag();
@@ -1192,7 +1181,7 @@ TypeError: 'str' object is not an iterator
             
     <footer id="footer" class="footer">
         <div class="footer-inner">
-            <div class="site-info">©&nbsp;&nbsp;mitsukuchiph.</div>
+            <div class="site-info">©&nbsp;2022&nbsp;mitsukuchiph.</div><div class="site-copyright"></div><div class="custom-footer">Everyone you meet is fighting a battle you know nothing about. Be kind. Always.</div>
 
             
     
@@ -1205,9 +1194,7 @@ TypeError: 'str' object is not an iterator
                 </li></ul>
     
 
-<div class="site-copyright"></div><div class="custom-footer">Everyone you meet is fighting a battle you know nothing about. Be kind. Always.</div>
 
-            
 
             
         </div>
@@ -1229,14 +1216,17 @@ TypeError: 'str' object is not an iterator
         
             <script>
     function loadComments() {
+        if (!document.getElementById('disqus_thread')) {
+            return;
+        }
         if (typeof DISQUS === 'undefined') {
-            var disqus_config = function() {
+            const disqus_config = function() {
                 this.page.url = 'https:\/\/linooohon.com\/blog\/posts\/07\/210727\/Python%20%E8%A7%80%E5%BF%B5%281%29%20-%20Iteration,%20Iterable,%20Iterator\/';
                 this.page.identifier = '\/blog\/posts\/07\/210727\/Python%20%E8%A7%80%E5%BF%B5%281%29%20-%20Iteration,%20Iterable,%20Iterator\/';
                 this.page.title = '[Python]觀念(1) - Iteration, Iterable, Iterator';
             };
             (function() {
-                var d = document, s = d.createElement('script'); s.async = true;
+                const d = document, s = d.createElement('script'); s.async = true;
                 s.src = 'https://mitsukuchiph.disqus.com/embed.js';
                 s.setAttribute('data-timestamp', +new Date());
                 (d.head || d.body).appendChild(s);
@@ -1269,7 +1259,10 @@ TypeError: 'str' object is not an iterator
     <script src="https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js"></script>
 
 <script>
-    mediumZoom(document.querySelectorAll('div.post-body img'), {
+    let imgNodes = document.querySelectorAll('div.post-body img');
+    imgNodes = Array.from(imgNodes).filter(node => node.parentNode.tagName !== "A");
+
+    mediumZoom(imgNodes, {
         background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
     })
 </script>
@@ -1278,7 +1271,6 @@ TypeError: 'str' object is not an iterator
 
 
     <script src="https://cdn.jsdelivr.net/npm/instant.page@5.1.0/instantpage.min.js" type="module" defer></script>
-
 
 
 

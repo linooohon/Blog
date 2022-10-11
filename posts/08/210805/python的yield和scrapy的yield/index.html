@@ -3,7 +3,10 @@
     <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
     <meta charset="UTF-8" />
 
-    <meta name="generator" content="Hugo 0.83.1" /><meta name="theme-color" content="#fff" />
+    <meta name="generator" content="Hugo 0.104.3" /><meta name="theme-color" content="#fff" />
+    <meta name="color-scheme" content="light dark">
+
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
@@ -14,11 +17,11 @@
 
     <title>[Python]觀念(2) yield, generator?，那 Scrapy 裡的 yield? | mitsukuchiph.</title>
 
-    <link rel="stylesheet" href="/blog/css/meme.min.b839f4681fa3611632a14c5ba9c9988c24cac3a1fac80e6d06fa3b67d4a417e5.css"/>
+    <link rel="stylesheet" href="/blog/css/meme.min.7bba102516a3fb63725409e5e5b6e4145b180431be976a2314f112e872c12311.css"/>
 
     
     
-        <script src="/blog/js/meme.min.1296eae7a1970c0bbd9d8315daae36c344017e9de3e57edc689779153976ec28.js"></script>
+        <script src="/blog/js/meme.min.a8da68c33deb197b2c655f3305eedf6b36e73947969053e445d62eca7e5c7379.js"></script>
 
     
 
@@ -61,7 +64,7 @@
         "description": "繼上篇 Iterator 紀錄，這次對 yield 的概念在此統整一下，同時也追了一下 Scrapy 的 source code\n",
         "inLanguage" : "zh-TW",
         "articleSection": "posts",
-        "wordCount":  2946 ,
+        "wordCount":  2921 ,
         "image": ["https://linooohon.com/blog/blog/images/08_210805/08_210805_pythonyield_intro.png"],
         "author": {
             "@type": "Person",
@@ -78,11 +81,11 @@
                 "@type": "ImageObject",
                 "url": "https://linooohon.com/icons/apple-touch-icon.png"
             },
-            "url": "https://linooohon.com/"
+            "url": "https://linooohon.com/blog"
         },
         "mainEntityOfPage": {
             "@type": "WebSite",
-            "@id": "https://linooohon.com/"
+            "@id": "https://linooohon.com/blog"
         }
     }
 </script>
@@ -116,16 +119,6 @@
     
 
     
-
-    
-    
-    <style>
-         
-        iframe[sandbox="allow-forms allow-popups allow-same-origin allow-scripts"] {
-            display: none !important;
-        }
-    </style>
-
 </head>
 
     <body>
@@ -138,7 +131,7 @@
                     
     <div class="site-brand">
         
-            <a href="/blog/" class="brand">mitsukuchiph.</a>
+            <a href="/blog" class="brand">mitsukuchiph.</a>
         
     </div>
 
@@ -317,7 +310,7 @@ Python 的 yield 是什麼?，Scrapy 裡的 yield?
 </blockquote>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -334,22 +327,22 @@ Python 的 yield 是什麼?，Scrapy 裡的 yield?
 </span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-py" data-lang="py"><span class="k">def</span> <span class="nf">get_string</span><span class="p">():</span>
-    <span class="k">return</span> <span class="s2">&#34;happy coding&#34;</span>
-    
-    
-<span class="k">def</span> <span class="nf">get_generator</span><span class="p">():</span>
-    <span class="k">yield</span> <span class="s2">&#34;happy coding&#34;</span>
-    
-    
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    
-    <span class="n">result</span> <span class="o">=</span> <span class="n">get_string</span><span class="p">()</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">result</span><span class="p">))</span> <span class="c1"># happy coding &lt;class &#39;str&#39;&gt;</span>
-    
-    <span class="n">result</span> <span class="o">=</span> <span class="n">get_generator</span><span class="p">()</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">result</span><span class="p">))</span> <span class="c1"># &lt;generator object get_generator at 0x10c424d60&gt; &lt;class &#39;generator&#39;&gt;</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_string</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="s2">&#34;happy coding&#34;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_generator</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">yield</span> <span class="s2">&#34;happy coding&#34;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">result</span> <span class="o">=</span> <span class="n">get_string</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">result</span><span class="p">))</span> <span class="c1"># happy coding &lt;class &#39;str&#39;&gt;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">result</span> <span class="o">=</span> <span class="n">get_generator</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">result</span><span class="p">))</span> <span class="c1"># &lt;generator object get_generator at 0x10c424d60&gt; &lt;class &#39;generator&#39;&gt;</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><h2 id="-幾個名詞先釐清-"><a href="#-幾個名詞先釐清-" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:-幾個名詞先釐清-" class="headings"><strong>&lt; 幾個名詞先釐清 &gt;</strong>:</a></h2>
 <p>在 <a href="https://docs.python.org/3.9/glossary.html#term-generator" target="_blank" rel="noopener">Python Glossary</a> 裡定義了三個詞</p>
@@ -389,15 +382,15 @@ Python 的 yield 是什麼?，Scrapy 裡的 yield?
 <blockquote>
 <p>關於 Generator 留到後面做解釋</p>
 </blockquote>
-<pre><code>現在只要先知道 function 裡有 yield 就是一個會回傳 generator iterator 的 generator function。
-</code></pre><pre><code>既然知道 yield 和 generator 的關係了，底下來個例子
+<pre tabindex="0"><code>現在只要先知道 function 裡有 yield 就是一個會回傳 generator iterator 的 generator function。
+</code></pre><pre tabindex="0"><code>既然知道 yield 和 generator 的關係了，底下來個例子
 </code></pre><h2 id="-generatorgenerator-function-例子解釋-"><a href="#-generatorgenerator-function-例子解釋-" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:-generatorgenerator-function-例子解釋-" class="headings"><strong>&lt; (generator)generator function 例子解釋 &gt;</strong>:</a></h2>
 <blockquote>
 <p>用這個 function 來理解一下，看到對岸的朋友解釋的文章，覺得挺好的，記錄下來！</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -409,45 +402,45 @@ Python 的 yield 是什麼?，Scrapy 裡的 yield?
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-py" data-lang="py"><span class="k">def</span> <span class="nf">foo</span><span class="p">():</span>
-    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;foo function is starting...&#39;</span><span class="p">)</span>
-    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
-        <span class="n">res</span> <span class="o">=</span> <span class="k">yield</span> <span class="mi">4</span>
-        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;res:&#39;</span><span class="p">,</span> <span class="n">res</span><span class="p">)</span>
-
-<span class="n">g</span> <span class="o">=</span> <span class="n">foo</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="o">*</span><span class="mi">10</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">foo</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;foo function is starting...&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">res</span> <span class="o">=</span> <span class="k">yield</span> <span class="mi">4</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;res:&#39;</span><span class="p">,</span> <span class="n">res</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">g</span> <span class="o">=</span> <span class="n">foo</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="o">*</span><span class="mi">10</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><blockquote>
 <p>執行結果:</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-py" data-lang="py"><span class="n">foo</span> <span class="n">function</span> <span class="ow">is</span> <span class="n">starting</span><span class="o">...</span>
-<span class="mi">4</span>
-<span class="o">********************</span>
-<span class="n">res</span><span class="p">:</span> <span class="bp">None</span>
-<span class="mi">4</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">foo</span> <span class="n">function</span> <span class="ow">is</span> <span class="n">starting</span><span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="mi">4</span>
+</span></span><span class="line"><span class="cl"><span class="o">********************</span>
+</span></span><span class="line"><span class="cl"><span class="n">res</span><span class="p">:</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl"><span class="mi">4</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><h3 id="1-g--foo"><a href="#1-g--foo" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:1-g--foo" class="headings">1. <code>g = foo()</code></a></h3>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-py" data-lang="py"><span class="n">g</span> <span class="o">=</span> <span class="n">foo</span><span class="p">()</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">g</span> <span class="o">=</span> <span class="n">foo</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><p>因為 foo() 帶有 yield 所以根據定義，就算呼叫了 foo(), 他也不會開始執行。</p>
 <p>但是這裡他會得到一個生成器物件 &quot;g&quot; (generator iterator)。</p>
@@ -457,11 +450,11 @@ Python 的 yield 是什麼?，Scrapy 裡的 yield?
 <h3 id="2-printnextg"><a href="#2-printnextg" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:2-printnextg" class="headings">2. <code>print(next(g))</code></a></h3>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-py" data-lang="py"><span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><p>直到調用 next 方法 foo function 才正式開始執行，
 先執行 foo 的 print('foo function is starting...') 然後進入 while loop，</p>
@@ -474,30 +467,30 @@ Python 的 yield 是什麼?，Scrapy 裡的 yield?
 <li>next(g): print 了 'foo function is starting...'</li>
 <li>return 了 4, 所以又 print 了 4</li>
 </ul>
-<pre><code>foo function is starting...
+<pre tabindex="0"><code>foo function is starting...
 4
 </code></pre><h3 id="3-print10"><a href="#3-print10" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:3-print10" class="headings">3. <code>print('*'*10)</code></a></h3>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-py" data-lang="py"><span class="k">print</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="o">*</span><span class="mi">10</span><span class="p">)</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="o">*</span><span class="mi">10</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><p>這行只是印開心的順便做一些區隔: print 10個 '*'</p>
 <blockquote>
 <p>print('*'*10) 執行結果:</p>
 </blockquote>
-<pre><code>********************
+<pre tabindex="0"><code>********************
 </code></pre><h3 id="4-printnextg"><a href="#4-printnextg" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:4-printnextg" class="headings">4. <code>print(next(g))</code></a></h3>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-py" data-lang="py"><span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><p>這裡是第二次調用，每次調用會接續上一次停止的地方，也就是正準備把 4 assign(指派/賦值) 給 res 的時候，但注意這邊因為上一次調用 <code>next()</code> 的最後一個步驟是 return 4 出去，所以這時候 &quot;=&quot; 右邊已經是 None 了。</p>
 <blockquote>
@@ -507,29 +500,29 @@ Python 的 yield 是什麼?，Scrapy 裡的 yield?
 <li>這時候 None 被 assign 給 res, res 就是 None，所以 print('res:', res) -&gt; res: None。</li>
 <li>接著還在 loop 裡，又會跑到 yield 4, 所以 return 4 出來，所以最後還會 print 出 4。</li>
 </ul>
-<pre><code>res: None
+<pre tabindex="0"><code>res: None
 4
 </code></pre><h3 id="如果最後一行改成這樣-printgsend7"><a href="#如果最後一行改成這樣-printgsend7" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:如果最後一行改成這樣-printgsend7" class="headings">如果最後一行改成這樣: <code>print(g.send(7))</code></a></h3>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">g</span> <span class="o">=</span> <span class="n">foo</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="o">*</span><span class="mi">20</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="mi">7</span><span class="p">))</span>   <span class="c1">## 改這行</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">g</span> <span class="o">=</span> <span class="n">foo</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="o">*</span><span class="mi">20</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="mi">7</span><span class="p">))</span>   <span class="c1">## 改這行</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><p>7 就會 assign 給 res
 所以 print('res:', res) -&gt; res: 7</p>
 <blockquote>
 <p>執行結果:</p>
 </blockquote>
-<pre><code>foo function is starting...
+<pre tabindex="0"><code>foo function is starting...
 4
 ********************
 res: 7
@@ -550,121 +543,120 @@ res: 7
 <blockquote>
 <p>也可以用 isinstance，來確認它是不是 Iterable, Iterator, Generator</p>
 </blockquote>
-<pre><code class="language-python=" data-lang="python=">import pandas as pd
+<pre tabindex="0"><code class="language-python=" data-lang="python=">import pandas as pd
 import numpy as np
 from collections.abc import Iterator, Iterable, Generator
 
 # dic
-dic_ = {'name': 'phil', 'phone': '0933333333'}
-print(&quot;===============dic===============&quot;)
+dic_ = {&#39;name&#39;: &#39;phil&#39;, &#39;phone&#39;: &#39;0933333333&#39;}
+print(&#34;===============dic===============&#34;)
 print(isinstance(dic_, Iterable))
 print(isinstance(dic_, Iterator))
 print(isinstance(dic_, Generator))
 
 # list
-list_ = ['a', 1, {'key': 'value'}, (1, 2), {1, 2}]
-print(&quot;===============list===============&quot;)
+list_ = [&#39;a&#39;, 1, {&#39;key&#39;: &#39;value&#39;}, (1, 2), {1, 2}]
+print(&#34;===============list===============&#34;)
 print(isinstance(list_, Iterable))
 print(isinstance(list_, Iterator))
 print(isinstance(list_, Generator))
 
 # tuple
-tuple_ = ('a', {'key': 'value'}, 2)
-print(&quot;===============tuple===============&quot;)
+tuple_ = (&#39;a&#39;, {&#39;key&#39;: &#39;value&#39;}, 2)
+print(&#34;===============tuple===============&#34;)
 print(isinstance(tuple_, Iterable))
 print(isinstance(tuple_, Iterator))
 print(isinstance(tuple_, Generator))
 
 # range
 range_ = range(1)
-print(&quot;===============range===============&quot;)
+print(&#34;===============range===============&#34;)
 print(isinstance(range_, Iterable))
 print(isinstance(range_, Iterator))
 print(isinstance(range_, Generator))
 
 # string
-string_ = 'a'
-print(&quot;===============string===============&quot;)
+string_ = &#39;a&#39;
+print(&#34;===============string===============&#34;)
 print(isinstance(string_, Iterable))
 print(isinstance(string_, Iterator))
 print(isinstance(string_, Generator))
 
 # set
-set_ = {'a', 2, 3, (1, 2)}
-print(&quot;===============set===============&quot;)
+set_ = {&#39;a&#39;, 2, 3, (1, 2)}
+print(&#34;===============set===============&#34;)
 print(isinstance(set_, Iterable))
 print(isinstance(set_, Iterator))
 print(isinstance(set_, Generator))
 
 # numpy array
 np_array_ = np.array([1, 2, 3, 4])
-print(&quot;===============np_array===============&quot;)
+print(&#34;===============np_array===============&#34;)
 print(isinstance(np_array_, Iterable))
 print(isinstance(np_array_, Iterator))
 print(isinstance(np_array_, Generator))
 
 # dataframe
-df_ = pd.read_csv(&quot;1.csv&quot;)
-print(&quot;===============dataframe===============&quot;)
+df_ = pd.read_csv(&#34;1.csv&#34;)
+print(&#34;===============dataframe===============&#34;)
 print(isinstance(df_, Iterable))
 print(isinstance(df_, Iterator))
 print(isinstance(df_, Generator))
 
 # bytes
 bytes_1 = bytes(1)
-print(&quot;===============bytes===============&quot;)
+print(&#34;===============bytes===============&#34;)
 print(isinstance(bytes_1, Iterable))
 print(isinstance(bytes_1, Iterator))
 print(isinstance(bytes_1, Generator))
-
 </code></pre><h3 id="generator-到底是什麼目的用法再次解析"><a href="#generator-到底是什麼目的用法再次解析" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:generator-到底是什麼目的用法再次解析" class="headings">Generator 到底是什麼，目的，用法(再次解析):</a></h3>
 <p>Python 中有一個東西叫做 List Comprehensions, 是 Python 可以簡潔的創造 list 的方式</p>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-py" data-lang="py"><span class="n">list_</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
-<span class="k">print</span><span class="p">(</span><span class="n">list_</span><span class="p">)</span>
-<span class="c1"># [4, 16, 36, 64, 100]</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">list_</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">list_</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># [4, 16, 36, 64, 100]</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><ul>
 <li>列出資料夾底下所有文件和資料夾</li>
 </ul>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-py" data-lang="py"><span class="kn">import</span> <span class="nn">os</span> 
-<span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)]</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">l</span><span class="p">))</span> <span class="c1"># 是個 list</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span> 
+</span></span><span class="line"><span class="cl"><span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">l</span><span class="p">))</span> <span class="c1"># 是個 list</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><p style="color: #d19169">但是，如果今天我們要的內容很多，list 就會變得非常佔用記憶體，所以當我們要做的事，可以依照某種規則算出來，那我們就可以 loop 整個過程去持續推算下一個元素，這樣就不必創造很大很大的 list, 在 Python 中，這樣邊 loop 邊計算還真的有，就是 Generator(生成器)</p>
 <p>要創建 generator 除了上面有提過的 generator function，這裡再補充一個，只要把 List Comprehensions 改成小括號 <code>()</code> 就行了。
 就是所謂的 generator expression <a href="https://docs.python.org/3.9/glossary.html#term-generator-expression" target="_blank" rel="noopener">Docs</a></p>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-py" data-lang="py"><span class="n">list_</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">list_</span><span class="p">)</span>
-<span class="c1"># &lt;generator object &lt;genexpr&gt; at 0x106a674a0&gt;</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">list_</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">list_</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># &lt;generator object &lt;genexpr&gt; at 0x106a674a0&gt;</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><p>那當然 generator 直接 print 沒東西，我們就是透過上面提過的 <code>next()</code></p>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -683,29 +675,29 @@ print(isinstance(bytes_1, Generator))
 </span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-py" data-lang="py"><span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">list_</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">list_</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">list_</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">list_</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">list_</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">list_</span><span class="p">))</span>
-<span class="s2">&#34;&#34;&#34;
-</span><span class="s2">4
-</span><span class="s2">16
-</span><span class="s2">36
-</span><span class="s2">64
-</span><span class="s2">100
-</span><span class="s2">Traceback (most recent call last):
-</span><span class="s2">  File &#34;/Users/linpinhung/Desktop/TMPF/06.py&#34;, line 82, in &lt;module&gt;
-</span><span class="s2">    print(next(list_))
-</span><span class="s2">StopIteration
-</span><span class="s2">&#34;&#34;&#34;</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">list_</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">list_</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">list_</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">list_</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">list_</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">list_</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">4
+</span></span></span><span class="line"><span class="cl"><span class="s2">16
+</span></span></span><span class="line"><span class="cl"><span class="s2">36
+</span></span></span><span class="line"><span class="cl"><span class="s2">64
+</span></span></span><span class="line"><span class="cl"><span class="s2">100
+</span></span></span><span class="line"><span class="cl"><span class="s2">Traceback (most recent call last):
+</span></span></span><span class="line"><span class="cl"><span class="s2">  File &#34;/Users/linpinhung/Desktop/TMPF/06.py&#34;, line 82, in &lt;module&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    print(next(list_))
+</span></span></span><span class="line"><span class="cl"><span class="s2">StopIteration
+</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><p>但一直用 next()，太麻煩，基本上都用 for loop 實現，且用 for loop 也不需關心 <code>StopIteration</code>, Python 幫忙解決，這也就是上一篇提過的 Iterator 的特性之一，Generator Iterator 當然也會有 Iterator 的特性。</p>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -717,17 +709,17 @@ print(isinstance(bytes_1, Generator))
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-py" data-lang="py"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">list_</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-
-<span class="s2">&#34;&#34;&#34;
-</span><span class="s2">4
-</span><span class="s2">16
-</span><span class="s2">36
-</span><span class="s2">64
-</span><span class="s2">100
-</span><span class="s2">&#34;&#34;&#34;</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">list_</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">4
+</span></span></span><span class="line"><span class="cl"><span class="s2">16
+</span></span></span><span class="line"><span class="cl"><span class="s2">36
+</span></span></span><span class="line"><span class="cl"><span class="s2">64
+</span></span></span><span class="line"><span class="cl"><span class="s2">100
+</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><h3 id="generatorgenerator-iterator與-iterator的差異"><a href="#generatorgenerator-iterator與-iterator的差異" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:generatorgenerator-iterator與-iterator的差異" class="headings">Generator(Generator Iterator)與 Iterator的差異:</a></h3>
 <ul>
@@ -739,17 +731,15 @@ print(isinstance(bytes_1, Generator))
 </ul>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
-</span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-py" data-lang="py"><span class="kn">import</span> <span class="nn">collections</span><span class="o">,</span><span class="nn">types</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">issubclass</span><span class="p">(</span><span class="n">types</span><span class="o">.</span><span class="n">GeneratorType</span><span class="p">,</span><span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Iterator</span><span class="p">))</span> <span class="c1">#True</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">issubclass</span><span class="p">(</span><span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Generator</span><span class="p">,</span><span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Iterator</span><span class="p">))</span> <span class="c1">#True</span>
-
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">collections</span><span class="o">,</span><span class="nn">types</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">issubclass</span><span class="p">(</span><span class="n">types</span><span class="o">.</span><span class="n">GeneratorType</span><span class="p">,</span><span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Iterator</span><span class="p">))</span> <span class="c1">#True</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">issubclass</span><span class="p">(</span><span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Generator</span><span class="p">,</span><span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Iterator</span><span class="p">))</span> <span class="c1">#True</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><h2 id="-scrapy-"><a href="#-scrapy-" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:-scrapy-" class="headings"><strong>&lt; Scrapy &gt;</strong>:</a></h2>
 <h3 id="scrapy-框架裡常用的-yield-會有兩種情況"><a href="#scrapy-框架裡常用的-yield-會有兩種情況" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:scrapy-框架裡常用的-yield-會有兩種情況" class="headings">Scrapy 框架裡常用的 yield, 會有兩種情況。</a></h3>
@@ -761,7 +751,7 @@ print(isinstance(bytes_1, Generator))
 仔細去追 Scrapy 的 source code，就會發現以 <code>scrapy/crawler.py</code> 底下的 class CrawlerRunner 為例:</p>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -787,31 +777,31 @@ print(isinstance(bytes_1, Generator))
 </span><span class="lnt">24
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-py" data-lang="py"><span class="c1"># 根據官方文檔</span>
-<span class="kn">import</span> <span class="nn">scrapy</span>
-<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
-<span class="kn">from</span> <span class="nn">scrapy.crawler</span> <span class="kn">import</span> <span class="n">CrawlerRunner</span>
-<span class="kn">from</span> <span class="nn">scrapy.utils.log</span> <span class="kn">import</span> <span class="n">configure_logging</span>
-<span class="kn">from</span> <span class="nn">scrapy.utils.project</span> <span class="kn">import</span> <span class="n">get_project_settings</span>
-
-<span class="k">class</span> <span class="nc">MySpider1</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
-    <span class="c1"># Your first spider definition</span>
-    <span class="o">...</span>
-
-<span class="k">class</span> <span class="nc">MySpider2</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
-    <span class="c1"># Your second spider definition</span>
-    <span class="o">...</span>
-
-<span class="n">configure_logging</span><span class="p">()</span>
-<span class="n">settings</span> <span class="o">=</span> <span class="n">get_project_settings</span><span class="p">()</span>
-<span class="n">runner</span> <span class="o">=</span> <span class="n">CrawlerRunner</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
-<span class="n">runner</span><span class="o">.</span><span class="n">crawl</span><span class="p">(</span><span class="n">MySpider1</span><span class="p">)</span>
-<span class="n">runner</span><span class="o">.</span><span class="n">crawl</span><span class="p">(</span><span class="n">MySpider2</span><span class="p">)</span>
-<span class="n">d</span> <span class="o">=</span> <span class="n">runner</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
-<span class="n">d</span><span class="o">.</span><span class="n">addBoth</span><span class="p">(</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">reactor</span><span class="o">.</span><span class="n">stop</span><span class="p">())</span>
-
-<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span> <span class="c1"># the script will block here until all crawling jobs are finished</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="c1"># 根據官方文檔</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">scrapy</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">scrapy.crawler</span> <span class="kn">import</span> <span class="n">CrawlerRunner</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">scrapy.utils.log</span> <span class="kn">import</span> <span class="n">configure_logging</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">scrapy.utils.project</span> <span class="kn">import</span> <span class="n">get_project_settings</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">MySpider1</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># Your first spider definition</span>
+</span></span><span class="line"><span class="cl">    <span class="o">...</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">MySpider2</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># Your second spider definition</span>
+</span></span><span class="line"><span class="cl">    <span class="o">...</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">configure_logging</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">settings</span> <span class="o">=</span> <span class="n">get_project_settings</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">runner</span> <span class="o">=</span> <span class="n">CrawlerRunner</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">runner</span><span class="o">.</span><span class="n">crawl</span><span class="p">(</span><span class="n">MySpider1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">runner</span><span class="o">.</span><span class="n">crawl</span><span class="p">(</span><span class="n">MySpider2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">d</span> <span class="o">=</span> <span class="n">runner</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">d</span><span class="o">.</span><span class="n">addBoth</span><span class="p">(</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">reactor</span><span class="o">.</span><span class="n">stop</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span> <span class="c1"># the script will block here until all crawling jobs are finished</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><p>最一開始是呼叫了 class CrawlerRunner 的 crawl 方法：
 這時後仔細看 source code 往下追，</p>
@@ -820,7 +810,7 @@ print(isinstance(bytes_1, Generator))
 </blockquote>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -844,40 +834,38 @@ print(isinstance(bytes_1, Generator))
 </span><span class="lnt">22
 </span><span class="lnt">23
 </span><span class="lnt">24
-</span><span class="lnt">25
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">scrapy.core.engine</span> <span class="kn">import</span> <span class="n">ExecutionEngine</span>
-
-
-<span class="k">class</span> <span class="nc">Crawler</span><span class="p">:</span>
-<span class="k">def</span> <span class="nf">crawl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    
-    <span class="c1">#(略)</span>
-    
-    <span class="k">try</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">spider</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_spider</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">engine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_engine</span><span class="p">()</span>
-        <span class="n">start_requests</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spider</span><span class="o">.</span><span class="n">start_requests</span><span class="p">())</span>
-        <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">open_spider</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spider</span><span class="p">,</span> <span class="n">start_requests</span><span class="p">)</span>
-
-    <span class="c1"># (略)</span>
-
-
-<span class="k">def</span> <span class="nf">_create_spider</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">spidercls</span><span class="o">.</span><span class="n">from_crawler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        
-<span class="k">def</span> <span class="nf">_create_engine</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">ExecutionEngine</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">())</span>
-
-<span class="c1"># (略)</span>
-
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">scrapy.core.engine</span> <span class="kn">import</span> <span class="n">ExecutionEngine</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Crawler</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">crawl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1">#(略)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">spider</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_spider</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">engine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_engine</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="n">start_requests</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spider</span><span class="o">.</span><span class="n">start_requests</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">        <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">open_spider</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spider</span><span class="p">,</span> <span class="n">start_requests</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># (略)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">_create_spider</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">spidercls</span><span class="o">.</span><span class="n">from_crawler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">_create_engine</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">ExecutionEngine</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># (略)</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><p>追到 <code>scrapy/core/engine.py</code><a href="https://github.com/scrapy/scrapy/blob/06f3d12c1208c380f9f1a16cb36ba2dfa3c244c5/scrapy/core/engine.py" target="_blank" rel="noopener">source code</a></p>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -921,49 +909,49 @@ print(isinstance(bytes_1, Generator))
 </span><span class="lnt">42
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-py" data-lang="py"><span class="k">class</span> <span class="nc">Slot</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">start_requests</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">,</span>
-        <span class="n">close_if_idle</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-        <span class="n">nextcall</span><span class="p">:</span> <span class="n">CallLaterOnce</span><span class="p">,</span>
-        <span class="n">scheduler</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">closing</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Deferred</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">inprogress</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="n">Request</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">start_requests</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Iterator</span><span class="p">]</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">start_requests</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">close_if_idle</span> <span class="o">=</span> <span class="n">close_if_idle</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">nextcall</span> <span class="o">=</span> <span class="n">nextcall</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">scheduler</span> <span class="o">=</span> <span class="n">scheduler</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat</span> <span class="o">=</span> <span class="n">LoopingCall</span><span class="p">(</span><span class="n">nextcall</span><span class="o">.</span><span class="n">schedule</span><span class="p">)</span>
-
-    <span class="c1"># (略)</span>
-    
-<span class="k">class</span> <span class="nc">ExecutionEngine</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">_next_request</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">slot</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span>  <span class="c1"># typing</span>
-        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">spider</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span>  <span class="c1"># typing</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">paused</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">None</span>
-
-        <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_needs_backout</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_next_request_from_scheduler</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="k">pass</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">slot</span><span class="o">.</span><span class="n">start_requests</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_needs_backout</span><span class="p">():</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">request</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">slot</span><span class="o">.</span><span class="n">start_requests</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">slot</span><span class="o">.</span><span class="n">start_requests</span> <span class="o">=</span> <span class="bp">None</span>
-            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">slot</span><span class="o">.</span><span class="n">start_requests</span> <span class="o">=</span> <span class="bp">None</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Error while obtaining start requests&#39;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;spider&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">spider</span><span class="p">})</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">crawl</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">spider_is_idle</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">slot</span><span class="o">.</span><span class="n">close_if_idle</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_spider_idle</span><span class="p">()</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Slot</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">start_requests</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">close_if_idle</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">nextcall</span><span class="p">:</span> <span class="n">CallLaterOnce</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">scheduler</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">closing</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Deferred</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">inprogress</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="n">Request</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">start_requests</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Iterator</span><span class="p">]</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">start_requests</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">close_if_idle</span> <span class="o">=</span> <span class="n">close_if_idle</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">nextcall</span> <span class="o">=</span> <span class="n">nextcall</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">scheduler</span> <span class="o">=</span> <span class="n">scheduler</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat</span> <span class="o">=</span> <span class="n">LoopingCall</span><span class="p">(</span><span class="n">nextcall</span><span class="o">.</span><span class="n">schedule</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># (略)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">ExecutionEngine</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">_next_request</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">slot</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>  <span class="c1"># typing</span>
+</span></span><span class="line"><span class="cl">        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">spider</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>  <span class="c1"># typing</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">paused</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_needs_backout</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_next_request_from_scheduler</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">pass</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">slot</span><span class="o">.</span><span class="n">start_requests</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_needs_backout</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">            <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">request</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">slot</span><span class="o">.</span><span class="n">start_requests</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="bp">self</span><span class="o">.</span><span class="n">slot</span><span class="o">.</span><span class="n">start_requests</span> <span class="o">=</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="bp">self</span><span class="o">.</span><span class="n">slot</span><span class="o">.</span><span class="n">start_requests</span> <span class="o">=</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Error while obtaining start requests&#39;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;spider&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">spider</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="bp">self</span><span class="o">.</span><span class="n">crawl</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">spider_is_idle</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">slot</span><span class="o">.</span><span class="n">close_if_idle</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">_spider_idle</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><p>其實看到 yield 就了解 generator 會有 next() 的實作，但是還是想親眼見到，所以：
 看到第 32 行，找到 next()，也就安心了...
@@ -1001,6 +989,7 @@ print(isinstance(bytes_1, Generator))
         
 
         
+
 
         
 
@@ -1049,9 +1038,9 @@ print(isinstance(bytes_1, Generator))
                     <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
 
 <script>
-    var typeNumber = 0;
-    var errorCorrectionLevel = 'L';
-    var qr = qrcode(typeNumber, errorCorrectionLevel);
+    const typeNumber = 0;
+    const errorCorrectionLevel = 'L';
+    const qr = qrcode(typeNumber, errorCorrectionLevel);
     qr.addData('https:\/\/linooohon.com\/blog\/posts\/08\/210805\/python%E7%9A%84yield%E5%92%8Cscrapy%E7%9A%84yield\/');
     qr.make();
     document.getElementById('qrcode-img').innerHTML = qr.createImgTag();
@@ -1202,7 +1191,7 @@ print(isinstance(bytes_1, Generator))
             
     <footer id="footer" class="footer">
         <div class="footer-inner">
-            <div class="site-info">©&nbsp;&nbsp;mitsukuchiph.</div>
+            <div class="site-info">©&nbsp;2022&nbsp;mitsukuchiph.</div><div class="site-copyright"></div><div class="custom-footer">Everyone you meet is fighting a battle you know nothing about. Be kind. Always.</div>
 
             
     
@@ -1215,9 +1204,7 @@ print(isinstance(bytes_1, Generator))
                 </li></ul>
     
 
-<div class="site-copyright"></div><div class="custom-footer">Everyone you meet is fighting a battle you know nothing about. Be kind. Always.</div>
 
-            
 
             
         </div>
@@ -1239,14 +1226,17 @@ print(isinstance(bytes_1, Generator))
         
             <script>
     function loadComments() {
+        if (!document.getElementById('disqus_thread')) {
+            return;
+        }
         if (typeof DISQUS === 'undefined') {
-            var disqus_config = function() {
+            const disqus_config = function() {
                 this.page.url = 'https:\/\/linooohon.com\/blog\/posts\/08\/210805\/python%E7%9A%84yield%E5%92%8Cscrapy%E7%9A%84yield\/';
                 this.page.identifier = '\/blog\/posts\/08\/210805\/python%E7%9A%84yield%E5%92%8Cscrapy%E7%9A%84yield\/';
                 this.page.title = '[Python]觀念(2) yield, generator?，那 Scrapy 裡的 yield?';
             };
             (function() {
-                var d = document, s = d.createElement('script'); s.async = true;
+                const d = document, s = d.createElement('script'); s.async = true;
                 s.src = 'https://mitsukuchiph.disqus.com/embed.js';
                 s.setAttribute('data-timestamp', +new Date());
                 (d.head || d.body).appendChild(s);
@@ -1279,7 +1269,10 @@ print(isinstance(bytes_1, Generator))
     <script src="https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js"></script>
 
 <script>
-    mediumZoom(document.querySelectorAll('div.post-body img'), {
+    let imgNodes = document.querySelectorAll('div.post-body img');
+    imgNodes = Array.from(imgNodes).filter(node => node.parentNode.tagName !== "A");
+
+    mediumZoom(imgNodes, {
         background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
     })
 </script>
@@ -1288,7 +1281,6 @@ print(isinstance(bytes_1, Generator))
 
 
     <script src="https://cdn.jsdelivr.net/npm/instant.page@5.1.0/instantpage.min.js" type="module" defer></script>
-
 
 
 

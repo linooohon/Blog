@@ -3,7 +3,10 @@
     <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
     <meta charset="UTF-8" />
 
-    <meta name="generator" content="Hugo 0.83.1" /><meta name="theme-color" content="#fff" />
+    <meta name="generator" content="Hugo 0.104.3" /><meta name="theme-color" content="#fff" />
+    <meta name="color-scheme" content="light dark">
+
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
@@ -14,11 +17,11 @@
 
     <title>[CI/CD]幫 Data Team 設置 GitLab 的 CI/CD | mitsukuchiph.</title>
 
-    <link rel="stylesheet" href="/blog/css/meme.min.b839f4681fa3611632a14c5ba9c9988c24cac3a1fac80e6d06fa3b67d4a417e5.css"/>
+    <link rel="stylesheet" href="/blog/css/meme.min.7bba102516a3fb63725409e5e5b6e4145b180431be976a2314f112e872c12311.css"/>
 
     
     
-        <script src="/blog/js/meme.min.1296eae7a1970c0bbd9d8315daae36c344017e9de3e57edc689779153976ec28.js"></script>
+        <script src="/blog/js/meme.min.a8da68c33deb197b2c655f3305eedf6b36e73947969053e445d62eca7e5c7379.js"></script>
 
     
 
@@ -61,7 +64,7 @@
         "description": "最近在公司開始整理一些 Legacy Code，在標記的同時，也開始設置 Python 版的 Monorepo，這裡紀錄一下目前幫 Data Team 初期設置的 GitLab CI/CD\n",
         "inLanguage" : "zh-TW",
         "articleSection": "posts",
-        "wordCount":  1019 ,
+        "wordCount":  1013 ,
         "image": ["https://linooohon.com/blog/blog/images/13_211124/13_211124_gitlabcicd.png"],
         "author": {
             "@type": "Person",
@@ -78,11 +81,11 @@
                 "@type": "ImageObject",
                 "url": "https://linooohon.com/icons/apple-touch-icon.png"
             },
-            "url": "https://linooohon.com/"
+            "url": "https://linooohon.com/blog"
         },
         "mainEntityOfPage": {
             "@type": "WebSite",
-            "@id": "https://linooohon.com/"
+            "@id": "https://linooohon.com/blog"
         }
     }
 </script>
@@ -116,16 +119,6 @@
     
 
     
-
-    
-    
-    <style>
-         
-        iframe[sandbox="allow-forms allow-popups allow-same-origin allow-scripts"] {
-            display: none !important;
-        }
-    </style>
-
 </head>
 
     <body>
@@ -138,7 +131,7 @@
                     
     <div class="site-brand">
         
-            <a href="/blog/" class="brand">mitsukuchiph.</a>
+            <a href="/blog" class="brand">mitsukuchiph.</a>
         
     </div>
 
@@ -292,33 +285,33 @@
 </ul>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yml" data-lang="yml"><span class="c"># image 的設定就會是:</span><span class="w">
-</span><span class="w"></span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">python:3.9.5</span><span class="w">
-</span></code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="line"><span class="cl"><span class="c"># image 的設定就會是:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">python:3.9.5</span><span class="w">
+</span></span></span></code></pre></td></tr></table></div>
 </div>
 </div><ul>
 <li><code>tags</code>: 讓 Job 找到 runner 就需要 tags</li>
 </ul>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yml" data-lang="yml"><span class="nt">tags</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="l">python3.9.5_ci_runner</span><span class="w">
-</span></code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="line"><span class="cl"><span class="nt">tags</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="l">python3.9.5_ci_runner</span><span class="w">
+</span></span></span></code></pre></td></tr></table></div>
 </div>
 </div><ul>
 <li><code>stages</code>: 定義 CI/CD 時候 Pipeline 的每個 Job(也就是在 GitLab 上那一個個的圈圈)</li>
 </ul>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -326,13 +319,13 @@
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yml" data-lang="yml"><span class="c"># 基本會類似像這樣</span><span class="w">
-</span><span class="w"></span><span class="nt">stages</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="l">build</span><span class="w">
-</span><span class="w">  </span>- <span class="l">lint</span><span class="w">
-</span><span class="w">  </span>- <span class="l">test</span><span class="w">
-</span><span class="w">  </span>- <span class="l">deploy crawler</span><span class="w">
-</span></code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="line"><span class="cl"><span class="c"># 基本會類似像這樣</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">stages</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="l">build</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="l">lint</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="l">test</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="l">deploy crawler</span><span class="w">
+</span></span></span></code></pre></td></tr></table></div>
 </div>
 </div><ul>
 <li>
@@ -344,17 +337,17 @@
 </ul>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yml" data-lang="yml"><span class="nt">.aws_ci_builder</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="nt">tags</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span>- <span class="l">python3.9.5_ci_runner</span><span class="w">
-</span><span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">python:3.9.5</span><span class="w">
-</span></code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="line"><span class="cl"><span class="nt">.aws_ci_builder</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">tags</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="l">python3.9.5_ci_runner</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">python:3.9.5</span><span class="w">
+</span></span></span></code></pre></td></tr></table></div>
 </div>
 </div><ul>
 <li>
@@ -369,28 +362,28 @@
 </ul>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yml" data-lang="yml"><span class="c"># dependencies</span><span class="w">
-</span><span class="w"></span><span class="nt">dependencies</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="l">build</span><span class="w">
-</span></code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="line"><span class="cl"><span class="c"># dependencies</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">dependencies</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="l">build</span><span class="w">
+</span></span></span></code></pre></td></tr></table></div>
 </div>
 </div><p>如果 <code>needs</code> 需要某個 job 的 artifacts 可以這樣設置:</p>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yml" data-lang="yml"><span class="nt">needs</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="nt">job</span><span class="p">:</span><span class="w"> </span><span class="l">build</span><span class="w">
-</span><span class="w">    </span><span class="nt">artifacts</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span></code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="line"><span class="cl"><span class="nt">needs</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">job</span><span class="p">:</span><span class="w"> </span><span class="l">build</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">artifacts</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span></code></pre></td></tr></table></div>
 </div>
 </div><h3 id="2-docker-的-install"><a href="#2-docker-的-install" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:2-docker-的-install" class="headings">2. Docker 的 Install</a></h3>
 <p>下載步驟(以我公司 CentOS 為例)：</p>
@@ -399,28 +392,28 @@
 <p>1-1. 下載 yum-utils</p>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">sudo yum install -y yum-utils
-
-<span class="c1"># 之所以下載 yum-utils 是因為我們要使用它的 yum-config-manager 功能</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo yum install -y yum-utils
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 之所以下載 yum-utils 是因為我們要使用它的 yum-config-manager 功能</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><p>1-2. Set up repo</p>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">sudo yum-config-manager <span class="se">\
-</span><span class="se"></span>    --add-repo <span class="se">\
-</span><span class="se"></span>    https://download.docker.com/linux/centos/docker-ce.repo
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo yum-config-manager <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    --add-repo <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    https://download.docker.com/linux/centos/docker-ce.repo
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><p><strong>2. 設定完畢後就可以下載 Docker Engine</strong></p>
 <ul>
@@ -428,28 +421,28 @@
 </ul>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">sudo yum install docker-ce docker-ce-cli containerd.io
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo yum install docker-ce docker-ce-cli containerd.io
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><ul>
 <li>選擇2. 自行選擇版本</li>
 </ul>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 先列出版本清單</span>
-yum list docker-ce --showduplicates <span class="p">|</span> sort -r
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 先列出版本清單</span>
+</span></span><span class="line"><span class="cl">yum list docker-ce --showduplicates <span class="p">|</span> sort -r
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -461,27 +454,27 @@ yum list docker-ce --showduplicates <span class="p">|</span> sort -r
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 會顯示像這樣</span>
-docker-ce.x86_64    3:20.10.9-3.el7                            docker-ce-test
-docker-ce.x86_64    3:20.10.9-3.el7                            docker-ce-stable
-docker-ce.x86_64    3:20.10.8-3.el7                            docker-ce-test
-docker-ce.x86_64    3:20.10.8-3.el7                            docker-ce-stable
-docker-ce.x86_64    3:20.10.7-3.el7                            docker-ce-test
-docker-ce.x86_64    3:20.10.7-3.el7                            docker-ce-stable
-docker-ce.x86_64    3:20.10.6-3.el7                            docker-ce-test
-docker-ce.x86_64    3:20.10.6-3.el7                            docker-ce-stable
-docker-ce.x86_64    3:20.10.5-3.el7                            docker-ce-test
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 會顯示像這樣</span>
+</span></span><span class="line"><span class="cl">docker-ce.x86_64    3:20.10.9-3.el7                            docker-ce-test
+</span></span><span class="line"><span class="cl">docker-ce.x86_64    3:20.10.9-3.el7                            docker-ce-stable
+</span></span><span class="line"><span class="cl">docker-ce.x86_64    3:20.10.8-3.el7                            docker-ce-test
+</span></span><span class="line"><span class="cl">docker-ce.x86_64    3:20.10.8-3.el7                            docker-ce-stable
+</span></span><span class="line"><span class="cl">docker-ce.x86_64    3:20.10.7-3.el7                            docker-ce-test
+</span></span><span class="line"><span class="cl">docker-ce.x86_64    3:20.10.7-3.el7                            docker-ce-stable
+</span></span><span class="line"><span class="cl">docker-ce.x86_64    3:20.10.6-3.el7                            docker-ce-test
+</span></span><span class="line"><span class="cl">docker-ce.x86_64    3:20.10.6-3.el7                            docker-ce-stable
+</span></span><span class="line"><span class="cl">docker-ce.x86_64    3:20.10.5-3.el7                            docker-ce-test
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 選擇要裝的版本，然後給他裝下去</span>
-sudo yum install docker-ce-&lt;VERSION_STRING&gt; docker-ce-cli-&lt;VERSION_STRING&gt; containerd.io
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 選擇要裝的版本，然後給他裝下去</span>
+</span></span><span class="line"><span class="cl">sudo yum install docker-ce-&lt;VERSION_STRING&gt; docker-ce-cli-&lt;VERSION_STRING&gt; containerd.io
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><p>&lt;VERSION_STRING&gt; 要找第二欄的 <code>3:20.10.9-3.el7</code> 這邊，但不是全部放，只要冒號後面一直到 hyphen 之前就好，舉例: 我要 <code>3:20.10.9-3.el7</code>，那就會是</p>
 <blockquote>
@@ -489,53 +482,53 @@ sudo yum install docker-ce-&lt;VERSION_STRING&gt; docker-ce-cli-&lt;VERSION_STRI
 </blockquote>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">sudo yum install docker-ce-20.10.9 docker-ce-cli-20.10.9 containerd.io
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo yum install docker-ce-20.10.9 docker-ce-cli-20.10.9 containerd.io
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><p><strong>3. 啟動 Docker Engine</strong></p>
-<pre><code>sudo systemctl start docker
+<pre tabindex="0"><code>sudo systemctl start docker
 </code></pre><p><strong>4. 如果要確認 Docker Engine 有沒有 active，可以下</strong></p>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">sudo systemctl is-active docker
-<span class="c1"># 如果顯示 active 那就是對了</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo systemctl is-active docker
+</span></span><span class="line"><span class="cl"><span class="c1"># 如果顯示 active 那就是對了</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><p>如果想設置 EC2 runner 啟動的時候 Docker Engine 就啟動，那可以</p>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">sudo systemctl <span class="nb">enable</span> docker.service
-sudo systemctl <span class="nb">enable</span> containerd.service
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo systemctl <span class="nb">enable</span> docker.service
+</span></span><span class="line"><span class="cl">sudo systemctl <span class="nb">enable</span> containerd.service
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><p><a href="https://docs.docker.com/engine/install/linux-postinstall/#configure-docker-to-start-on-boot" target="_blank" rel="noopener">官方</a></p>
 <h3 id="3-yml檔的-script-操作"><a href="#3-yml檔的-script-操作" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:3-yml檔的-script-操作" class="headings">3. yml檔的 script 操作:</a></h3>
 <p><strong>- 如果 script 是需要互動的輸入 Key 或是 Password 之類的，就可以很簡單的 echo 它:</strong></p>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yml" data-lang="yml"><span class="c"># 以 Zyte Deploy 工具 `shub` 為例 </span><span class="w">
-</span><span class="w"></span><span class="l">echo $ZYTE_DEPLOY_API_KEY | shub login</span><span class="w">
-</span></code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="line"><span class="cl"><span class="c"># 以 Zyte Deploy 工具 `shub` 為例 </span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">echo $ZYTE_DEPLOY_API_KEY | shub login</span><span class="w">
+</span></span></span></code></pre></td></tr></table></div>
 </div>
 </div><p><strong>- yml 檔裡如果有 script 需要多行</strong>:</p>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -543,22 +536,22 @@ sudo systemctl <span class="nb">enable</span> containerd.service
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yml" data-lang="yml"><span class="nt">script</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="p">|</span><span class="sd">
-</span><span class="sd">    cat &lt;&lt; EOF &gt; example.txt
-</span><span class="sd">    123
-</span><span class="sd">    456
-</span><span class="sd">    EOF</span><span class="w">    
-</span></code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="line"><span class="cl"><span class="nt">script</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="p">|</span><span class="sd">
+</span></span></span><span class="line"><span class="cl"><span class="sd">    cat &lt;&lt; EOF &gt; example.txt
+</span></span></span><span class="line"><span class="cl"><span class="sd">    123
+</span></span></span><span class="line"><span class="cl"><span class="sd">    456
+</span></span></span><span class="line"><span class="cl"><span class="sd">    EOF</span><span class="w">    
+</span></span></span></code></pre></td></tr></table></div>
 </div>
 </div><p><strong>- yml 檔裡如果要用 GitLab 的 Environment Variables:</strong></p>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yml" data-lang="yml"><span class="l">$變數名</span><span class="w">
-</span></code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="line"><span class="cl"><span class="l">$變數名</span><span class="w">
+</span></span></span></code></pre></td></tr></table></div>
 </div>
 </div><h2 id="-the-end-"><a href="#-the-end-" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><a href="#contents:-the-end-" class="headings"><strong>&lt; The End &gt;</strong>:</a></h2>
 <p>結束！</p>
@@ -580,6 +573,7 @@ sudo systemctl <span class="nb">enable</span> containerd.service
         
 
         
+
 
         
 
@@ -628,9 +622,9 @@ sudo systemctl <span class="nb">enable</span> containerd.service
                     <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
 
 <script>
-    var typeNumber = 0;
-    var errorCorrectionLevel = 'L';
-    var qr = qrcode(typeNumber, errorCorrectionLevel);
+    const typeNumber = 0;
+    const errorCorrectionLevel = 'L';
+    const qr = qrcode(typeNumber, errorCorrectionLevel);
     qr.addData('https:\/\/linooohon.com\/blog\/posts\/13\/211124\/GitLab_CI-CD\/');
     qr.make();
     document.getElementById('qrcode-img').innerHTML = qr.createImgTag();
@@ -797,7 +791,7 @@ sudo systemctl <span class="nb">enable</span> containerd.service
             
     <footer id="footer" class="footer">
         <div class="footer-inner">
-            <div class="site-info">©&nbsp;&nbsp;mitsukuchiph.</div>
+            <div class="site-info">©&nbsp;2022&nbsp;mitsukuchiph.</div><div class="site-copyright"></div><div class="custom-footer">Everyone you meet is fighting a battle you know nothing about. Be kind. Always.</div>
 
             
     
@@ -810,9 +804,7 @@ sudo systemctl <span class="nb">enable</span> containerd.service
                 </li></ul>
     
 
-<div class="site-copyright"></div><div class="custom-footer">Everyone you meet is fighting a battle you know nothing about. Be kind. Always.</div>
 
-            
 
             
         </div>
@@ -834,14 +826,17 @@ sudo systemctl <span class="nb">enable</span> containerd.service
         
             <script>
     function loadComments() {
+        if (!document.getElementById('disqus_thread')) {
+            return;
+        }
         if (typeof DISQUS === 'undefined') {
-            var disqus_config = function() {
+            const disqus_config = function() {
                 this.page.url = 'https:\/\/linooohon.com\/blog\/posts\/13\/211124\/GitLab_CI-CD\/';
                 this.page.identifier = '\/blog\/posts\/13\/211124\/GitLab_CI-CD\/';
                 this.page.title = '[CI\/CD]幫 Data Team 設置 GitLab 的 CI\/CD';
             };
             (function() {
-                var d = document, s = d.createElement('script'); s.async = true;
+                const d = document, s = d.createElement('script'); s.async = true;
                 s.src = 'https://mitsukuchiph.disqus.com/embed.js';
                 s.setAttribute('data-timestamp', +new Date());
                 (d.head || d.body).appendChild(s);
@@ -874,7 +869,10 @@ sudo systemctl <span class="nb">enable</span> containerd.service
     <script src="https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js"></script>
 
 <script>
-    mediumZoom(document.querySelectorAll('div.post-body img'), {
+    let imgNodes = document.querySelectorAll('div.post-body img');
+    imgNodes = Array.from(imgNodes).filter(node => node.parentNode.tagName !== "A");
+
+    mediumZoom(imgNodes, {
         background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
     })
 </script>
@@ -883,7 +881,6 @@ sudo systemctl <span class="nb">enable</span> containerd.service
 
 
     <script src="https://cdn.jsdelivr.net/npm/instant.page@5.1.0/instantpage.min.js" type="module" defer></script>
-
 
 
 
